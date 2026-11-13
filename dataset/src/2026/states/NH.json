@@ -1,0 +1,40 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "NH",
+  "name": "New Hampshire",
+  "sources": {
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "none",
+    "cites": [
+      "tf-2026"
+    ],
+    "confidence": "secondary"
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [],
+    "maintainerNotes": []
+  }
+}

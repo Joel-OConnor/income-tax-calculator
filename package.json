@@ -1,0 +1,11 @@
+{
+  "name": "income-tax-calculator",
+  "private": true,
+  "workspaces": ["dataset", "engine", "web"],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build:data": "npm run build -w tax-dataset",
+    "test": "npm test -w tax-engine",
+    "typecheck": "npm run typecheck --workspaces"
+  }
+}

@@ -1,0 +1,365 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "NM",
+  "name": "New Mexico",
+  "sources": {
+    "nm-hb252-2024": {
+      "name": "New Mexico Legislature, House Bill 252 (2024 regular session, final version), Section 5 amending NMSA 1978 Section 7-2-7",
+      "url": "https://www.nmlegis.gov/Sessions/24%20Regular/final/HB0252.pdf"
+    },
+    "nm-trd-hb93-2026": {
+      "name": "New Mexico Taxation and Revenue Department, Bill Analysis and Fiscal Impact Report for HB 93, January 27, 2026 (table of current personal income tax brackets and 2026 federal standard deduction)",
+      "url": "https://www.nmlegis.gov/Sessions/26%20Regular/AgencyAnalysis/HB0093_333.pdf"
+    },
+    "nm-pit-2025": {
+      "name": "New Mexico Taxation and Revenue Department, 2025 Personal Income Tax Form Packet (PIT-1 instructions)",
+      "url": "https://klvg4oyd4j.execute-api.us-west-2.amazonaws.com/prod/PublicFiles/34821a9573ca43e7b06dfad20f5183fd/0558a902-6362-47ca-8e3b-7cca3bc69b9d/2025%20PIT%20Packet_Final.pdf"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-nm-lmi-exemption": {
+      "name": "PolicyEngine US parameters, NM low- and middle-income exemption income limit (cites PIT-1 instructions and NMSA 7-2-5.8)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/nm/tax/income/exemptions/low_and_middle_income/income_limit.yaml"
+    },
+    "nm-wkc-2026": {
+      "name": "New Mexico Taxation and Revenue, workers' compensation fee notice (January 2026)",
+      "url": "https://www.tax.newmexico.gov/individuals/wp-content/uploads/sites/5/2026/01/WKC-Fee-Payment-Other-Update-.pdf"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "nmsa-7-2-18-34": {
+      "name": "NMSA 1978, Section 7-2-18.34, Child income tax credit",
+      "url": "https://nmonesource.com/nmos/nmsa/en/4340/1/document.do"
+    },
+    "nmsa-7-2-18-15": {
+      "name": "NMSA 1978, Section 7-2-18.15, working families tax credit (Taxation and Revenue Department compilation)",
+      "url": "https://klvg4oyd4j.execute-api.us-west-2.amazonaws.com/prod/PublicFiles/34821a9573ca43e7b06dfad20f5183fd/856ebf4b-3814-49dd-8631-ebe579d6a42b/Personal%20Income%20Tax.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "nm-hb252-2024",
+        "nm-trd-hb93-2026",
+        "tf-2026"
+      ],
+      "section": "HB 252 Section 5 (Section 7-2-7 A and B), pages 16-17; HB 93 analysis, Policy Issues table",
+      "confidence": "primary",
+      "note": "Read from the enacted text of HB 252, which sets these rates for taxable years beginning on or after January 1, 2025, and from the Taxation and Revenue Department's January 2026 analysis, which lists the same brackets as current law. The brackets are not indexed. Head of household uses the joint schedule by statute. Tax Foundation and PolicyEngine agree. Cumulative check: the statute's top-bracket base amounts of $9,748 (single) and $14,624 (joint and head of household) are reproduced by these brackets.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.015
+        },
+        {
+          "from": 5500,
+          "rate": 0.032
+        },
+        {
+          "from": 16500,
+          "rate": 0.043
+        },
+        {
+          "from": 33500,
+          "rate": 0.047
+        },
+        {
+          "from": 66500,
+          "rate": 0.049
+        },
+        {
+          "from": 210000,
+          "rate": 0.059
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.015
+        },
+        {
+          "from": 8000,
+          "rate": 0.032
+        },
+        {
+          "from": 25000,
+          "rate": 0.043
+        },
+        {
+          "from": 50000,
+          "rate": 0.047
+        },
+        {
+          "from": 100000,
+          "rate": 0.049
+        },
+        {
+          "from": 315000,
+          "rate": 0.059
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.015
+        },
+        {
+          "from": 8000,
+          "rate": 0.032
+        },
+        {
+          "from": 25000,
+          "rate": 0.043
+        },
+        {
+          "from": 50000,
+          "rate": 0.047
+        },
+        {
+          "from": 100000,
+          "rate": 0.049
+        },
+        {
+          "from": 315000,
+          "rate": 0.059
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "nmsa-7-2-18-15",
+        "nm-pit-2025"
+      ],
+      "section": "7-2-18.15(A), (B) and (D); 2025 PIT-1 instructions, line 25",
+      "confidence": "primary",
+      "note": "The working families tax credit: \"twenty-five percent for taxable years beginning on or after January 1, 2023, of the federal earned income tax credit\", refundable. A filer without a child who is \"at least eighteen years of age but has not reached the age of twenty-five\" also qualifies. The statute was read in a July 2023 department compilation and checked against the 2025 instructions.",
+      "name": "New Mexico working families tax credit",
+      "refundable": true,
+      "match": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "childlessMinAge": 18
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "nm-pit-2025",
+          "nmsa-7-2-18-34"
+        ],
+        "section": "2025 PIT-RC line 25, Table 4 \"2025 Child Income Tax Credit Income Table\"; 7-2-18.34(A)",
+        "confidence": "primary",
+        "valuesTaxYear": 2025,
+        "note": "Refundable credit per qualifying child (federal section 152(c) definition, so no New Mexico age test), by federal AGI. One table for every filing status. Tier boundaries are fixed in statute as \"over X but not over Y\". The amounts are indexed each year from the September CPI and rounded down to a dollar. These are the 2025 amounts: the 2026 table was not published as of 2026-11-12. Applying the statutory formula to the September 2025 CPI gives $656, $437, $218, $109, $82, $54 and $27, which is an estimate and is not used.",
+        "name": "New Mexico child income tax credit",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 17,
+            "amount": 637
+          }
+        ],
+        "amountByIncome": {
+          "basis": "federal_agi",
+          "points": {
+            "single": [
+              {
+                "income": 0,
+                "value": 637
+              },
+              {
+                "income": 25000,
+                "value": 424
+              },
+              {
+                "income": 50000,
+                "value": 212
+              },
+              {
+                "income": 75000,
+                "value": 106
+              },
+              {
+                "income": 100000,
+                "value": 79
+              },
+              {
+                "income": 200000,
+                "value": 53
+              },
+              {
+                "income": 350000,
+                "value": 26
+              }
+            ],
+            "mfj": [
+              {
+                "income": 0,
+                "value": 637
+              },
+              {
+                "income": 25000,
+                "value": 424
+              },
+              {
+                "income": 50000,
+                "value": 212
+              },
+              {
+                "income": 75000,
+                "value": 106
+              },
+              {
+                "income": 100000,
+                "value": 79
+              },
+              {
+                "income": 200000,
+                "value": 53
+              },
+              {
+                "income": 350000,
+                "value": 26
+              }
+            ],
+            "hoh": [
+              {
+                "income": 0,
+                "value": 637
+              },
+              {
+                "income": 25000,
+                "value": 424
+              },
+              {
+                "income": 50000,
+                "value": 212
+              },
+              {
+                "income": 75000,
+                "value": 106
+              },
+              {
+                "income": 100000,
+                "value": 79
+              },
+              {
+                "income": 200000,
+                "value": 53
+              },
+              {
+                "income": 350000,
+                "value": 26
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "nm-trd-hb93-2026",
+        "nm-pit-2025",
+        "tf-2026"
+      ],
+      "section": "HB 93 analysis, Methodology table; PIT-1 instructions, line 12",
+      "confidence": "primary",
+      "note": "New Mexico uses the federal standard deduction (PIT-1 line 12 takes the amount from federal Form 1040). These are the 2026 federal amounts as listed in the Taxation and Revenue Department's January 2026 analysis, and they match the federal file. The line 12 rule was read in the 2025 instructions because the 2026 instructions are not out yet. HB 93, which would have raised the New Mexico deduction for 2026, died in the 2026 session. Tax Foundation agrees for single and joint.",
+      "single": 16100,
+      "mfj": 32200,
+      "hoh": 24150
+    },
+    "personalExemption": {
+      "cites": [
+        "nm-pit-2025",
+        "pe-nm-lmi-exemption",
+        "tf-2026"
+      ],
+      "section": "PIT-1 instructions, line 14 and the New Mexico Low- and Middle-Income Tax Exemption Worksheet, page PIT-1-26; line 13 for the dependent deduction",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "New Mexico has no personal exemption as such. What is entered here is the low- and middle-income exemption: $2,500 for each exemption (filer, spouse and each dependent), reduced as federal AGI rises. Rule, from the 2025 PIT-1 worksheet for line 14: per exemption, $2,500 minus 15% of AGI over $20,000 (single), or minus 10% of AGI over $30,000 (joint and head of household). Nobody qualifies above $36,667 (single) or $55,000 (joint, head of household), which is where the formula reaches zero. The points are that rule as a share of the full amount: 1 at $20,000 or $30,000, falling in a straight line to 0 ($36,666.67 for single, the exact zero of the formula). The 2026 instructions are not out yet, so these are the 2025 figures. PolicyEngine shows them unchanged since 2021, so they are not indexed. Separately, New Mexico has a \"deduction for certain dependents\": $4,000 for each dependent after the first, for joint and head of household filers only (2025 PIT-1 instructions, line 13; Tax Foundation footnote (jj)). The schema cannot express \"all but one dependent\" and this group can hold only one set of amounts, so that deduction is not modeled.",
+      "kind": "deduction",
+      "single": 2500,
+      "mfj": 5000,
+      "hoh": 2500,
+      "dependent": 2500,
+      "phaseOut": {
+        "basis": "federal_agi",
+        "appliesTo": "all",
+        "unit": "fraction",
+        "interpolation": "linear",
+        "points": {
+          "single": [
+            {
+              "income": 20000,
+              "value": 1
+            },
+            {
+              "income": 36666.67,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 30000,
+              "value": 1
+            },
+            {
+              "income": 55000,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 30000,
+              "value": 1
+            },
+            {
+              "income": 55000,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "nm-pit-2025",
+      "nm-wkc-2026",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "No local income tax: New Mexico is not in Tax Foundation footnote (a). Workers' compensation fee read in the Taxation and Revenue notice: the employee portion is $2.25 a quarter. It is a flat $9 a year, so the payroll flag stays false. No paid leave program has been enacted. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Not modeled: New Mexico's low-income comprehensive tax rebate.",
+      "Employees pay a workers' compensation fee of $2.25 a quarter. Not included.",
+      "Not modeled: the $4,000 deduction for each dependent after the first, for joint and head of household filers.",
+      "New Mexico's child tax credit uses the 2025 amounts ($26 to $637 per child, falling as income rises), because the 2026 amounts are not published yet. Expect them to be about 3% higher."
+    ],
+    "maintainerNotes": [
+      "Employees pay a small flat quarterly workers' compensation fee through payroll. It is not a percentage payroll tax, so the payroll flag is false. From general knowledge, needs checking.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): our New Mexico tax was higher by $405 and $358 (two children, joint at $90,000 and $180,000) and by $217 and $81 (one child, head of household at $60,000 and $110,000)."
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "ND",
+  "name": "North Dakota",
+  "sources": {
+    "nd-1es-2026": {
+      "name": "North Dakota Office of State Tax Commissioner, Form ND-1ES 2026, Estimated Income Tax - Individuals (SFN 28709, 12-2025)",
+      "url": "https://www.tax.nd.gov/sites/www/files/documents/forms/individual/2025-iit/28709-form-nd-1es-2026.pdf"
+    },
+    "pe-nd-rates": {
+      "name": "PolicyEngine US parameters, ND single filer rates (cites Form ND-1ES 2026 and N.D.C.C. 57-38-30.3)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/nd/tax/income/rates/single.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_taxable_income",
+    "brackets": {
+      "cites": [
+        "nd-1es-2026",
+        "pe-nd-rates",
+        "tf-2026"
+      ],
+      "section": "Page 2, \"2026 Forms ND-1 and ND-EZ Tax Rate Schedules\"",
+      "confidence": "primary",
+      "note": "Read from the 2026 schedules on Form ND-1ES. The top-bracket base amounts reproduce: $3,916.09 single, $4,329.98 joint, $4,118.40 head of household. PolicyEngine matches. Tax Foundation's 2026 table shows the 2025 thresholds ($48,475 and $244,825 single, $80,975 and $298,075 joint) under its footnote (j), which says 2026 widths were not available, so it is a year stale here. The worksheet on the same form starts from federal taxable income.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 49575,
+          "rate": 0.0195
+        },
+        {
+          "from": 250400,
+          "rate": 0.025
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 82800,
+          "rate": 0.0195
+        },
+        {
+          "from": 304850,
+          "rate": 0.025
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 66400,
+          "rate": 0.0195
+        },
+        {
+          "from": 277600,
+          "rate": 0.025
+        }
+      ]
+    },
+    "surtaxes": [],
+    "standardDeduction": null,
+    "personalExemption": null
+  },
+  "rules": {
+    "cites": [
+      "nd-1es-2026",
+      "pe-nd-rates",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Starting point is from the ND-1ES worksheet (line 1 is federal taxable income) and Tax Foundation footnote (o). North Dakota is absent from Tax Foundation footnote (a), which lists states with local income taxes. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "North Dakota starts from federal taxable income, so the federal standard deduction is already applied. There is no separate state standard deduction or personal exemption.",
+      "Not modeled: a marriage penalty credit for joint filers, worth a few hundred dollars at most."
+    ],
+    "maintainerNotes": [
+      "North Dakota starts from federal taxable income, so the federal standard deduction is already applied. No separate state standard deduction or personal exemption. Tax Foundation lists $16,100 and $32,200, which are the federal amounts.",
+      "Not modeled: the nonrefundable marriage penalty credit for joint filers, which PolicyEngine's North Dakota parameters include (a few hundred dollars at most)."
+    ]
+  }
+}

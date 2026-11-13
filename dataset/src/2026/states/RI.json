@@ -1,0 +1,336 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "RI",
+  "name": "Rhode Island",
+  "sources": {
+    "ri-adv-2025-22": {
+      "name": "Rhode Island Division of Taxation, Advisory ADV 2025-22, \"Inflation-adjusted amounts set for Tax Year 2026\" (November 3, 2025)",
+      "url": "https://tax.ri.gov/sites/g/files/xkgbur541/files/2025-11/ADV_2025_22_Inflation_Adjustments.pdf"
+    },
+    "pe-ri-surtax": {
+      "name": "PolicyEngine US parameters, RI high-income surtax rate (cites 2026 House Bill 7127 as amended)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ri/tax/income/high_earner_tax/rate.yaml"
+    },
+    "ri-dlt-2026": {
+      "name": "Rhode Island Department of Labor and Training, 2026 Tax Rates for Unemployment Insurance and Temporary Disability Insurance",
+      "url": "https://dlt.ri.gov/press-releases/2026-tax-rates-unemployment-insurance-and-temporary-disability-insurance"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "ri-worksheets-2025": {
+      "name": "Rhode Island Division of Taxation, 2025 Rhode Island Tax Rate Schedule and Worksheets (Standard Deduction Worksheet and Exemption Worksheet)",
+      "url": "https://tax.ri.gov/sites/g/files/xkgbur541/files/2025-10/2025%20Tax%20Rate%20and%20Worksheets_d.pdf"
+    },
+    "ri-tdi-quickref-2026": {
+      "name": "Rhode Island DLT, UI and TDI quick reference (July 2026)",
+      "url": "https://dlt.ri.gov/sites/g/files/xkgbur571/files/2026-06/7.1.26%20UI%20%26%20TDI%20Quick%20Reference.pdf"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "rigl-44-30-2-6": {
+      "name": "R.I. Gen. Laws 44-30-2.6(c)(2)(N), earned income credit",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE44/44-30/44-I/44-30-2.6.htm"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ri-adv-2025-22",
+        "tf-2026"
+      ],
+      "section": "Page 2, \"Uniform tax rate schedule for Tax Year 2026 (Personal Income Tax)\"",
+      "confidence": "primary",
+      "note": "Rhode Island uses one schedule for all filers, so joint and head of household are the same as single. The printed base amounts reproduce: $3,076.88 at $82,050 and $8,035.88 at $186,450. Tax Foundation agrees.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0375
+        },
+        {
+          "from": 82050,
+          "rate": 0.0475
+        },
+        {
+          "from": 186450,
+          "rate": 0.0599
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0375
+        },
+        {
+          "from": 82050,
+          "rate": 0.0475
+        },
+        {
+          "from": 186450,
+          "rate": 0.0599
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0375
+        },
+        {
+          "from": 82050,
+          "rate": 0.0475
+        },
+        {
+          "from": 186450,
+          "rate": 0.0599
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "rigl-44-30-2-6"
+      ],
+      "section": "44-30-2.6(c)(2)(N)",
+      "confidence": "primary",
+      "note": "\"sixteen percent (16%) of the federal earned-income credit\" for tax years beginning on or after January 1, 2024, fully refundable.",
+      "name": "Rhode Island earned income credit",
+      "refundable": true,
+      "match": [
+        0.16,
+        0.16,
+        0.16,
+        0.16
+      ]
+    },
+    "standardDeduction": {
+      "cites": [
+        "ri-adv-2025-22",
+        "ri-worksheets-2025",
+        "tf-2026"
+      ],
+      "section": "Page 1, \"Rhode Island standard deduction amounts by Tax Year\"",
+      "confidence": "primary",
+      "note": "Full amounts for 2026 from ADV 2025-22. Tax Foundation agrees for single and joint. Rule, from the 2025 Standard Deduction and Exemption Worksheets with the 2026 figures from ADV 2025-22 substituted: no reduction if modified federal AGI is $261,000 or less. Otherwise divide the excess over $261,000 by the $7,450 increment and round up to a whole number. 1 leaves 80%, 2 leaves 60%, 3 leaves 40%, 4 leaves 20%, and an excess of more than $29,800 (AGI over $290,800) leaves nothing. Same thresholds for every filing status. The basis is Rhode Island modified federal AGI (Form RI-1040 line 3). The worksheet PDF read was the 2025 edition and carries a draft watermark dated 10/01/2025, so the 20% step rule is a 2025 reading. The 2026 threshold, increment and range end are read from ADV 2025-22, and 4 increments of $7,450 land exactly on its $290,800.",
+      "single": 11200,
+      "mfj": 22400,
+      "hoh": 16800,
+      "phaseOut": {
+        "basis": "state_agi",
+        "unit": "fraction",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 261000,
+              "value": 0.8
+            },
+            {
+              "income": 268450,
+              "value": 0.6
+            },
+            {
+              "income": 275900,
+              "value": 0.4
+            },
+            {
+              "income": 283350,
+              "value": 0.2
+            },
+            {
+              "income": 290800,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 261000,
+              "value": 0.8
+            },
+            {
+              "income": 268450,
+              "value": 0.6
+            },
+            {
+              "income": 275900,
+              "value": 0.4
+            },
+            {
+              "income": 283350,
+              "value": 0.2
+            },
+            {
+              "income": 290800,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 261000,
+              "value": 0.8
+            },
+            {
+              "income": 268450,
+              "value": 0.6
+            },
+            {
+              "income": 275900,
+              "value": 0.4
+            },
+            {
+              "income": 283350,
+              "value": 0.2
+            },
+            {
+              "income": 290800,
+              "value": 0
+            }
+          ]
+        }
+      }
+    },
+    "personalExemption": {
+      "cites": [
+        "ri-adv-2025-22",
+        "ri-worksheets-2025",
+        "tf-2026"
+      ],
+      "section": "Page 1, \"Rhode Island personal and dependency exemption amounts by Tax Year\"",
+      "confidence": "primary",
+      "note": "$5,250 per exemption for 2026: filer, spouse and each dependent. Tax Foundation agrees. The phase-out applies to the total of all exemptions. Rule, from the 2025 Standard Deduction and Exemption Worksheets with the 2026 figures from ADV 2025-22 substituted: no reduction if modified federal AGI is $261,000 or less. Otherwise divide the excess over $261,000 by the $7,450 increment and round up to a whole number. 1 leaves 80%, 2 leaves 60%, 3 leaves 40%, 4 leaves 20%, and an excess of more than $29,800 (AGI over $290,800) leaves nothing. Same thresholds for every filing status. The basis is Rhode Island modified federal AGI (Form RI-1040 line 3). The worksheet PDF read was the 2025 edition and carries a draft watermark dated 10/01/2025, so the 20% step rule is a 2025 reading. The 2026 threshold, increment and range end are read from ADV 2025-22, and 4 increments of $7,450 land exactly on its $290,800.",
+      "kind": "deduction",
+      "single": 5250,
+      "mfj": 10500,
+      "hoh": 5250,
+      "dependent": 5250,
+      "phaseOut": {
+        "basis": "state_agi",
+        "appliesTo": "all",
+        "unit": "fraction",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 261000,
+              "value": 0.8
+            },
+            {
+              "income": 268450,
+              "value": 0.6
+            },
+            {
+              "income": 275900,
+              "value": 0.4
+            },
+            {
+              "income": 283350,
+              "value": 0.2
+            },
+            {
+              "income": 290800,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 261000,
+              "value": 0.8
+            },
+            {
+              "income": 268450,
+              "value": 0.6
+            },
+            {
+              "income": 275900,
+              "value": 0.4
+            },
+            {
+              "income": 283350,
+              "value": 0.2
+            },
+            {
+              "income": 290800,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 261000,
+              "value": 0.8
+            },
+            {
+              "income": 268450,
+              "value": 0.6
+            },
+            {
+              "income": 275900,
+              "value": 0.4
+            },
+            {
+              "income": 283350,
+              "value": 0.2
+            },
+            {
+              "income": 290800,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "ri-adv-2025-22",
+      "ri-dlt-2026",
+      "pe-ri-surtax",
+      "tf-2026",
+      "ri-tdi-quickref-2026",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "Rhode Island is absent from Tax Foundation footnote (a), which lists states with local income taxes. Payroll flag read in the Department of Labor and Training quick reference: employees pay 1.1% of the first $100,000 earned. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Employees pay 1.1% of the first $100,000 of wages for Temporary Disability Insurance, up to $1,100 a year. Not included."
+    ],
+    "maintainerNotes": [
+      "PolicyEngine records a new high-income surtax on taxable income over $1,000,000 starting in tax year 2027 (1%, rising in later years). It does not apply to 2026."
+    ]
+  }
+}

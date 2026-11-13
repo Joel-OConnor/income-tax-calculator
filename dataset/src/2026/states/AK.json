@@ -1,0 +1,45 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "AK",
+  "name": "Alaska",
+  "sources": {
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "ak-ui-2026": {
+      "name": "Alaska Department of Labor, 2026 unemployment insurance tax rates",
+      "url": "https://labor.alaska.gov/estax/2026-experience-rates.html"
+    }
+  },
+  "incomeTax": {
+    "type": "none",
+    "cites": [
+      "tf-2026"
+    ],
+    "confidence": "secondary"
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "ak-ui-2026"
+    ],
+    "confidence": "secondary",
+    "note": "Payroll flag read on the Alaska Department of Labor page: 2026 employee rate 0.50% on a taxable wage base of $54,200.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Alaska's Permanent Fund Dividend is taxable federal income. It is not included here, so federal tax is understated by the tax on your dividend.",
+      "Employees pay 0.5% of the first $54,200 of wages into state unemployment insurance, up to $271 a year. Not included."
+    ],
+    "maintainerNotes": [
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): PolicyEngine adds about $1,000 of dividend income per adult for Alaska households, raising federal tax by $120 to $480 in the cases tested."
+    ]
+  }
+}

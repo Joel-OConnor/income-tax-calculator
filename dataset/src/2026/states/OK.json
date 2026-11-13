@@ -1,0 +1,422 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "OK",
+  "name": "Oklahoma",
+  "sources": {
+    "ok-hb2764": {
+      "name": "Oklahoma Legislature, Enrolled House Bill 2764 (2025), amending 68 O.S. 2355, subsection D",
+      "url": "https://www.oklegislature.gov/cf_pdf/2025-26%20ENR/hB/HB2764%20ENR.PDF"
+    },
+    "ok-511-pkt-2026": {
+      "name": "Oklahoma Tax Commission, 2026 Oklahoma Resident Individual Income Tax Forms and Instructions (Form 511 packet, software developer release)",
+      "url": "https://oklahoma.gov/content/dam/ok/en/tax/documents/forms/software-developers/Dev511-Pkt-26.pdf"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "ok-68-2357": {
+      "name": "Oklahoma Statutes Title 68, Section 2357(B)(2), child care and child tax credit",
+      "url": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os68.pdf"
+    },
+    "ok-511-pkt-2025": {
+      "name": "Oklahoma Tax Commission, 2025 Form 511 packet, Schedule 511-F",
+      "url": "https://oklahoma.gov/content/dam/ok/en/tax/documents/forms/individuals/current/511-Pkt.pdf"
+    },
+    "ok-68-2357-43": {
+      "name": "Oklahoma Statutes Title 68, Section 2357.43, earned income tax credit",
+      "url": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os68.pdf"
+    },
+    "ok-511-eic-2025": {
+      "name": "Oklahoma Tax Commission, 2025 Form 511-EIC, Oklahoma Earned Income Credit Worksheet",
+      "url": "https://oklahoma.gov/content/dam/ok/en/tax/documents/forms/individuals/current/511-EIC.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ok-hb2764",
+        "ok-511-pkt-2026",
+        "tf-2026"
+      ],
+      "section": "HB 2764 section amending 68 O.S. 2355(D), pages 10-11; 2026 Oklahoma Income Tax Tables in the 511 packet",
+      "confidence": "primary",
+      "note": "Read from the enrolled bill, which sets the schedule for tax year 2026 and later: 0% on the first $3,750, 2.5% on the next $1,150, 3.5% on the next $2,300, 4.5% on the rest for single filers, and doubled widths for joint filers, surviving spouses and heads of household. The 2026 Form 511 packet confirms the 4.5% top rate, and its table formulas for income of $95,000 or more ($4,060 plus 4.5% single, $3,845 plus 4.5% joint and head of household) match these brackets to within rounding. Tax Foundation agrees. Further 0.25 point cuts can be triggered in later years by revenue certifications.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 3750,
+          "rate": 0.025
+        },
+        {
+          "from": 4900,
+          "rate": 0.035
+        },
+        {
+          "from": 7200,
+          "rate": 0.045
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 7500,
+          "rate": 0.025
+        },
+        {
+          "from": 9800,
+          "rate": 0.035
+        },
+        {
+          "from": 14400,
+          "rate": 0.045
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 7500,
+          "rate": 0.025
+        },
+        {
+          "from": 9800,
+          "rate": 0.035
+        },
+        {
+          "from": 14400,
+          "rate": 0.045
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "ok-68-2357-43",
+        "ok-511-eic-2025"
+      ],
+      "section": "68 O.S. 2357.43; 2025 Form 511-EIC, 2020 Earned Income Credit Table",
+      "confidence": "secondary",
+      "note": "5% of the federal credit, refundable, but \"computed using the same requirements ... in effect for computation of the earned income tax credit for federal income tax purposes for the 2020 income tax year\". The form prints the 2020 federal table, not adjusted for inflation, so this is a schedule of its own: 5% of the 2020 credit. Read on the form: maximum credits of $538, $3,584, $5,920 and $6,660, and no credit from earned income of $15,820, $41,756, $47,440 and $50,954 ($21,710, $47,646, $53,330 and $56,844 joint). The earned income amounts where the maximum is reached ($7,030, $10,540, $14,800) and the phase-out starts ($8,790, or $19,330 with children, $14,680 and $25,220 joint) are the 2020 federal figures from general knowledge. They agree with the form's figures through the statutory percentages to within $3, but were not read, which is why this is marked secondary. Not modeled: the form lets the filer use the prior year's earned income when that gives more.",
+      "name": "Oklahoma earned income credit",
+      "refundable": true,
+      "schedule": [
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 7030,
+              "value": 26.9
+            },
+            {
+              "income": 8790,
+              "value": 26.9
+            },
+            {
+              "income": 15820,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 7030,
+              "value": 26.9
+            },
+            {
+              "income": 14680,
+              "value": 26.9
+            },
+            {
+              "income": 21710,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 7030,
+              "value": 26.9
+            },
+            {
+              "income": 8790,
+              "value": 26.9
+            },
+            {
+              "income": 15820,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 10540,
+              "value": 179.2
+            },
+            {
+              "income": 19330,
+              "value": 179.2
+            },
+            {
+              "income": 41756,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 10540,
+              "value": 179.2
+            },
+            {
+              "income": 25220,
+              "value": 179.2
+            },
+            {
+              "income": 47646,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 10540,
+              "value": 179.2
+            },
+            {
+              "income": 19330,
+              "value": 179.2
+            },
+            {
+              "income": 41756,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 14800,
+              "value": 296.0
+            },
+            {
+              "income": 19330,
+              "value": 296.0
+            },
+            {
+              "income": 47440,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 14800,
+              "value": 296.0
+            },
+            {
+              "income": 25220,
+              "value": 296.0
+            },
+            {
+              "income": 53330,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 14800,
+              "value": 296.0
+            },
+            {
+              "income": 19330,
+              "value": 296.0
+            },
+            {
+              "income": 47440,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 14800,
+              "value": 333.0
+            },
+            {
+              "income": 19330,
+              "value": 333.0
+            },
+            {
+              "income": 50954,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 14800,
+              "value": 333.0
+            },
+            {
+              "income": 25220,
+              "value": 333.0
+            },
+            {
+              "income": 56844,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 14800,
+              "value": 333.0
+            },
+            {
+              "income": 19330,
+              "value": 333.0
+            },
+            {
+              "income": 50954,
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "ok-68-2357",
+          "ok-511-pkt-2025"
+        ],
+        "section": "68 O.S. 2357(B)(2); Schedule 511-F line 3",
+        "confidence": "primary",
+        "note": "The greater of 20% of the federal child care credit or 5% of the federal child tax credit, only when federal AGI is $100,000 or less, nonrefundable. Only the 5% arm is here because the calculator does not ask about child care costs. The 5% applies to the credit allowed on the federal return, refundable part included (Schedule 511-F: \"total of child tax credit and additional child tax credit\"). Neither source says whether the federal credit for other dependents counts, and it is left out.",
+        "name": "Oklahoma child tax credit",
+        "refundable": false,
+        "federalCreditShare": 0.05,
+        "incomeLimit": {
+          "basis": "federal_agi",
+          "single": 100000,
+          "mfj": 100000,
+          "hoh": 100000
+        }
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "ok-511-pkt-2026",
+        "tf-2026"
+      ],
+      "section": "Form 511 line 10 instructions, \"Standard Deduction\"",
+      "confidence": "primary",
+      "note": "Read from the 2026 Form 511 packet as posted for software developers. The consumer copy of the 2026 packet was not yet posted when this was written, so recheck against it. Amounts are not indexed. Tax Foundation agrees for single and joint. Filers who itemize federally must itemize for Oklahoma.",
+      "single": 6350,
+      "mfj": 12700,
+      "hoh": 9350
+    },
+    "personalExemption": {
+      "cites": [
+        "ok-511-pkt-2026",
+        "tf-2026"
+      ],
+      "section": "Form 511 line 11 instructions, \"Exemptions\"",
+      "confidence": "primary",
+      "note": "$1,000 for each exemption claimed: filer, spouse and each dependent. Extra $1,000 exemptions for age 65 with limited income and for blindness are not included.",
+      "kind": "deduction",
+      "single": 1000,
+      "mfj": 2000,
+      "hoh": 1000,
+      "dependent": 1000
+    }
+  },
+  "rules": {
+    "cites": [
+      "ok-511-pkt-2026",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Oklahoma is absent from Tax Foundation footnote (a), which lists states with local income taxes. The 511 packet treats health savings account contributions as a subtraction, which is consistent with not taxing them. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Not modeled: Oklahoma's sales tax relief credit for low-income households.",
+      "Not modeled: when out-of-state income is present, deductions and exemptions are prorated.",
+      "Oklahoma's child tax credit is 5% of the federal child tax credit, for filers with federal AGI of $100,000 or less. Filers with child care costs can take 20% of the federal child care credit when that is larger, which is not modeled.",
+      "Oklahoma's earned income credit is 5% of the federal credit as it stood in 2020, so it is smaller and ends at lower incomes than 5% of this year's federal credit. This is included."
+    ],
+    "maintainerNotes": [
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): our Oklahoma tax was $220 higher (two children, joint $90,000) and $110 higher (one child, head of household $60,000), and matched at $180,000 and $110,000."
+    ]
+  }
+}

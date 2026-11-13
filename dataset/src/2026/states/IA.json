@@ -1,0 +1,152 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "IA",
+  "name": "Iowa",
+  "sources": {
+    "idr-2026-rates": {
+      "name": "Iowa Department of Revenue, \"IDR Announces 2026 Individual Income Tax and Interest Rates\", October 21, 2025",
+      "url": "https://revenue.iowa.gov/press-release/2025-10-21/idr-announces-2026-individual-income-tax-and-interest-rates"
+    },
+    "ia1040-fti-2025": {
+      "name": "Iowa Department of Revenue, 2025 IA 1040 expanded instructions, Federal Taxable Income (line 2)",
+      "url": "https://revenue.iowa.gov/taxes/tax-guidance/individual-income-tax/1040-expanded-instructions/federal-taxable-income"
+    },
+    "ia1040-exemption-credits-2025": {
+      "name": "Iowa Department of Revenue, 2025 IA 1040 expanded instructions, Exemption Credits",
+      "url": "https://revenue.iowa.gov/taxes/tax-guidance/individual-income-tax/1040-expanded-instructions/exemption-credits"
+    },
+    "ia1040-tax-2025": {
+      "name": "Iowa Department of Revenue, 2025 IA 1040 expanded instructions, Iowa Tax (line 5)",
+      "url": "https://revenue.iowa.gov/taxes/tax-guidance/individual-income-tax/1040-expanded-instructions/iowa-tax"
+    },
+    "pe-ia": {
+      "name": "PolicyEngine US parameters, Iowa income tax (rates, exemption credits, federal standard deduction switch, tax-exempt income limits)",
+      "url": "https://github.com/PolicyEngine/policyengine-us/tree/main/policyengine_us/parameters/gov/states/ia/tax/income"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "ia-surtax-2025": {
+      "name": "Iowa Department of Revenue, school district surtax rates for 2025",
+      "url": "https://revenue.iowa.gov/media/4382/download"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "ia-code-422-12b": {
+      "name": "Iowa Code 2026, section 422.12B, earned income tax credit (archived copy of the legislature's PDF)",
+      "url": "https://web.archive.org/web/20260517223313/https://www.legis.iowa.gov/docs/code//422.12B.pdf"
+    },
+    "ia-eitc-inst": {
+      "name": "Iowa Department of Revenue, 1040 expanded instructions: Iowa Earned Income Tax Credit",
+      "url": "https://revenue.iowa.gov/taxes/tax-guidance/individual-income-tax/1040-expanded-instructions/iowa-earned-income-tax-credit"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_taxable_income",
+    "brackets": {
+      "cites": [
+        "idr-2026-rates",
+        "pe-ia",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "Flat 3.8% on all taxable income in 2026, per the department's release. One schedule for all filing statuses. Tax Foundation and PolicyEngine agree.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.038
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.038
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.038
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "ia-code-422-12b",
+        "ia-eitc-inst"
+      ],
+      "section": "Iowa Code 422.12B(1)",
+      "confidence": "primary",
+      "note": "\"For tax years beginning on or after January 1, 2014, fifteen percent\" of the federal credit, and \"any credit in excess of the tax liability is refundable\". The legislature's site could not be reached on 2026-11-12, so the statute is from an archived copy of its 2026 code PDF.",
+      "name": "Iowa earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.15,
+        0.15,
+        0.15,
+        0.15
+      ]
+    },
+    "standardDeduction": null,
+    "personalExemption": {
+      "cites": [
+        "ia1040-exemption-credits-2025",
+        "pe-ia",
+        "tf-2026"
+      ],
+      "section": "Personal credit and dependent credit",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "Read in the 2025 instructions. The 2026 return instructions are not published yet. The credit is $40 each: one for single filers, two for married filing jointly and for head of household, and one per dependent. Tax Foundation's 2026 table lists the same $40 / $80 / $40. PolicyEngine's parameter file has $40 per filer and spouse and does not show the second credit for head of household. The state instructions win.",
+      "kind": "credit",
+      "single": 40,
+      "mfj": 80,
+      "hoh": 80,
+      "dependent": 40
+    }
+  },
+  "rules": {
+    "cites": [
+      "ia1040-fti-2025",
+      "ia1040-tax-2025",
+      "ia1040-exemption-credits-2025",
+      "pe-ia",
+      "tf-2026",
+      "ia-surtax-2025",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Starting point is from the 2025 IA 1040 instructions and Tax Foundation footnote (o). Local flag read in the Department of Revenue's 2025 surtax table and Iowa Code 2026 section 257.21. School district surtaxes run up to 20% of Iowa tax and six counties add 1% for emergency medical services. No 2026 rate table was published when checked. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": true,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Iowa starts from federal taxable income, so the federal standard deduction is already applied and there is no separate state standard deduction.",
+      "Many Iowa school districts add a surtax of up to 20% of your Iowa tax, and a few counties add 1% for emergency medical services. Not included.",
+      "Not modeled: an alternate tax calculation, open to every filing status except single, that applies when it gives a lower tax.",
+      "Not modeled: filers with low incomes can be exempt from Iowa tax entirely.",
+      "Not modeled: additional $20 credit for a filer or spouse who is 65 or older or blind."
+    ],
+    "maintainerNotes": [
+      "Iowa starts from federal taxable income (IA 1040 line 2 is federal Form 1040 line 15), so the federal standard deduction is already applied. No separate state standard deduction. Tax Foundation shows the 2026 federal amounts ($16,100 single, $32,200 joint) in its Iowa row.",
+      "Tax Foundation footnote (a) puts Iowa's average local income tax at 0.08% of AGI. From general knowledge these are school district surtaxes charged as a percentage of Iowa tax. Not modeled.",
+      "Not modeled: the alternate tax calculation open to every filing status except single. In the 2025 instructions it is 4.3% of income above $13,500 ($32,000 if the filer or spouse is 65 or older), used when it is lower than the regular tax. Single filers may instead qualify for a separate income tax reduction worksheet.",
+      "Not modeled: exemption from tax for low incomes. PolicyEngine lists net income limits of $9,000 for single filers and $13,500 for others, sourced from 2021 and 2022 instructions and not rechecked for 2026."
+    ]
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "UT",
+  "name": "Utah",
+  "sources": {
+    "ut-code-59-10-104": {
+      "name": "Utah Code 59-10-104, Tax basis, Tax rate (effective 1/1/2026, amended by Chapter 250, 2026 General Session)",
+      "url": "https://le.utah.gov/xcode/Title59/Chapter10/59-10-S104.html"
+    },
+    "ut-sb60-2026": {
+      "name": "Utah S.B. 60 (2026), Income Tax Rate Amendments, enrolled copy",
+      "url": "https://le.utah.gov/Session/2026/bills/enrolled/SB0060.pdf"
+    },
+    "ut-code-59-10-1018": {
+      "name": "Utah Code 59-10-1018, Nonrefundable taxpayer tax credits (amended by Chapter 299, 2026 General Session)",
+      "url": "https://le.utah.gov/xcode/Title59/Chapter10/59-10-S1018.html"
+    },
+    "ut-tc40-2025-credit": {
+      "name": "Utah State Tax Commission, 2025 TC-40 instructions, Taxpayer Tax Credit (lines 11 to 20)",
+      "url": "https://incometax.utah.gov/credits/taxpayer-tax-credit"
+    },
+    "rp-2025-32": {
+      "name": "IRS Revenue Procedure 2025-32 (2026 inflation adjustments)",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "ut-code-59-10-1047": {
+      "name": "Utah Code 59-10-1047, Nonrefundable child tax credit (effective 1/1/2026, as amended by 2026 HB 290)",
+      "url": "https://le.utah.gov/xcode/Title59/Chapter10/59-10-S1047.html"
+    },
+    "ut-code-59-10-1044": {
+      "name": "Utah Code 59-10-1044, nonrefundable earned income tax credit",
+      "url": "https://le.utah.gov/xcode/Title59/Chapter10/59-10-S1044.html"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ut-code-59-10-104",
+        "ut-sb60-2026",
+        "tf-2026"
+      ],
+      "section": "59-10-104(2)(b)",
+      "confidence": "primary",
+      "note": "Flat rate. S.B. 60 (2026) cut it from 4.5% to 4.45%, effective May 6, 2026 with retrospective operation for taxable years beginning on or after January 1, 2026. Tax Foundation still shows 4.5%, which predates the bill. PolicyEngine shows 4.45%.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0445
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0445
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0445
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "ut-code-59-10-1044"
+      ],
+      "section": "59-10-1044(2) and (3)",
+      "confidence": "primary",
+      "note": "\"a nonrefundable earned income tax credit equal to the lesser of: (a) 20% of the amount of the federal earned income tax credit\" and the Utah wages on the filer's W-2. No carryforward. The wage limit is left out: 20% of the federal credit is never more than 9% of wages.",
+      "name": "Utah earned income tax credit",
+      "refundable": false,
+      "match": [
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "ut-code-59-10-1047"
+        ],
+        "section": "59-10-1047(1) to (4)",
+        "confidence": "primary",
+        "note": "$1,000 for each child under six on the last day of the year who gets the federal child tax credit. Reduced by 10 cents for each dollar of modified AGI over $49,000 (single, head of household) or $61,000 (joint), off the total, per the statute and the 2025 TC-40 worksheet. Nonrefundable, no carryover. Modified AGI adds tax-exempt interest, which the calculator does not have, so state AGI is used.",
+        "name": "Utah child tax credit",
+        "refundable": false,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 6,
+            "amount": 1000
+          }
+        ],
+        "phaseOut": {
+          "basis": "state_agi",
+          "start": {
+            "single": 49000,
+            "mfj": 61000,
+            "hoh": 49000
+          },
+          "amount": 0.1,
+          "per": 1,
+          "rounding": "none",
+          "appliesTo": "total"
+        }
+      }
+    ],
+    "standardDeduction": null,
+    "personalExemption": {
+      "cites": [
+        "ut-code-59-10-1018",
+        "ut-tc40-2025-credit",
+        "rp-2025-32",
+        "tf-2026"
+      ],
+      "confidence": "secondary",
+      "valuesTaxYear": 2025,
+      "note": "This is Utah's taxpayer tax credit before its phase-out, computed rather than read from a table. Filer amounts are 6% of the 2026 federal standard deduction ($16,100 / $32,200 / $24,150), per 59-10-1018(2). Tax Foundation shows the same $966 and $1,932. The dependent amount is 6% of the Utah personal exemption of $2,111, which is the 2025 figure from the TC-40 instructions. The 2026 exemption is indexed and was not published as of November 2026, so only the dependent amount is a 2025 value. The credit is nonrefundable. Filers who itemize use 6% of itemized deductions less state income tax instead. Phase-out rule (59-10-1018(4), TC-40 lines 17 to 19): the total credit is reduced by 1.3 cents for each dollar of Utah taxable income over a base amount, never below zero. The base amounts used are the 2025 ones from the TC-40 instructions ($18,213 single, $36,426 joint, $27,320 head of household). The 2026 base amounts are indexed and were not published as of November 2026. The reduction has no upper limit, so each phaseOut list is two points on the line: the base amount with 0, and the base amount plus $1,000,000 with $13,000.",
+      "kind": "credit",
+      "single": 966,
+      "mfj": 1932,
+      "hoh": 1449,
+      "dependent": 126.66,
+      "phaseOut": {
+        "basis": "state_taxable_income",
+        "appliesTo": "all",
+        "unit": "reduction",
+        "interpolation": "linear",
+        "points": {
+          "single": [
+            {
+              "income": 18213,
+              "value": 0
+            },
+            {
+              "income": 1018213,
+              "value": 13000
+            }
+          ],
+          "mfj": [
+            {
+              "income": 36426,
+              "value": 0
+            },
+            {
+              "income": 1036426,
+              "value": 13000
+            }
+          ],
+          "hoh": [
+            {
+              "income": 27320,
+              "value": 0
+            },
+            {
+              "income": 1027320,
+              "value": 13000
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "ut-code-59-10-1018",
+      "ut-tc40-2025-credit",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "No local income taxes per Tax Foundation footnote (a), which does not list Utah. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions, apart from $5 on the 401k case, because its taxpayer credit phase-out threshold is a later year's. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Utah's taxpayer credit shrinks as income rises. With no dependents it is gone at roughly $92,500 single, $138,800 head of household and $185,000 joint. This is included, using 2025 thresholds because the 2026 ones are not published yet.",
+      "Utah has no standard deduction. The federal standard deduction only enters through the 6% taxpayer tax credit, and the credit cannot reduce tax below zero.",
+      "A dependent born during the year counts twice for the Utah personal exemption in that year."
+    ],
+    "maintainerNotes": [
+      "The taxpayer tax credit (entered as the personal exemption credit) phases out at 1.3 cents per dollar of Utah taxable income above a base amount. This is encoded in personalExemption.phaseOut using the 2025 base amounts, because the 2026 ones are not yet published. With no dependents the credit is gone at roughly $92,500 single, $138,800 head of household and $185,000 joint."
+    ]
+  }
+}

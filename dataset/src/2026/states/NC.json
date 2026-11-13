@@ -1,0 +1,216 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "NC",
+  "name": "North Carolina",
+  "sources": {
+    "ncdor-rates": {
+      "name": "North Carolina Department of Revenue, Tax Rate Schedules",
+      "url": "https://www.ncdor.gov/taxes-forms/tax-rate-schedules"
+    },
+    "ncgs-105-153-5": {
+      "name": "N.C. General Statutes 105-153.5, Modifications to adjusted gross income (standard deduction and child deduction)",
+      "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_105/GS_105-153.5.html"
+    },
+    "ncdor-std-2025": {
+      "name": "North Carolina Department of Revenue, North Carolina Standard Deduction or North Carolina Itemized Deductions (tax year 2025 page)",
+      "url": "https://www.ncdor.gov/taxes-forms/individual-income-tax/filing-topics/north-carolina-standard-deduction-or-north-carolina-itemized-deductions"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "ncdor-child-2025": {
+      "name": "North Carolina Department of Revenue, North Carolina Child Deduction (tax year 2025 page)",
+      "url": "https://www.ncdor.gov/taxes-forms/individual-income-tax/filing-topics/north-carolina-child-deduction"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ncdor-rates",
+        "tf-2026"
+      ],
+      "section": "\"For Taxable Years after 2025\"",
+      "confidence": "primary",
+      "note": "Flat rate, same for every filing status. The NCDOR page gives 3.99% for taxable years after 2025 and says further cuts may apply from 2027 if revenue triggers are met. Tax Foundation agrees.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0399
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0399
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0399
+        }
+      ]
+    },
+    "surtaxes": [],
+    "standardDeduction": {
+      "cites": [
+        "ncgs-105-153-5",
+        "ncdor-std-2025",
+        "tf-2026"
+      ],
+      "section": "G.S. 105-153.5(a)(1)",
+      "confidence": "primary",
+      "note": "Read from the statute, which sets fixed amounts with no indexing and no change scheduled for 2026. The NCDOR page shows the same amounts but is labeled tax year 2025. Tax Foundation 2026 agrees for single and joint.",
+      "single": 12750,
+      "mfj": 25500,
+      "hoh": 19125
+    },
+    "personalExemption": {
+      "cites": [
+        "ncgs-105-153-5",
+        "ncdor-child-2025"
+      ],
+      "section": "G.S. 105-153.5(a1), child deduction table",
+      "confidence": "primary",
+      "note": "North Carolina has no personal exemption. This group carries the child deduction only, so the filer amounts are 0 and `dependent` is the top per-child amount. The deduction is allowed for each qualifying child for whom the filer is allowed the federal child tax credit, not for other dependents. Rule, read from the statute table (fixed amounts, not indexed, no change scheduled for 2026): the per-child amount is $3,000 in the lowest federal AGI tier and falls by $500 per tier to $0. Joint and surviving spouse: $3,000 up to $40,000, then one tier per $20,000, $0 over $140,000. Head of household: $3,000 up to $30,000, then one tier per $15,000, $0 over $105,000. Single and married filing separately: $3,000 up to $20,000, then one tier per $10,000, $0 over $70,000. Each tier is 'over X up to Y', so a point's value applies above its income. The NCDOR child deduction page shows the same table but is labeled tax year 2025.",
+      "kind": "deduction",
+      "single": 0,
+      "mfj": 0,
+      "hoh": 0,
+      "dependent": 3000,
+      "dependentsCounted": "children",
+      "phaseOut": {
+        "basis": "federal_agi",
+        "appliesTo": "dependent",
+        "unit": "amount",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 3000
+            },
+            {
+              "income": 20000,
+              "value": 2500
+            },
+            {
+              "income": 30000,
+              "value": 2000
+            },
+            {
+              "income": 40000,
+              "value": 1500
+            },
+            {
+              "income": 50000,
+              "value": 1000
+            },
+            {
+              "income": 60000,
+              "value": 500
+            },
+            {
+              "income": 70000,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 3000
+            },
+            {
+              "income": 40000,
+              "value": 2500
+            },
+            {
+              "income": 60000,
+              "value": 2000
+            },
+            {
+              "income": 80000,
+              "value": 1500
+            },
+            {
+              "income": 100000,
+              "value": 1000
+            },
+            {
+              "income": 120000,
+              "value": 500
+            },
+            {
+              "income": 140000,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 3000
+            },
+            {
+              "income": 30000,
+              "value": 2500
+            },
+            {
+              "income": 45000,
+              "value": 2000
+            },
+            {
+              "income": 60000,
+              "value": 1500
+            },
+            {
+              "income": 75000,
+              "value": 1000
+            },
+            {
+              "income": 90000,
+              "value": 500
+            },
+            {
+              "income": 105000,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "ncdor-std-2025",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "North Carolina is absent from Tax Foundation footnote (a), which lists states with local income taxes. The note on losing the standard deduction is from the NCDOR standard deduction page. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "The child deduction is encoded in personalExemption as a per-dependent amount. It covers only children who qualify for the federal child tax credit, so applying it to every dependent overstates it for older or other dependents.",
+      "The standard deduction is zero for anyone not eligible for the federal standard deduction."
+    ],
+    "maintainerNotes": []
+  }
+}

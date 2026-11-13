@@ -1,0 +1,215 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "SC",
+  "name": "South Carolina",
+  "sources": {
+    "scdor-il-26-20": {
+      "name": "SCDOR Information Letter #26-20, Individual Income Tax Reform (August 31, 2026)",
+      "url": "https://dor.sc.gov/sites/dor/files/policies/IL26-20.pdf"
+    },
+    "sc-act-110": {
+      "name": "South Carolina Act 110 of 2026 (H.4216), amending S.C. Code Sections 12-6-510, 12-6-50 and 12-6-1140",
+      "url": "https://www.scstatehouse.gov/sess126_2025-2026/bills/4216.htm"
+    },
+    "scdor-iit": {
+      "name": "SCDOR Individual Income Tax page (2025 dependent exemption, \"New for tax year 2026\")",
+      "url": "https://dor.sc.gov/iit"
+    },
+    "pe-sc-two-wage": {
+      "name": "PolicyEngine US parameters, SC two wage earner credit rate",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/sc/tax/income/credits/two_wage_earner/rate.yaml"
+    },
+    "pe-sc-young-child": {
+      "name": "PolicyEngine US parameters, SC young child deduction (cites S.C. Code Section 12-6-1160)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/sc/tax/income/deductions/young_child/amount.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "sc-1040-inst-2026": {
+      "name": "South Carolina Department of Revenue, 2026 Individual Income Tax Instructions (SC1040), November 2026",
+      "url": "https://dor.sc.gov/sites/dor/files/SoftwareDeveloperForms/SC1040Inst.pdf"
+    },
+    "sc-code-12-6-1160": {
+      "name": "South Carolina Code Title 12 Chapter 6, Sections 12-6-1140 and 12-6-1160",
+      "url": "https://www.scstatehouse.gov/code/t12c006.php"
+    },
+    "sc-code-12-6-3632": {
+      "name": "South Carolina Code 12-6-3632, earned income tax credit, as amended by 2026 Act No. 110",
+      "url": "https://www.scstatehouse.gov/code/t12c006.php"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "scdor-il-26-20",
+        "sc-act-110",
+        "tf-2026"
+      ],
+      "section": "IL #26-20, Tax Brackets and Rates; Section 12-6-510(C)(1)",
+      "confidence": "primary",
+      "note": "Act 110, signed March 30, 2026, replaced the three-bracket schedule for tax years beginning after 2025. One schedule for every filing status. The letter prints the top bracket as 5.21% of taxable income minus $966, which these brackets reproduce (1.99% of $30,000 is $597). Tax Foundation still shows the pre-Act 110 2026 schedule (0% to $3,640, 3% to $18,230, 6% above), which is wrong for 2026. PolicyEngine matches Act 110. The $30,000 threshold is indexed starting after 2026.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0199
+        },
+        {
+          "from": 30000,
+          "rate": 0.0521
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0199
+        },
+        {
+          "from": 30000,
+          "rate": 0.0521
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0199
+        },
+        {
+          "from": 30000,
+          "rate": 0.0521
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "sc-code-12-6-3632",
+        "sc-act-110"
+      ],
+      "section": "S.C. Code 12-6-3632; 2026 Act No. 110 sections 7 and 8",
+      "confidence": "primary",
+      "note": "\"a nonrefundable credit ... equal to one hundred twenty-five percent of the federal earned income tax credit ... but not to exceed two hundred dollars\", first applying to tax years beginning after 2025. The cap is per return. Full-year residents only.",
+      "name": "South Carolina earned income tax credit",
+      "refundable": false,
+      "match": [
+        1.25,
+        1.25,
+        1.25,
+        1.25
+      ],
+      "cap": 200
+    },
+    "standardDeduction": {
+      "cites": [
+        "scdor-il-26-20",
+        "sc-act-110",
+        "tf-2026"
+      ],
+      "section": "IL #26-20, South Carolina Income Adjusted Deduction (SCIAD); Section 12-6-1140(15)",
+      "confidence": "primary",
+      "note": "These are the full SCIAD amounts, which replace the federal standard deduction from 2026. Phase-out rule (IL #26-20 table, Section 12-6-1140(15)(b)): the SCIAD is reduced by the fraction (federal AGI - start) / width, with start and width of $40,000 and $55,000 for single, $60,000 and $82,500 for head of household, and $80,000 and $110,000 for joint. It is zero once the fraction reaches 1, at AGI of $95,000, $142,500 and $190,000. The phaseOut points are the two ends of that straight line for each status. Not captured: the statute rounds the reduction down to a multiple of $10, so the real deduction can be up to $10 higher than the line gives (about 50 cents of tax). An exact step schedule would need about 6,750 points. Tax Foundation lists $8,350 / $16,700, the pre-OBBBA federal standard deduction South Carolina used before Act 110.",
+      "single": 15000,
+      "mfj": 30000,
+      "hoh": 22500,
+      "phaseOut": {
+        "basis": "federal_agi",
+        "unit": "amount",
+        "interpolation": "linear",
+        "points": {
+          "single": [
+            {
+              "income": 40000,
+              "value": 15000
+            },
+            {
+              "income": 95000,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 80000,
+              "value": 30000
+            },
+            {
+              "income": 190000,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 60000,
+              "value": 22500
+            },
+            {
+              "income": 142500,
+              "value": 0
+            }
+          ]
+        }
+      }
+    },
+    "personalExemption": {
+      "cites": [
+        "sc-1040-inst-2026",
+        "sc-code-12-6-1160",
+        "scdor-iit",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "Dependent exemption only, no exemption for the filer or spouse. $5,040 for 2026, read in the SCDOR's 2026 SC1040 instructions (November 2026). That copy sits in the department's software developer folder, so recheck it against the public booklet. Section 12-6-1160 gives an additional deduction of the same amount for each dependent who has not reached age 6 by December 31, which is youngChild. Act 110 of 2026 left both in place. The 2025 amount was $4,930.",
+      "kind": "deduction",
+      "single": 0,
+      "mfj": 0,
+      "hoh": 0,
+      "dependent": 5040,
+      "section": "2026 SC1040 instructions, Schedule ADJ Part 2 lines b and c; S.C. Code 12-6-1140(13) and 12-6-1160",
+      "youngChild": {
+        "underAge": 6,
+        "amount": 5040
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "scdor-il-26-20",
+      "sc-act-110",
+      "pe-sc-two-wage",
+      "pe-sc-young-child",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "No local income taxes per Tax Foundation footnote (a), which does not list South Carolina. The starting point (federal AGI from 2026) is from IL #26-20. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "South Carolina's deduction shrinks as income rises and is gone at $95,000 single, $142,500 head of household and $190,000 joint. This is included.",
+      "From 2026 South Carolina starts from federal AGI and does not allow the federal standard, itemized, senior, tip, overtime, car loan interest or QBI deductions (IL #26-20).",
+      "Not modeled: the two wage earner credit for joint filers, 0.7% of the lower earner's income up to $50,000.",
+      "From tax year 2027 the 5.21% rate drops when revenue growth triggers are met, so check the rate each year."
+    ],
+    "maintainerNotes": [
+      "The SCIAD (entered as the standard deduction) phases out with federal AGI and is zero at $95,000 single, $142,500 head of household and $190,000 joint. The phase-out is encoded in standardDeduction.phaseOut.",
+      "Not modeled: two wage earner credit for joint filers, 0.7% of the lower earner's income up to $50,000 (PolicyEngine)."
+    ]
+  }
+}

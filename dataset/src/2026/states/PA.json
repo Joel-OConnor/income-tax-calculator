@@ -1,0 +1,124 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "PA",
+  "name": "Pennsylvania",
+  "sources": {
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pa-pit-guide-gc": {
+      "name": "PA Personal Income Tax Guide, Gross Compensation (DSM-12, 08-2025)",
+      "url": "https://www.pa.gov/agencies/revenue/forms-and-publications/pa-personal-income-tax-guide/gross-compensation.html"
+    },
+    "pa-40in-2025": {
+      "name": "2025 PA-40 instructions",
+      "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/revenue/documents/formsandpublications/formsforindividuals/pit/documents/2025/2025_pa-40in.pdf"
+    },
+    "pa-pit-06-005": {
+      "name": "PA Department of Revenue, Letter Ruling PIT-06-005, health savings accounts",
+      "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/revenue/documents/taxlawpoliciesbulletinsnotices/letterrulings/pit/documents/pit-06-005.pdf"
+    },
+    "pa-code-101-6": {
+      "name": "61 Pa. Code 101.6, compensation",
+      "url": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/061/chapter101/s101.6.html"
+    },
+    "pa-rev-415": {
+      "name": "PA REV-415, Employer Withholding Information Guide",
+      "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/revenue/documents/formsandpublications/formsforbusinesses/employerwithholding/documents/rev-415.pdf"
+    },
+    "pa-uc-employee": {
+      "name": "PA Department of Labor and Industry, employee unemployment compensation withholding",
+      "url": "https://www.pa.gov/en/agencies/dli/resources/for-employers-and-educators/how-to-file/uc-tax/employee-withholding.html"
+    },
+    "phila-wage-tax": {
+      "name": "City of Philadelphia, wage tax rates from July 1, 2026",
+      "url": "https://www.phila.gov/services/payments-assistance-taxes/taxes/business-taxes/business-taxes-by-type/wage-tax-employers/"
+    },
+    "pa-act-45-2025": {
+      "name": "Pennsylvania Act 45 of 2025 (HB 416), Working Pennsylvanians Tax Credit",
+      "url": "https://www.palegis.us/legislation/bills/text/PDF/2025/0/HB0416/PN2576"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "state_gross_income",
+    "brackets": {
+      "cites": [
+        "tf-2026"
+      ],
+      "confidence": "secondary",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0307
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0307
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0307
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "pa-act-45-2025"
+      ],
+      "section": "Sections 1603-W.2(c) and (d)",
+      "confidence": "primary",
+      "note": "\"10% of the federal earned income tax credit received by the taxpayer for the same taxable year\", for taxable years beginning after December 31, 2024, with the excess over tax refunded.",
+      "name": "Working Pennsylvanians Tax Credit",
+      "refundable": true,
+      "match": [
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ]
+    },
+    "standardDeduction": null,
+    "personalExemption": null
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "pa-pit-guide-gc",
+      "pa-40in-2025",
+      "pa-pit-06-005",
+      "pa-code-101-6",
+      "pa-rev-415",
+      "pa-uc-employee",
+      "phila-wage-tax"
+    ],
+    "confidence": "primary",
+    "note": "Read in the Personal Income Tax Guide: employee contributions to a 401(k), 403(b) or other retirement plan are taxable, and health premiums through a section 125 plan are not. The 2025 PA-40 instructions allow no IRA deduction and follow federal rules for the HSA deduction (Schedule O). PIT-06-005 excludes cafeteria plan and employer HSA contributions. 61 Pa. Code 101.6(h) excludes medical flexible spending amounts. REV-415 taxes transportation benefits taken by salary reduction. Employee unemployment contribution of 0.07% of all wages read on the Labor and Industry page. Philadelphia's rates read on the city's page.",
+    "taxes401kContributions": true,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": true,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": true,
+    "hasLocalIncomeTaxes": true,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Most municipalities and school districts levy a local earned income tax, averaging about 1% of income statewide. Philadelphia's wage tax is 3.735% for residents. Not included.",
+      "Pennsylvania has a tax forgiveness credit for low incomes that is not modeled.",
+      "Pennsylvania taxes money you put into a 401(k) or other retirement plan and gives no deduction for IRA contributions. Health premiums, flexible spending and HSA contributions are not taxed. Commuter benefits taken from pay are taxed. This is included.",
+      "Employees pay 0.07% of all wages into state unemployment compensation. Not included."
+    ],
+    "maintainerNotes": [
+      "Most municipalities and school districts levy a local earned income tax. Tax Foundation puts the statewide average at 0.99% of AGI.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): PolicyEngine does not tax 401k contributions in Pennsylvania (its tax was $307 lower on a $10,000 contribution). We do. Pennsylvania does tax employee deferrals, so ours is kept, but the flag was confirmed on 2026-11-12 in the Personal Income Tax Guide and 61 Pa. Code 101.6(c)(8).",
+      "Until 2026-11-12 commuter benefits were treated as untaxed in Pennsylvania. REV-415 says salary-reduction transportation benefits are taxable.",
+      "61 Pa. Code 101.6(h) excludes a medical spending account only when unused money cannot carry over to another year. No Department statement was found on plans with the federal carryover. Dependent care accounts have been excluded since Act 34 of 2023, though the guide still carries the old wording."
+    ]
+  }
+}

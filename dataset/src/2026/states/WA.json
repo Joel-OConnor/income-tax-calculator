@@ -1,0 +1,51 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "WA",
+  "name": "Washington",
+  "sources": {
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "wa-paid-leave-2026": {
+      "name": "Washington Paid Leave, employer roles and responsibilities (2026 rates)",
+      "url": "https://paidleave.wa.gov/employer-roles-responsibilities/"
+    },
+    "seattle-payroll-expense": {
+      "name": "City of Seattle, payroll expense tax",
+      "url": "https://www.seattle.gov/city-finance/business-taxes-and-licenses/seattle-taxes/payroll-expense-tax"
+    }
+  },
+  "incomeTax": {
+    "type": "none",
+    "cites": [
+      "tf-2026"
+    ],
+    "confidence": "secondary",
+    "note": "Washington taxes long-term capital gains only. Wages are not taxed."
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "wa-paid-leave-2026",
+      "seattle-payroll-expense"
+    ],
+    "confidence": "secondary",
+    "note": "Payroll flag read on paidleave.wa.gov: the 2026 paid leave premium is 1.13% of wages, up to 71.43% of it from the employee, and WA Cares is 0.58% of all wages. Workers also pay part of workers' compensation premiums, at hourly rates that depend on the job. Seattle's payroll expense tax is paid by employers.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Employees pay 0.58% of all wages for the WA Cares long-term care program and up to about 0.81% of wages, up to $184,500, for paid family and medical leave. Workers also pay part of workers' compensation premiums. Not included.",
+      "Not included: Washington's Working Families Tax Credit, $335 to $1,330 for 2025 depending on the number of children. It goes to people who qualify for the federal earned income credit and is claimed by a separate application to the Department of Revenue."
+    ],
+    "maintainerNotes": [
+      "For 2027 paidleave.wa.gov gives a premium of 1.2% with 70.7% from the employee."
+    ]
+  }
+}

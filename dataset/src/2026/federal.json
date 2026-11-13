@@ -1,0 +1,421 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "federal",
+  "sources": {
+    "rp-2025-32": {
+      "name": "IRS Revenue Procedure 2025-32 (2026 inflation adjustments)",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf"
+    },
+    "rp-2025-19": {
+      "name": "IRS Revenue Procedure 2025-19 (2026 HSA amounts)",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-25-19.pdf"
+    },
+    "ir-2025-111": {
+      "name": "IRS news release IR-2025-111 (2026 retirement plan limits, Notice 2025-67)",
+      "url": "https://www.irs.gov/newsroom/401k-limit-increases-to-24500-for-2026-ira-limit-increases-to-7500"
+    },
+    "tc751": {
+      "name": "IRS Topic 751, Social Security and Medicare withholding rates",
+      "url": "https://www.irs.gov/taxtopics/tc751"
+    },
+    "i8959": {
+      "name": "IRS Instructions for Form 8959, Additional Medicare Tax",
+      "url": "https://www.irs.gov/instructions/i8959"
+    },
+    "p969": {
+      "name": "IRS Publication 969, Health Savings Accounts",
+      "url": "https://www.irs.gov/publications/p969"
+    },
+    "ctc": {
+      "name": "IRS Child Tax Credit page",
+      "url": "https://www.irs.gov/credits-deductions/individuals/child-tax-credit"
+    },
+    "odc": {
+      "name": "IRS, Understanding the Credit for Other Dependents",
+      "url": "https://www.irs.gov/newsroom/understanding-the-credit-for-other-dependents"
+    },
+    "overtime-qa": {
+      "name": "IRS Q&A on the deduction for qualified overtime compensation",
+      "url": "https://www.irs.gov/newsroom/questions-and-answers-about-the-new-deduction-for-qualified-overtime-compensation"
+    },
+    "pe-salt": {
+      "name": "PolicyEngine US parameters, federal SALT deduction cap and phase-out (26 U.S.C. 164(b)(6) and (7))",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/irs/deductions/itemized/salt_and_real_estate/cap.yaml"
+    },
+    "usc-26-32": {
+      "name": "26 U.S.C. 32, Earned income",
+      "url": "https://www.law.cornell.edu/uscode/text/26/32"
+    }
+  },
+  "incomeTax": {
+    "brackets": {
+      "cites": [
+        "rp-2025-32"
+      ],
+      "section": "4.01, Tables 1-3",
+      "confidence": "primary",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.1
+        },
+        {
+          "from": 12400,
+          "rate": 0.12
+        },
+        {
+          "from": 50400,
+          "rate": 0.22
+        },
+        {
+          "from": 105700,
+          "rate": 0.24
+        },
+        {
+          "from": 201775,
+          "rate": 0.32
+        },
+        {
+          "from": 256225,
+          "rate": 0.35
+        },
+        {
+          "from": 640600,
+          "rate": 0.37
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.1
+        },
+        {
+          "from": 24800,
+          "rate": 0.12
+        },
+        {
+          "from": 100800,
+          "rate": 0.22
+        },
+        {
+          "from": 211400,
+          "rate": 0.24
+        },
+        {
+          "from": 403550,
+          "rate": 0.32
+        },
+        {
+          "from": 512450,
+          "rate": 0.35
+        },
+        {
+          "from": 768700,
+          "rate": 0.37
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.1
+        },
+        {
+          "from": 17700,
+          "rate": 0.12
+        },
+        {
+          "from": 67450,
+          "rate": 0.22
+        },
+        {
+          "from": 105700,
+          "rate": 0.24
+        },
+        {
+          "from": 201750,
+          "rate": 0.32
+        },
+        {
+          "from": 256200,
+          "rate": 0.35
+        },
+        {
+          "from": 640600,
+          "rate": 0.37
+        }
+      ]
+    },
+    "standardDeduction": {
+      "cites": [
+        "rp-2025-32"
+      ],
+      "section": "4.14(1)",
+      "confidence": "primary",
+      "single": 16100,
+      "mfj": 32200,
+      "hoh": 24150
+    },
+    "additionalStandardDeduction": {
+      "cites": [
+        "rp-2025-32"
+      ],
+      "section": "4.14(3)",
+      "confidence": "primary",
+      "married": 1650,
+      "unmarried": 2050
+    }
+  },
+  "credits": {
+    "childTaxCredit": {
+      "cites": [
+        "rp-2025-32"
+      ],
+      "section": "4.05",
+      "confidence": "primary",
+      "perChild": 2200,
+      "refundableMax": 1700
+    },
+    "refundableChildTaxCredit": {
+      "cites": [
+        "ctc"
+      ],
+      "confidence": "unverified",
+      "note": "Statutory, not indexed (IRC 24(d)(1)(B)): 15% of earned income above $2,500. From general knowledge. Confirm against the 2026 Schedule 8812 instructions when published.",
+      "earnedIncomeOver": 2500,
+      "rate": 0.15
+    },
+    "otherDependentCredit": {
+      "cites": [
+        "odc"
+      ],
+      "confidence": "secondary",
+      "note": "Statutory amount, not indexed. Taken from a search summary of the IRS page, not read directly.",
+      "perDependent": 500
+    },
+    "earnedIncomeCredit": {
+      "cites": [
+        "rp-2025-32",
+        "usc-26-32"
+      ],
+      "section": "Rev. Proc. 2025-32 section 4.06(1); 26 U.S.C. 32(b)(1) for the percentages, 32(c)(1)(A)(ii)(II) for the ages",
+      "confidence": "primary",
+      "note": "Earned income amounts, maximum credits and threshold phaseout amounts are from the 2026 table in the revenue procedure. The credit and phaseout percentages are statutory and not indexed (7.65% with no child, then 34%, 40%, 45% in, and 7.65%, 15.98%, 21.06%, 21.06% out). They reproduce the table's completed phaseout amounts: $51,593, $58,629, $62,974 and $19,540, or $58,863, $65,899, $70,244 and $26,820 joint. The percentages also follow from the table itself (maximum credit divided by earned income amount). The age rule was read in the statute: \"attained age 25 but not attained age 65 before the close of the taxable year\". The Form 1040 instructions print the credit in $50 income bands, so a real return can differ from this formula by a few dollars. The $12,200 investment income limit is not checked.",
+      "byChildren": [
+        {
+          "phaseInRate": 0.0765,
+          "earnedIncomeAmount": 8680,
+          "maxCredit": 664,
+          "phaseOutRate": 0.0765,
+          "phaseOutStart": {
+            "mfj": 18140,
+            "other": 10860
+          }
+        },
+        {
+          "phaseInRate": 0.34,
+          "earnedIncomeAmount": 13020,
+          "maxCredit": 4427,
+          "phaseOutRate": 0.1598,
+          "phaseOutStart": {
+            "mfj": 31160,
+            "other": 23890
+          }
+        },
+        {
+          "phaseInRate": 0.4,
+          "earnedIncomeAmount": 18290,
+          "maxCredit": 7316,
+          "phaseOutRate": 0.2106,
+          "phaseOutStart": {
+            "mfj": 31160,
+            "other": 23890
+          }
+        },
+        {
+          "phaseInRate": 0.45,
+          "earnedIncomeAmount": 18290,
+          "maxCredit": 8231,
+          "phaseOutRate": 0.2106,
+          "phaseOutStart": {
+            "mfj": 31160,
+            "other": 23890
+          }
+        }
+      ],
+      "childlessMinAge": 25,
+      "childlessMaxAge": 64
+    },
+    "dependentCreditPhaseOut": {
+      "cites": [
+        "ctc",
+        "odc"
+      ],
+      "confidence": "secondary",
+      "note": "Statutory thresholds, not indexed. Taken from a search summary of IRS pages. Confirm against the 2026 Schedule 8812 instructions when published.",
+      "start": {
+        "single": 200000,
+        "mfj": 400000,
+        "hoh": 200000
+      },
+      "reductionPer1000": 50
+    }
+  },
+  "deductions": {
+    "overtime": {
+      "cites": [
+        "overtime-qa"
+      ],
+      "confidence": "secondary",
+      "note": "Caps, thresholds and the 2025-2028 window come from a search summary of IRS pages. The $100 per $1,000 reduction rate is from general knowledge and is unverified. Only the premium part of FLSA-required overtime qualifies. Married filers must file jointly to claim it.",
+      "max": {
+        "single": 12500,
+        "mfj": 25000,
+        "hoh": 12500
+      },
+      "phaseOutStart": {
+        "single": 150000,
+        "mfj": 300000,
+        "hoh": 150000
+      },
+      "reductionPer1000": 100,
+      "firstTaxYear": 2025,
+      "lastTaxYear": 2028
+    }
+  },
+  "itemized": {
+    "stateAndLocalTax": {
+      "cites": [
+        "pe-salt"
+      ],
+      "confidence": "secondary",
+      "note": "2026 cap of $40,400, reduced by 30% of income over $505,000 but not below $10,000. From PolicyEngine's parameters, not read in an IRS publication. The $10,000 floor is from general knowledge of the statute.",
+      "cap": {
+        "single": 40400,
+        "mfj": 40400,
+        "hoh": 40400
+      },
+      "phaseOutStart": {
+        "single": 505000,
+        "mfj": 505000,
+        "hoh": 505000
+      },
+      "phaseOutRate": 0.3,
+      "floor": 10000
+    }
+  },
+  "fica": {
+    "socialSecurity": {
+      "cites": [
+        "tc751"
+      ],
+      "confidence": "primary",
+      "rate": 0.062,
+      "wageBase": 184500
+    },
+    "medicare": {
+      "cites": [
+        "tc751"
+      ],
+      "confidence": "primary",
+      "rate": 0.0145
+    },
+    "additionalMedicare": {
+      "cites": [
+        "tc751",
+        "i8959"
+      ],
+      "confidence": "secondary",
+      "note": "Rate read from Topic 751. Filing-status thresholds are statutory and not indexed, taken from a search summary of the Form 8959 instructions.",
+      "rate": 0.009,
+      "threshold": {
+        "single": 200000,
+        "mfj": 250000,
+        "hoh": 200000
+      }
+    }
+  },
+  "contributionLimits": {
+    "k401": {
+      "cites": [
+        "ir-2025-111"
+      ],
+      "confidence": "primary",
+      "employeeDeferral": 24500,
+      "catchUp50": 8000,
+      "catchUp60to63": 11250
+    },
+    "ira": {
+      "cites": [
+        "ir-2025-111"
+      ],
+      "confidence": "primary",
+      "limit": 7500,
+      "catchUp50": 1100,
+      "traditionalDeductionPhaseOut": {
+        "coveredByWorkplacePlan": {
+          "single": [
+            81000,
+            91000
+          ],
+          "mfj": [
+            129000,
+            149000
+          ],
+          "hoh": [
+            81000,
+            91000
+          ]
+        },
+        "spouseCoveredOnly": {
+          "mfj": [
+            242000,
+            252000
+          ]
+        }
+      },
+      "rothPhaseOut": {
+        "single": [
+          153000,
+          168000
+        ],
+        "mfj": [
+          242000,
+          252000
+        ],
+        "hoh": [
+          153000,
+          168000
+        ]
+      }
+    },
+    "hsa": {
+      "cites": [
+        "rp-2025-19",
+        "p969"
+      ],
+      "section": "2.01(1)",
+      "confidence": "primary",
+      "note": "Self-only and family limits read from Rev. Proc. 2025-19. The age 55 catch-up is statutory and not indexed, from Publication 969.",
+      "selfOnly": 4400,
+      "family": 8750,
+      "catchUp55": 1000
+    },
+    "healthFsa": {
+      "cites": [
+        "rp-2025-32"
+      ],
+      "section": "4.15",
+      "confidence": "primary",
+      "limit": 3400
+    },
+    "commuter": {
+      "cites": [
+        "rp-2025-32"
+      ],
+      "section": "4.16",
+      "confidence": "primary",
+      "monthlyTransit": 340,
+      "monthlyParking": 340
+    }
+  }
+}

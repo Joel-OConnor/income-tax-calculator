@@ -1,0 +1,183 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "VA",
+  "name": "Virginia",
+  "sources": {
+    "va-code-58-1-320": {
+      "name": "Code of Virginia 58.1-320, Imposition of tax",
+      "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-320/"
+    },
+    "va-code-58-1-322-03": {
+      "name": "Code of Virginia 58.1-322.03, Virginia taxable income; deductions",
+      "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-322.03/"
+    },
+    "va-leg-summary-2026": {
+      "name": "Virginia Tax, 2026 Legislative Summary",
+      "url": "https://www.tax.virginia.gov/sites/default/files/inline-files/2026-legislative-summary.pdf"
+    },
+    "pe-va-spouse-adj": {
+      "name": "PolicyEngine US parameters, VA spouse tax adjustment cap",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/va/tax/income/exemptions/spouse_tax_adjustment/cap.yaml"
+    },
+    "pe-va-filing": {
+      "name": "PolicyEngine US parameters, VA filing requirement",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/va/tax/income/filing_requirement.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "va-58-1-339-8": {
+      "name": "Code of Virginia 58.1-339.8, income tax credit for low-income taxpayers",
+      "url": "https://law.lis.virginia.gov/vacode/title58.1/chapter3/section58.1-339.8/"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "va-code-58-1-320",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "Set in statute, not indexed, and the same for every filing status. Tax Foundation and PolicyEngine agree.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 3000,
+          "rate": 0.03
+        },
+        {
+          "from": 5000,
+          "rate": 0.05
+        },
+        {
+          "from": 17000,
+          "rate": 0.0575
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 3000,
+          "rate": 0.03
+        },
+        {
+          "from": 5000,
+          "rate": 0.05
+        },
+        {
+          "from": 17000,
+          "rate": 0.0575
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 3000,
+          "rate": 0.03
+        },
+        {
+          "from": 5000,
+          "rate": 0.05
+        },
+        {
+          "from": 17000,
+          "rate": 0.0575
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "va-58-1-339-8",
+        "va-leg-summary-2026"
+      ],
+      "section": "58.1-339.8(B)(2) and (B)(3)(b); 2026 Legislative Summary page 9",
+      "confidence": "primary",
+      "note": "A refundable credit \"equal to 20 percent\" of the federal credit for 2025 and 2026, extended through 2029 by the 2026 Appropriation Act. The nonrefundable option is also 20%, so a resident always does at least as well with the refundable one. It cannot be combined with the $300 per person credit for incomes under the poverty line, and it is lost by filers who take the age deduction or the 65-or-blind exemption, neither of which is checked.",
+      "name": "Virginia earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    "standardDeduction": {
+      "cites": [
+        "va-code-58-1-322-03",
+        "va-leg-summary-2026",
+        "tf-2026"
+      ],
+      "section": "58.1-322.03(1)(b)(v)",
+      "confidence": "primary",
+      "note": "The statute sets $8,750 for single individuals and $17,500 for married persons for taxable years 2025 and 2026. There is no separate head of household amount, so head of household uses the single amount. It rises to $9,200 / $18,400 for 2027 and $9,300 / $18,600 for 2028 and 2029. Tax Foundation agrees.",
+      "single": 8750,
+      "mfj": 17500,
+      "hoh": 8750
+    },
+    "personalExemption": {
+      "cites": [
+        "va-code-58-1-322-03",
+        "tf-2026"
+      ],
+      "section": "58.1-322.03(2)(a)",
+      "confidence": "primary",
+      "note": "$930 for each personal exemption (filer, spouse and each dependent). Not indexed. Tax Foundation agrees.",
+      "kind": "deduction",
+      "single": 930,
+      "mfj": 1860,
+      "hoh": 930,
+      "dependent": 930
+    }
+  },
+  "rules": {
+    "cites": [
+      "va-code-58-1-322-03",
+      "pe-va-spouse-adj",
+      "pe-va-filing",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "No local income taxes per Tax Foundation footnote (a), which does not list Virginia. The $800 aged or blind exemption is from 58.1-322.03(2)(b). Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Not modeled: the spouse tax adjustment for joint filers where both spouses have income, worth up to $259.",
+      "Not modeled: no tax is owed when Virginia AGI is under the filing threshold, about $11,950 single and $23,900 joint.",
+      "Not modeled: an extra $800 exemption for each filer who is 65 or older or blind, and the $300 per person credit for incomes under the poverty line, which is an alternative to the earned income credit."
+    ],
+    "maintainerNotes": [
+      "Not modeled: spouse tax adjustment for joint filers where both spouses have income, worth up to $259 (PolicyEngine).",
+      "Not modeled: no tax is owed when Virginia AGI is under the filing threshold. PolicyEngine lists $11,950 single and $23,900 joint, not confirmed for 2026."
+    ]
+  }
+}

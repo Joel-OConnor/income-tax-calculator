@@ -1,0 +1,124 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "LA",
+  "name": "Louisiana",
+  "sources": {
+    "rs-47-32": {
+      "name": "Louisiana Revised Statutes 47:32, Rates of tax",
+      "url": "https://www.legis.la.gov/legis/Law.aspx?d=101946"
+    },
+    "rs-47-294": {
+      "name": "Louisiana Revised Statutes 47:294, Standard deduction",
+      "url": "https://www.legis.la.gov/legis/Law.aspx?d=101761"
+    },
+    "rib-26-019": {
+      "name": "Louisiana Department of Revenue, Revenue Information Bulletin No. 26-019 (September 28, 2026), Inflation Adjustment to Standard Deduction and Retirement Income Exemption",
+      "url": "https://dam.ldr.la.gov/lawspolicies/RIB%2026-019.pdf"
+    },
+    "pe-la-std-applies": {
+      "name": "PolicyEngine US parameters, LA standard deduction applies and personal exemptions repealed from 2025 (cites RS 47:294 and the 2025 IT-540 instructions)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/la/tax/income/deductions/standard/applies.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "la-rs-47-297-8": {
+      "name": "La. R.S. 47:297.8, earned income tax credit",
+      "url": "https://www.legis.la.gov/legis/Law.aspx?d=453085"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "rs-47-32",
+        "tf-2026"
+      ],
+      "section": "RS 47:32(A)",
+      "confidence": "primary",
+      "note": "Flat rate. The statute computes the tax at three percent on net income, with no separate schedule by filing status. Tax Foundation agrees.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.03
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.03
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.03
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "la-rs-47-297-8"
+      ],
+      "section": "R.S. 47:297.8(A)(2) and (B)",
+      "confidence": "primary",
+      "note": "\"five percent of the federal earned income tax credit\" for tax years 2019 through 2030, refundable. It reverts to 3.5% in 2031.",
+      "name": "Louisiana earned income credit",
+      "refundable": true,
+      "match": [
+        0.05,
+        0.05,
+        0.05,
+        0.05
+      ]
+    },
+    "standardDeduction": {
+      "cites": [
+        "rib-26-019",
+        "rs-47-294",
+        "tf-2026"
+      ],
+      "section": "RIB 26-019 table, 2026 Amounts",
+      "confidence": "primary",
+      "note": "Read from the bulletin: $12,500 and $25,000 for 2025 times a 2.7% CPI-U multiplier. Head of household gets the joint amount. Tax Foundation shows $12,875 and $25,750 for 2026, which disagrees. The department's bulletin is used.",
+      "single": 12838,
+      "mfj": 25676,
+      "hoh": 25676
+    },
+    "personalExemption": null
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "pe-la-std-applies",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Local tax flag is from Tax Foundation footnote (a), which lists no Louisiana local income taxes. The repeal of personal and dependent exemptions from 2025 is from PolicyEngine and matches Tax Foundation showing none. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Personal and dependent exemptions were repealed from tax year 2025 and replaced by the larger standard deduction.",
+      "The standard deduction is indexed each year by CPI-U, so the amount changes annually."
+    ],
+    "maintainerNotes": []
+  }
+}

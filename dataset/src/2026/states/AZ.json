@@ -1,0 +1,402 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "AZ",
+  "name": "Arizona",
+  "sources": {
+    "az-140es-2026": {
+      "name": "Arizona Department of Revenue, 2026 Form 140ES instructions (Individual Estimated Income Tax Payment)",
+      "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2026_140iES.pdf"
+    },
+    "az-laws-2026-ch140": {
+      "name": "Arizona Laws 2026, chapter 140 (HB 4168), approved June 13, 2026",
+      "url": "https://www.azleg.gov/legtext/57leg/2R/laws/0140.htm"
+    },
+    "ars-43-1041": {
+      "name": "Arizona Revised Statutes 43-1041, Optional standard deduction",
+      "url": "https://www.azleg.gov/ars/43/01041.htm"
+    },
+    "ars-43-1073-01": {
+      "name": "Arizona Revised Statutes 43-1073.01, Dependent tax credit",
+      "url": "https://www.azleg.gov/ars/43/01073-01.htm"
+    },
+    "az-140i-2025": {
+      "name": "Arizona Department of Revenue, 2025 Form 140 Resident Personal Income Tax Instructions (line 49, Tables II to V, adjusted dependent tax credit)",
+      "url": "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf"
+    },
+    "az-ind-update-2026-02": {
+      "name": "Arizona Department of Revenue, Individual Income Update, February 2026 (2025 standard deduction amounts)",
+      "url": "https://azdor.gov/sites/default/files/document/IND_Updates-2602.pdf"
+    },
+    "pe-az-std": {
+      "name": "PolicyEngine US parameters, AZ standard deduction (cites A.R.S. 43-1041, Laws 2026 ch. 140 and Rev. Proc. 2025-32)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/az/tax/income/deductions/standard/amount.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "az-140es-2026",
+        "tf-2026"
+      ],
+      "section": "Form 140ES instructions, page 1: tax rate for 2026 estimated payments",
+      "confidence": "primary",
+      "note": "Flat 2.5% for every filing status. The 2026 Form 140ES instructions say the rate for estimating 2026 tax is 2.5%. Tax Foundation agrees.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.025
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.025
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.025
+        }
+      ]
+    },
+    "surtaxes": [],
+    "standardDeduction": {
+      "cites": [
+        "pe-az-std",
+        "ars-43-1041",
+        "az-laws-2026-ch140",
+        "az-ind-update-2026-02",
+        "tf-2026"
+      ],
+      "confidence": "secondary",
+      "note": "2026 amounts are PolicyEngine's, not yet read in a Department of Revenue publication. Laws 2026 ch. 140 set the statutory base to $15,750 single, $31,500 joint and $23,625 head of household (retroactive to 2025, confirmed as the 2025 amounts in the department's February 2026 update), and A.R.S. 43-1041(H) indexes them the same way as the federal standard deduction. PolicyEngine concludes the 2026 amounts equal the federal 2026 figures. The 2026 Form 140ES instructions tell filers to estimate with the 2025 amounts, so the department had not published 2026 figures when this was written. Tax Foundation shows $8,350 single and $16,700 joint, which predates ch. 140 and is not used.",
+      "single": 16100,
+      "mfj": 32200,
+      "hoh": 24150
+    },
+    "personalExemption": {
+      "cites": [
+        "ars-43-1073-01",
+        "az-laws-2026-ch140",
+        "az-140i-2025",
+        "tf-2026"
+      ],
+      "section": "A.R.S. 43-1073.01(B) and (C); Laws 2026 ch. 140, section 35(B) for the effective year",
+      "confidence": "primary",
+      "note": "Arizona has no personal exemption for the filer or spouse. The dependent amount is the dependent tax credit: $125 per dependent under 17 (raised from $100 by Laws 2026 ch. 140 for tax years from 2026) and $25 per dependent 17 or older, which is otherDependent (A.R.S. 43-1073.01(B)(2), unchanged by ch. 140). phaseOut holds the reduction in A.R.S. 43-1073.01(C): the credit loses 5% for each $1,000 or part of $1,000 of federal AGI over $200,000 (single, head of household) or $400,000 (joint), so nothing is left more than $19,000 over the limit. The schedule matches Table V of the 2025 Form 140 instructions row for row (.95 for $1 to $1,000 over, down to .00 for $19,001 and over). The statute's thresholds are unchanged for 2026, but the 2026 instructions were not out when this was written. Tax Foundation still shows $100, which predates ch. 140.",
+      "kind": "credit",
+      "single": 0,
+      "mfj": 0,
+      "hoh": 0,
+      "dependent": 125,
+      "phaseOut": {
+        "basis": "federal_agi",
+        "appliesTo": "dependent",
+        "unit": "fraction",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 200000,
+              "value": 0.95
+            },
+            {
+              "income": 201000,
+              "value": 0.9
+            },
+            {
+              "income": 202000,
+              "value": 0.85
+            },
+            {
+              "income": 203000,
+              "value": 0.8
+            },
+            {
+              "income": 204000,
+              "value": 0.75
+            },
+            {
+              "income": 205000,
+              "value": 0.7
+            },
+            {
+              "income": 206000,
+              "value": 0.65
+            },
+            {
+              "income": 207000,
+              "value": 0.6
+            },
+            {
+              "income": 208000,
+              "value": 0.55
+            },
+            {
+              "income": 209000,
+              "value": 0.5
+            },
+            {
+              "income": 210000,
+              "value": 0.45
+            },
+            {
+              "income": 211000,
+              "value": 0.4
+            },
+            {
+              "income": 212000,
+              "value": 0.35
+            },
+            {
+              "income": 213000,
+              "value": 0.3
+            },
+            {
+              "income": 214000,
+              "value": 0.25
+            },
+            {
+              "income": 215000,
+              "value": 0.2
+            },
+            {
+              "income": 216000,
+              "value": 0.15
+            },
+            {
+              "income": 217000,
+              "value": 0.1
+            },
+            {
+              "income": 218000,
+              "value": 0.05
+            },
+            {
+              "income": 219000,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 400000,
+              "value": 0.95
+            },
+            {
+              "income": 401000,
+              "value": 0.9
+            },
+            {
+              "income": 402000,
+              "value": 0.85
+            },
+            {
+              "income": 403000,
+              "value": 0.8
+            },
+            {
+              "income": 404000,
+              "value": 0.75
+            },
+            {
+              "income": 405000,
+              "value": 0.7
+            },
+            {
+              "income": 406000,
+              "value": 0.65
+            },
+            {
+              "income": 407000,
+              "value": 0.6
+            },
+            {
+              "income": 408000,
+              "value": 0.55
+            },
+            {
+              "income": 409000,
+              "value": 0.5
+            },
+            {
+              "income": 410000,
+              "value": 0.45
+            },
+            {
+              "income": 411000,
+              "value": 0.4
+            },
+            {
+              "income": 412000,
+              "value": 0.35
+            },
+            {
+              "income": 413000,
+              "value": 0.3
+            },
+            {
+              "income": 414000,
+              "value": 0.25
+            },
+            {
+              "income": 415000,
+              "value": 0.2
+            },
+            {
+              "income": 416000,
+              "value": 0.15
+            },
+            {
+              "income": 417000,
+              "value": 0.1
+            },
+            {
+              "income": 418000,
+              "value": 0.05
+            },
+            {
+              "income": 419000,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 200000,
+              "value": 0.95
+            },
+            {
+              "income": 201000,
+              "value": 0.9
+            },
+            {
+              "income": 202000,
+              "value": 0.85
+            },
+            {
+              "income": 203000,
+              "value": 0.8
+            },
+            {
+              "income": 204000,
+              "value": 0.75
+            },
+            {
+              "income": 205000,
+              "value": 0.7
+            },
+            {
+              "income": 206000,
+              "value": 0.65
+            },
+            {
+              "income": 207000,
+              "value": 0.6
+            },
+            {
+              "income": 208000,
+              "value": 0.55
+            },
+            {
+              "income": 209000,
+              "value": 0.5
+            },
+            {
+              "income": 210000,
+              "value": 0.45
+            },
+            {
+              "income": 211000,
+              "value": 0.4
+            },
+            {
+              "income": 212000,
+              "value": 0.35
+            },
+            {
+              "income": 213000,
+              "value": 0.3
+            },
+            {
+              "income": 214000,
+              "value": 0.25
+            },
+            {
+              "income": 215000,
+              "value": 0.2
+            },
+            {
+              "income": 216000,
+              "value": 0.15
+            },
+            {
+              "income": 217000,
+              "value": 0.1
+            },
+            {
+              "income": 218000,
+              "value": 0.05
+            },
+            {
+              "income": 219000,
+              "value": 0
+            }
+          ]
+        }
+      },
+      "otherDependent": 25
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "ars-43-1041",
+      "az-laws-2026-ch140",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Local tax flag follows Tax Foundation footnote (a), which does not list Arizona. The charitable and overtime notes are from the statute and session law cited. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Not modeled: filers who take the standard deduction can add their charitable contributions to it, limited to $1,000 single and $2,000 joint for tax years from 2026 (A.R.S. 43-1041(I)(2), replacing the earlier percentage increase).",
+      "Laws 2026 ch. 140 added Arizona subtractions for the amounts deducted federally for qualified tips and qualified overtime (A.R.S. 43-1022(31) and (32)), so the federal overtime deduction carries through to Arizona taxable income."
+    ],
+    "maintainerNotes": [
+      "Not modeled: the dependent credit is $25, not $125, for dependents 17 or older. The schema holds one dependent amount."
+    ]
+  }
+}

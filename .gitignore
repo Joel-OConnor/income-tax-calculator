@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+web/.next/
+web/data/
+web/next-env.d.ts
+*.tsbuildinfo
+oracle/.venv/
+oracle/out/
+__pycache__/
+*.pyc
+.env*

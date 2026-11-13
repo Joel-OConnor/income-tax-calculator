@@ -1,0 +1,122 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "MT",
+  "name": "Montana",
+  "sources": {
+    "mt-pub1-2026": {
+      "name": "Montana Department of Revenue, 2026 Montana Publication 1, A Guide to Montana Tax Withholding and Estimated Payments",
+      "url": "https://revenuefiles.mt.gov/files/Forms/Publication-1/Publication-1-2026.pdf"
+    },
+    "mt-dor-hb337": {
+      "name": "Montana Department of Revenue notice on House Bill 337 (2026 and 2027 rates and brackets)",
+      "url": "https://revenue.mt.gov/news/recent-news/HB-337"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "mca-15-30-2318": {
+      "name": "Montana Code Annotated 15-30-2318, earned income tax credit (as amended by Ch. 227, L. 2025)",
+      "url": "https://mca.legmt.gov/bills/mca/title_0150/chapter_0300/part_0230/section_0180/0150-0300-0230-0180.html"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_taxable_income",
+    "brackets": {
+      "cites": [
+        "mt-pub1-2026",
+        "mt-dor-hb337",
+        "tf-2026"
+      ],
+      "section": "2026 Tax Tables, Ordinary Income Tax Rates, page 16",
+      "confidence": "primary",
+      "note": "Read from Publication 1 and the DOR's House Bill 337 notice, which agree. Tax Foundation and PolicyEngine show the same figures. House Bill 337 raised the thresholds and cut the top rate from 5.9% for 2026; for 2027 the top rate drops to 5.4% and the thresholds rise again. The tables print rates only, no cumulative amounts. These are the ordinary income rates. Net long-term capital gains have their own lower rates.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.047
+        },
+        {
+          "from": 47500,
+          "rate": 0.0565
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.047
+        },
+        {
+          "from": 95000,
+          "rate": 0.0565
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.047
+        },
+        {
+          "from": 71250,
+          "rate": 0.0565
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "mca-15-30-2318"
+      ],
+      "section": "MCA 15-30-2318(2)",
+      "confidence": "primary",
+      "note": "\"20% of the amount of the credit determined for the tax year under section 32 of the Internal Revenue Code\", refundable. Raised from 10% by HB 337 of 2025 for the tax year beginning January 1, 2026.",
+      "name": "Montana earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    "standardDeduction": null,
+    "personalExemption": null
+  },
+  "rules": {
+    "cites": [
+      "mt-pub1-2026",
+      "mt-dor-hb337",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Starting point is from Publication 1 (Montana taxable income is built from federal taxable income, using the federal standard or itemized deduction) and Tax Foundation footnote (o). No local income tax: Montana is not in Tax Foundation footnote (a). Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Montana starts from federal taxable income, so the federal standard deduction is already applied. No separate state standard deduction or personal exemption.",
+      "Publication 1 says the federal qualified business income deduction must be left out when working out federal taxable income for Montana.",
+      "Not modeled: net long-term capital gains are taxed at 3% and 4.1% instead of the ordinary rates.",
+      "Not modeled: a $5,660 subtraction for taxpayers 65 and older (Publication 1)."
+    ],
+    "maintainerNotes": [
+      "Check whether Montana requires adding back the federal overtime deduction. Publication 1 does not mention it."
+    ]
+  }
+}

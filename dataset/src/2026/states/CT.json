@@ -1,0 +1,1611 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "CT",
+  "name": "Connecticut",
+  "sources": {
+    "ct-tpg-211-2026": {
+      "name": "Connecticut DRS, TPG-211, 2026 Withholding Calculation Rules, effective January 1, 2026 (Rev. 12/25)",
+      "url": "https://portal.ct.gov/-/media/drs/forms/2025/wth/tpg-211_1225.pdf?rev=e16ef13773ec42d4bf0afd2e192e0176&hash=CCF9990D8EE0AA580A11BC6E97235650"
+    },
+    "ct-1040-inst-2025": {
+      "name": "Connecticut DRS, 2025 Form CT-1040 Instructions (Rev. 12/25), Tax Calculation Schedule and Tables A to E",
+      "url": "https://portal.ct.gov/-/media/drs/forms/2025/income/2025-ct-1040-instructions_1225.pdf"
+    },
+    "ct-tax-tables-2025": {
+      "name": "Connecticut DRS, 2025 Connecticut Income Tax Tables (all exemptions and credits included, AGI up to $102,000)",
+      "url": "https://portal.ct.gov/-/media/drs/forms/2025/income/2025-income-tax-tables.pdf?rev=ed6120a9402c41a7a69573aa06fdc16a&hash=F9CD6C7D8C10AC6A80D6FD1ED85A6CDC"
+    },
+    "pe-ct-hoh": {
+      "name": "PolicyEngine US parameters, CT head of household rates (cites Conn. Gen. Stat. 12-700 and CT-1040 instructions)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ct/tax/income/rates/head_of_household.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "ct-paid-leave": {
+      "name": "CT Paid Leave, Contributions",
+      "url": "https://www.ctpaidleave.org/How-CT-Paid-Leave-Works/contributions"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "cgs-12-704e": {
+      "name": "Connecticut General Statutes 12-704e, earned income tax credit",
+      "url": "https://www.cga.ct.gov/current/pub/chap_229.htm#sec_12-704e"
+    },
+    "ct-pa-25-168": {
+      "name": "Connecticut Public Act 25-168, section 371 ($250 for filers with a qualifying child)",
+      "url": "https://www.cga.ct.gov/2025/ACT/PA/PDF/2025PA-00168-R00HB-07287-PA.PDF"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ct-tpg-211-2026",
+        "ct-1040-inst-2025",
+        "pe-ct-hoh",
+        "tf-2026"
+      ],
+      "section": "Table B, Initial Tax Calculation",
+      "confidence": "primary",
+      "note": "Read from Table B of the 2026 withholding calculation rules, which state that the 2026 rules and tables are unchanged from 2025. Table B is keyed by withholding code (F and A single and separate, B head of household, C joint) and matches the filing-status tables in the 2025 CT-1040 instructions line for line. The brackets reproduce the printed top-bracket amounts: $31,250 single, $62,500 joint and $50,000 head of household. Tax Foundation agrees for single and joint, PolicyEngine for head of household.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 10000,
+          "rate": 0.045
+        },
+        {
+          "from": 50000,
+          "rate": 0.055
+        },
+        {
+          "from": 100000,
+          "rate": 0.06
+        },
+        {
+          "from": 200000,
+          "rate": 0.065
+        },
+        {
+          "from": 250000,
+          "rate": 0.069
+        },
+        {
+          "from": 500000,
+          "rate": 0.0699
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 20000,
+          "rate": 0.045
+        },
+        {
+          "from": 100000,
+          "rate": 0.055
+        },
+        {
+          "from": 200000,
+          "rate": 0.06
+        },
+        {
+          "from": 400000,
+          "rate": 0.065
+        },
+        {
+          "from": 500000,
+          "rate": 0.069
+        },
+        {
+          "from": 1000000,
+          "rate": 0.0699
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 16000,
+          "rate": 0.045
+        },
+        {
+          "from": 80000,
+          "rate": 0.055
+        },
+        {
+          "from": 160000,
+          "rate": 0.06
+        },
+        {
+          "from": 320000,
+          "rate": 0.065
+        },
+        {
+          "from": 400000,
+          "rate": 0.069
+        },
+        {
+          "from": 800000,
+          "rate": 0.0699
+        }
+      ]
+    },
+    "surtaxes": [],
+    "taxAdjustments": [
+      {
+        "cites": [
+          "ct-tpg-211-2026",
+          "ct-1040-inst-2025",
+          "ct-tax-tables-2025"
+        ],
+        "section": "Table C, 2% Tax Rate Phase-Out Add-Back (codes F, C and B)",
+        "confidence": "primary",
+        "note": "Dollars added to the bracket tax to take back the benefit of the 2% rate. Shape: single adds $25 for each $5,000 or part over $56,500, up to $250 above $101,500. Joint adds $50 per $5,000 over $100,500, up to $500 above $145,500. Head of household adds $40 per $4,000 over $78,500, up to $400 above $114,500. Points are the rows of the 2026 table, each row's lower bound with its value, since the rows read 'more than X, less than or equal to Y'. The 2025 CT-1040 instructions table is identical row for row. The lookup is on Connecticut AGI (annualized salary in the withholding rules), not taxable income. Checked end to end against the 2025 DRS tax tables at AGI just under $102,000 for all three statuses.",
+        "name": "2% tax rate phase-out add-back (Table C)",
+        "effect": "add",
+        "basis": "state_agi",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 56500,
+              "value": 25
+            },
+            {
+              "income": 61500,
+              "value": 50
+            },
+            {
+              "income": 66500,
+              "value": 75
+            },
+            {
+              "income": 71500,
+              "value": 100
+            },
+            {
+              "income": 76500,
+              "value": 125
+            },
+            {
+              "income": 81500,
+              "value": 150
+            },
+            {
+              "income": 86500,
+              "value": 175
+            },
+            {
+              "income": 91500,
+              "value": 200
+            },
+            {
+              "income": 96500,
+              "value": 225
+            },
+            {
+              "income": 101500,
+              "value": 250
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 100500,
+              "value": 50
+            },
+            {
+              "income": 105500,
+              "value": 100
+            },
+            {
+              "income": 110500,
+              "value": 150
+            },
+            {
+              "income": 115500,
+              "value": 200
+            },
+            {
+              "income": 120500,
+              "value": 250
+            },
+            {
+              "income": 125500,
+              "value": 300
+            },
+            {
+              "income": 130500,
+              "value": 350
+            },
+            {
+              "income": 135500,
+              "value": 400
+            },
+            {
+              "income": 140500,
+              "value": 450
+            },
+            {
+              "income": 145500,
+              "value": 500
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 78500,
+              "value": 40
+            },
+            {
+              "income": 82500,
+              "value": 80
+            },
+            {
+              "income": 86500,
+              "value": 120
+            },
+            {
+              "income": 90500,
+              "value": 160
+            },
+            {
+              "income": 94500,
+              "value": 200
+            },
+            {
+              "income": 98500,
+              "value": 240
+            },
+            {
+              "income": 102500,
+              "value": 280
+            },
+            {
+              "income": 106500,
+              "value": 320
+            },
+            {
+              "income": 110500,
+              "value": 360
+            },
+            {
+              "income": 114500,
+              "value": 400
+            }
+          ]
+        }
+      },
+      {
+        "cites": [
+          "ct-tpg-211-2026",
+          "ct-1040-inst-2025"
+        ],
+        "section": "Table D, Tax Recapture (codes F, C and B)",
+        "confidence": "primary",
+        "note": "Dollars added to the bracket tax to take back the benefit of the lower brackets. Shape for single: three stacked ramps, each per $5,000 or part: $25 over $105,000 (10 steps, $250), then $90 over $200,000 (30 steps, $2,950 total), then $50 over $500,000 (9 steps), reaching $3,400 above $540,000. Joint doubles every threshold, width and amount ($6,800 above $1,080,000). Head of household uses thresholds of $168,000, $320,000 and $800,000, $8,000 widths and $40, $140 and $80 steps ($5,320 above $864,000). Points are the rows of the 2026 table, each row's lower bound with its value, since the rows read 'more than X, less than or equal to Y'. The 2025 CT-1040 instructions table is identical row for row. The lookup is on Connecticut AGI (annualized salary in the withholding rules), not taxable income. The DRS tax tables stop at $102,000, so there is no printed tax figure to check this table against.",
+        "name": "Tax recapture (Table D)",
+        "effect": "add",
+        "basis": "state_agi",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 105000,
+              "value": 25
+            },
+            {
+              "income": 110000,
+              "value": 50
+            },
+            {
+              "income": 115000,
+              "value": 75
+            },
+            {
+              "income": 120000,
+              "value": 100
+            },
+            {
+              "income": 125000,
+              "value": 125
+            },
+            {
+              "income": 130000,
+              "value": 150
+            },
+            {
+              "income": 135000,
+              "value": 175
+            },
+            {
+              "income": 140000,
+              "value": 200
+            },
+            {
+              "income": 145000,
+              "value": 225
+            },
+            {
+              "income": 150000,
+              "value": 250
+            },
+            {
+              "income": 200000,
+              "value": 340
+            },
+            {
+              "income": 205000,
+              "value": 430
+            },
+            {
+              "income": 210000,
+              "value": 520
+            },
+            {
+              "income": 215000,
+              "value": 610
+            },
+            {
+              "income": 220000,
+              "value": 700
+            },
+            {
+              "income": 225000,
+              "value": 790
+            },
+            {
+              "income": 230000,
+              "value": 880
+            },
+            {
+              "income": 235000,
+              "value": 970
+            },
+            {
+              "income": 240000,
+              "value": 1060
+            },
+            {
+              "income": 245000,
+              "value": 1150
+            },
+            {
+              "income": 250000,
+              "value": 1240
+            },
+            {
+              "income": 255000,
+              "value": 1330
+            },
+            {
+              "income": 260000,
+              "value": 1420
+            },
+            {
+              "income": 265000,
+              "value": 1510
+            },
+            {
+              "income": 270000,
+              "value": 1600
+            },
+            {
+              "income": 275000,
+              "value": 1690
+            },
+            {
+              "income": 280000,
+              "value": 1780
+            },
+            {
+              "income": 285000,
+              "value": 1870
+            },
+            {
+              "income": 290000,
+              "value": 1960
+            },
+            {
+              "income": 295000,
+              "value": 2050
+            },
+            {
+              "income": 300000,
+              "value": 2140
+            },
+            {
+              "income": 305000,
+              "value": 2230
+            },
+            {
+              "income": 310000,
+              "value": 2320
+            },
+            {
+              "income": 315000,
+              "value": 2410
+            },
+            {
+              "income": 320000,
+              "value": 2500
+            },
+            {
+              "income": 325000,
+              "value": 2590
+            },
+            {
+              "income": 330000,
+              "value": 2680
+            },
+            {
+              "income": 335000,
+              "value": 2770
+            },
+            {
+              "income": 340000,
+              "value": 2860
+            },
+            {
+              "income": 345000,
+              "value": 2950
+            },
+            {
+              "income": 500000,
+              "value": 3000
+            },
+            {
+              "income": 505000,
+              "value": 3050
+            },
+            {
+              "income": 510000,
+              "value": 3100
+            },
+            {
+              "income": 515000,
+              "value": 3150
+            },
+            {
+              "income": 520000,
+              "value": 3200
+            },
+            {
+              "income": 525000,
+              "value": 3250
+            },
+            {
+              "income": 530000,
+              "value": 3300
+            },
+            {
+              "income": 535000,
+              "value": 3350
+            },
+            {
+              "income": 540000,
+              "value": 3400
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 210000,
+              "value": 50
+            },
+            {
+              "income": 220000,
+              "value": 100
+            },
+            {
+              "income": 230000,
+              "value": 150
+            },
+            {
+              "income": 240000,
+              "value": 200
+            },
+            {
+              "income": 250000,
+              "value": 250
+            },
+            {
+              "income": 260000,
+              "value": 300
+            },
+            {
+              "income": 270000,
+              "value": 350
+            },
+            {
+              "income": 280000,
+              "value": 400
+            },
+            {
+              "income": 290000,
+              "value": 450
+            },
+            {
+              "income": 300000,
+              "value": 500
+            },
+            {
+              "income": 400000,
+              "value": 680
+            },
+            {
+              "income": 410000,
+              "value": 860
+            },
+            {
+              "income": 420000,
+              "value": 1040
+            },
+            {
+              "income": 430000,
+              "value": 1220
+            },
+            {
+              "income": 440000,
+              "value": 1400
+            },
+            {
+              "income": 450000,
+              "value": 1580
+            },
+            {
+              "income": 460000,
+              "value": 1760
+            },
+            {
+              "income": 470000,
+              "value": 1940
+            },
+            {
+              "income": 480000,
+              "value": 2120
+            },
+            {
+              "income": 490000,
+              "value": 2300
+            },
+            {
+              "income": 500000,
+              "value": 2480
+            },
+            {
+              "income": 510000,
+              "value": 2660
+            },
+            {
+              "income": 520000,
+              "value": 2840
+            },
+            {
+              "income": 530000,
+              "value": 3020
+            },
+            {
+              "income": 540000,
+              "value": 3200
+            },
+            {
+              "income": 550000,
+              "value": 3380
+            },
+            {
+              "income": 560000,
+              "value": 3560
+            },
+            {
+              "income": 570000,
+              "value": 3740
+            },
+            {
+              "income": 580000,
+              "value": 3920
+            },
+            {
+              "income": 590000,
+              "value": 4100
+            },
+            {
+              "income": 600000,
+              "value": 4280
+            },
+            {
+              "income": 610000,
+              "value": 4460
+            },
+            {
+              "income": 620000,
+              "value": 4640
+            },
+            {
+              "income": 630000,
+              "value": 4820
+            },
+            {
+              "income": 640000,
+              "value": 5000
+            },
+            {
+              "income": 650000,
+              "value": 5180
+            },
+            {
+              "income": 660000,
+              "value": 5360
+            },
+            {
+              "income": 670000,
+              "value": 5540
+            },
+            {
+              "income": 680000,
+              "value": 5720
+            },
+            {
+              "income": 690000,
+              "value": 5900
+            },
+            {
+              "income": 1000000,
+              "value": 6000
+            },
+            {
+              "income": 1010000,
+              "value": 6100
+            },
+            {
+              "income": 1020000,
+              "value": 6200
+            },
+            {
+              "income": 1030000,
+              "value": 6300
+            },
+            {
+              "income": 1040000,
+              "value": 6400
+            },
+            {
+              "income": 1050000,
+              "value": 6500
+            },
+            {
+              "income": 1060000,
+              "value": 6600
+            },
+            {
+              "income": 1070000,
+              "value": 6700
+            },
+            {
+              "income": 1080000,
+              "value": 6800
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 168000,
+              "value": 40
+            },
+            {
+              "income": 176000,
+              "value": 80
+            },
+            {
+              "income": 184000,
+              "value": 120
+            },
+            {
+              "income": 192000,
+              "value": 160
+            },
+            {
+              "income": 200000,
+              "value": 200
+            },
+            {
+              "income": 208000,
+              "value": 240
+            },
+            {
+              "income": 216000,
+              "value": 280
+            },
+            {
+              "income": 224000,
+              "value": 320
+            },
+            {
+              "income": 232000,
+              "value": 360
+            },
+            {
+              "income": 240000,
+              "value": 400
+            },
+            {
+              "income": 320000,
+              "value": 540
+            },
+            {
+              "income": 328000,
+              "value": 680
+            },
+            {
+              "income": 336000,
+              "value": 820
+            },
+            {
+              "income": 344000,
+              "value": 960
+            },
+            {
+              "income": 352000,
+              "value": 1100
+            },
+            {
+              "income": 360000,
+              "value": 1240
+            },
+            {
+              "income": 368000,
+              "value": 1380
+            },
+            {
+              "income": 376000,
+              "value": 1520
+            },
+            {
+              "income": 384000,
+              "value": 1660
+            },
+            {
+              "income": 392000,
+              "value": 1800
+            },
+            {
+              "income": 400000,
+              "value": 1940
+            },
+            {
+              "income": 408000,
+              "value": 2080
+            },
+            {
+              "income": 416000,
+              "value": 2220
+            },
+            {
+              "income": 424000,
+              "value": 2360
+            },
+            {
+              "income": 432000,
+              "value": 2500
+            },
+            {
+              "income": 440000,
+              "value": 2640
+            },
+            {
+              "income": 448000,
+              "value": 2780
+            },
+            {
+              "income": 456000,
+              "value": 2920
+            },
+            {
+              "income": 464000,
+              "value": 3060
+            },
+            {
+              "income": 472000,
+              "value": 3200
+            },
+            {
+              "income": 480000,
+              "value": 3340
+            },
+            {
+              "income": 488000,
+              "value": 3480
+            },
+            {
+              "income": 496000,
+              "value": 3620
+            },
+            {
+              "income": 504000,
+              "value": 3760
+            },
+            {
+              "income": 512000,
+              "value": 3900
+            },
+            {
+              "income": 520000,
+              "value": 4040
+            },
+            {
+              "income": 528000,
+              "value": 4180
+            },
+            {
+              "income": 536000,
+              "value": 4320
+            },
+            {
+              "income": 544000,
+              "value": 4460
+            },
+            {
+              "income": 552000,
+              "value": 4600
+            },
+            {
+              "income": 800000,
+              "value": 4680
+            },
+            {
+              "income": 808000,
+              "value": 4760
+            },
+            {
+              "income": 816000,
+              "value": 4840
+            },
+            {
+              "income": 824000,
+              "value": 4920
+            },
+            {
+              "income": 832000,
+              "value": 5000
+            },
+            {
+              "income": 840000,
+              "value": 5080
+            },
+            {
+              "income": 848000,
+              "value": 5160
+            },
+            {
+              "income": 856000,
+              "value": 5240
+            },
+            {
+              "income": 864000,
+              "value": 5320
+            }
+          ]
+        }
+      },
+      {
+        "cites": [
+          "ct-tpg-211-2026",
+          "ct-1040-inst-2025",
+          "ct-tax-tables-2025"
+        ],
+        "section": "Table E, Personal Tax Credits (codes F, C and B)",
+        "confidence": "primary",
+        "note": "Share of the tax (bracket tax plus Table C and Table D amounts) that is removed. It is a lookup with irregular breakpoints, not a formula: .75 from the exemption amount ($15,000 single, $24,000 joint, $19,000 head of household), stepping down to .10 over a wide middle band (single $33,300 to $60,000, joint $52,000 to $96,000, head of household $46,000 to $74,000), then .01 per $500 to zero above $64,500, $100,500 and $78,500. The table has no row below the exemption amount, where no tax is due, so the first point is 0 there. Points are the rows of the 2026 table, each row's lower bound with its value, since the rows read 'more than X, less than or equal to Y'. The 2025 CT-1040 instructions table is identical row for row. The lookup is on Connecticut AGI (annualized salary in the withholding rules), not taxable income. Checked end to end against the 2025 DRS tax tables: single $1,799 and $1,801 either side of $50,000, joint $3,194 and $3,196 either side of $90,000.",
+        "name": "Personal tax credit (Table E)",
+        "effect": "creditFraction",
+        "basis": "state_agi",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 15000,
+              "value": 0.75
+            },
+            {
+              "income": 18800,
+              "value": 0.7
+            },
+            {
+              "income": 19300,
+              "value": 0.65
+            },
+            {
+              "income": 19800,
+              "value": 0.6
+            },
+            {
+              "income": 20300,
+              "value": 0.55
+            },
+            {
+              "income": 20800,
+              "value": 0.5
+            },
+            {
+              "income": 21300,
+              "value": 0.45
+            },
+            {
+              "income": 21800,
+              "value": 0.4
+            },
+            {
+              "income": 22300,
+              "value": 0.35
+            },
+            {
+              "income": 25000,
+              "value": 0.3
+            },
+            {
+              "income": 25500,
+              "value": 0.25
+            },
+            {
+              "income": 26000,
+              "value": 0.2
+            },
+            {
+              "income": 26500,
+              "value": 0.15
+            },
+            {
+              "income": 31300,
+              "value": 0.14
+            },
+            {
+              "income": 31800,
+              "value": 0.13
+            },
+            {
+              "income": 32300,
+              "value": 0.12
+            },
+            {
+              "income": 32800,
+              "value": 0.11
+            },
+            {
+              "income": 33300,
+              "value": 0.1
+            },
+            {
+              "income": 60000,
+              "value": 0.09
+            },
+            {
+              "income": 60500,
+              "value": 0.08
+            },
+            {
+              "income": 61000,
+              "value": 0.07
+            },
+            {
+              "income": 61500,
+              "value": 0.06
+            },
+            {
+              "income": 62000,
+              "value": 0.05
+            },
+            {
+              "income": 62500,
+              "value": 0.04
+            },
+            {
+              "income": 63000,
+              "value": 0.03
+            },
+            {
+              "income": 63500,
+              "value": 0.02
+            },
+            {
+              "income": 64000,
+              "value": 0.01
+            },
+            {
+              "income": 64500,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 24000,
+              "value": 0.75
+            },
+            {
+              "income": 30000,
+              "value": 0.7
+            },
+            {
+              "income": 30500,
+              "value": 0.65
+            },
+            {
+              "income": 31000,
+              "value": 0.6
+            },
+            {
+              "income": 31500,
+              "value": 0.55
+            },
+            {
+              "income": 32000,
+              "value": 0.5
+            },
+            {
+              "income": 32500,
+              "value": 0.45
+            },
+            {
+              "income": 33000,
+              "value": 0.4
+            },
+            {
+              "income": 33500,
+              "value": 0.35
+            },
+            {
+              "income": 40000,
+              "value": 0.3
+            },
+            {
+              "income": 40500,
+              "value": 0.25
+            },
+            {
+              "income": 41000,
+              "value": 0.2
+            },
+            {
+              "income": 41500,
+              "value": 0.15
+            },
+            {
+              "income": 50000,
+              "value": 0.14
+            },
+            {
+              "income": 50500,
+              "value": 0.13
+            },
+            {
+              "income": 51000,
+              "value": 0.12
+            },
+            {
+              "income": 51500,
+              "value": 0.11
+            },
+            {
+              "income": 52000,
+              "value": 0.1
+            },
+            {
+              "income": 96000,
+              "value": 0.09
+            },
+            {
+              "income": 96500,
+              "value": 0.08
+            },
+            {
+              "income": 97000,
+              "value": 0.07
+            },
+            {
+              "income": 97500,
+              "value": 0.06
+            },
+            {
+              "income": 98000,
+              "value": 0.05
+            },
+            {
+              "income": 98500,
+              "value": 0.04
+            },
+            {
+              "income": 99000,
+              "value": 0.03
+            },
+            {
+              "income": 99500,
+              "value": 0.02
+            },
+            {
+              "income": 100000,
+              "value": 0.01
+            },
+            {
+              "income": 100500,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 19000,
+              "value": 0.75
+            },
+            {
+              "income": 24000,
+              "value": 0.7
+            },
+            {
+              "income": 24500,
+              "value": 0.65
+            },
+            {
+              "income": 25000,
+              "value": 0.6
+            },
+            {
+              "income": 25500,
+              "value": 0.55
+            },
+            {
+              "income": 26000,
+              "value": 0.5
+            },
+            {
+              "income": 26500,
+              "value": 0.45
+            },
+            {
+              "income": 27000,
+              "value": 0.4
+            },
+            {
+              "income": 27500,
+              "value": 0.35
+            },
+            {
+              "income": 34000,
+              "value": 0.3
+            },
+            {
+              "income": 34500,
+              "value": 0.25
+            },
+            {
+              "income": 35000,
+              "value": 0.2
+            },
+            {
+              "income": 35500,
+              "value": 0.15
+            },
+            {
+              "income": 44000,
+              "value": 0.14
+            },
+            {
+              "income": 44500,
+              "value": 0.13
+            },
+            {
+              "income": 45000,
+              "value": 0.12
+            },
+            {
+              "income": 45500,
+              "value": 0.11
+            },
+            {
+              "income": 46000,
+              "value": 0.1
+            },
+            {
+              "income": 74000,
+              "value": 0.09
+            },
+            {
+              "income": 74500,
+              "value": 0.08
+            },
+            {
+              "income": 75000,
+              "value": 0.07
+            },
+            {
+              "income": 75500,
+              "value": 0.06
+            },
+            {
+              "income": 76000,
+              "value": 0.05
+            },
+            {
+              "income": 76500,
+              "value": 0.04
+            },
+            {
+              "income": 77000,
+              "value": 0.03
+            },
+            {
+              "income": 77500,
+              "value": 0.02
+            },
+            {
+              "income": 78000,
+              "value": 0.01
+            },
+            {
+              "income": 78500,
+              "value": 0
+            }
+          ]
+        }
+      }
+    ],
+    "earnedIncomeCredit": {
+      "cites": [
+        "cgs-12-704e",
+        "ct-pa-25-168"
+      ],
+      "section": "CGS 12-704e(a) and (b); PA 25-168 section 371",
+      "confidence": "primary",
+      "note": "\"forty per cent for taxable years commencing on or after January 1, 2023\" of the federal credit, refundable, plus a flat $250 a return for a filer with \"at least one qualifying child\", from 2025. Full-year residents only.",
+      "name": "Connecticut earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "withChildAddOn": 250
+    },
+    "standardDeduction": null,
+    "personalExemption": {
+      "cites": [
+        "ct-tpg-211-2026",
+        "ct-1040-inst-2025",
+        "tf-2026"
+      ],
+      "section": "Table A, Personal Exemptions",
+      "confidence": "primary",
+      "note": "Connecticut has no standard deduction and no dependent exemption. The amounts are the full exemption. phaseOut reproduces Table A: the exemption drops $1,000 for each $1,000 or part of $1,000 of Connecticut AGI over $30,000 single, $48,000 joint and $38,000 head of household, and is zero above $44,000, $71,000 and $56,000. Every row of Table A in the 2026 withholding rules and in the 2025 CT-1040 instructions was checked against the schedule. Tax Foundation agrees on the maximum amounts and phase-out starts for single and joint.",
+      "kind": "deduction",
+      "single": 15000,
+      "mfj": 24000,
+      "hoh": 19000,
+      "dependent": 0,
+      "phaseOut": {
+        "basis": "state_agi",
+        "appliesTo": "filer",
+        "unit": "amount",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 15000
+            },
+            {
+              "income": 30000,
+              "value": 14000
+            },
+            {
+              "income": 31000,
+              "value": 13000
+            },
+            {
+              "income": 32000,
+              "value": 12000
+            },
+            {
+              "income": 33000,
+              "value": 11000
+            },
+            {
+              "income": 34000,
+              "value": 10000
+            },
+            {
+              "income": 35000,
+              "value": 9000
+            },
+            {
+              "income": 36000,
+              "value": 8000
+            },
+            {
+              "income": 37000,
+              "value": 7000
+            },
+            {
+              "income": 38000,
+              "value": 6000
+            },
+            {
+              "income": 39000,
+              "value": 5000
+            },
+            {
+              "income": 40000,
+              "value": 4000
+            },
+            {
+              "income": 41000,
+              "value": 3000
+            },
+            {
+              "income": 42000,
+              "value": 2000
+            },
+            {
+              "income": 43000,
+              "value": 1000
+            },
+            {
+              "income": 44000,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 24000
+            },
+            {
+              "income": 48000,
+              "value": 23000
+            },
+            {
+              "income": 49000,
+              "value": 22000
+            },
+            {
+              "income": 50000,
+              "value": 21000
+            },
+            {
+              "income": 51000,
+              "value": 20000
+            },
+            {
+              "income": 52000,
+              "value": 19000
+            },
+            {
+              "income": 53000,
+              "value": 18000
+            },
+            {
+              "income": 54000,
+              "value": 17000
+            },
+            {
+              "income": 55000,
+              "value": 16000
+            },
+            {
+              "income": 56000,
+              "value": 15000
+            },
+            {
+              "income": 57000,
+              "value": 14000
+            },
+            {
+              "income": 58000,
+              "value": 13000
+            },
+            {
+              "income": 59000,
+              "value": 12000
+            },
+            {
+              "income": 60000,
+              "value": 11000
+            },
+            {
+              "income": 61000,
+              "value": 10000
+            },
+            {
+              "income": 62000,
+              "value": 9000
+            },
+            {
+              "income": 63000,
+              "value": 8000
+            },
+            {
+              "income": 64000,
+              "value": 7000
+            },
+            {
+              "income": 65000,
+              "value": 6000
+            },
+            {
+              "income": 66000,
+              "value": 5000
+            },
+            {
+              "income": 67000,
+              "value": 4000
+            },
+            {
+              "income": 68000,
+              "value": 3000
+            },
+            {
+              "income": 69000,
+              "value": 2000
+            },
+            {
+              "income": 70000,
+              "value": 1000
+            },
+            {
+              "income": 71000,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 19000
+            },
+            {
+              "income": 38000,
+              "value": 18000
+            },
+            {
+              "income": 39000,
+              "value": 17000
+            },
+            {
+              "income": 40000,
+              "value": 16000
+            },
+            {
+              "income": 41000,
+              "value": 15000
+            },
+            {
+              "income": 42000,
+              "value": 14000
+            },
+            {
+              "income": 43000,
+              "value": 13000
+            },
+            {
+              "income": 44000,
+              "value": 12000
+            },
+            {
+              "income": 45000,
+              "value": 11000
+            },
+            {
+              "income": 46000,
+              "value": 10000
+            },
+            {
+              "income": 47000,
+              "value": 9000
+            },
+            {
+              "income": 48000,
+              "value": 8000
+            },
+            {
+              "income": 49000,
+              "value": 7000
+            },
+            {
+              "income": 50000,
+              "value": 6000
+            },
+            {
+              "income": 51000,
+              "value": 5000
+            },
+            {
+              "income": 52000,
+              "value": 4000
+            },
+            {
+              "income": 53000,
+              "value": 3000
+            },
+            {
+              "income": 54000,
+              "value": 2000
+            },
+            {
+              "income": 55000,
+              "value": 1000
+            },
+            {
+              "income": 56000,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "ct-paid-leave",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "Local tax flag follows Tax Foundation footnote (a), which does not list Connecticut. Payroll flag read on the CT Paid Leave contributions page: 0.5% of income up to the Social Security contribution limit. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Employees pay 0.5% of wages, up to the Social Security wage base, into the Connecticut Paid Leave program. Not included."
+    ],
+    "maintainerNotes": [
+      "Employees pay 0.5% of wages, up to the Social Security wage base, into the Connecticut Paid Leave program. From general knowledge."
+    ]
+  }
+}

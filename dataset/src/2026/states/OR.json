@@ -1,0 +1,361 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "OR",
+  "name": "Oregon",
+  "sources": {
+    "or-estimate-2026": {
+      "name": "Oregon Department of Revenue, Publication OR-ESTIMATE 2026, Oregon Estimated Income Tax Instructions (150-101-026, Rev. 10-07-25)",
+      "url": "https://www.oregon.gov/dor/forms/FormsPubs/publication-or-estimate_101-026_2026.pdf"
+    },
+    "or-wh-formulas-2026": {
+      "name": "Oregon Department of Revenue, Oregon Withholding Tax Formulas, effective January 1, 2026 (150-206-436, Rev. 12-31-25)",
+      "url": "https://www.oregon.gov/dor/forms/FormsPubs/withholding-tax-formulas_206-436_2026.pdf"
+    },
+    "or-payroll-2026": {
+      "name": "2026 Oregon Combined Payroll Tax Report Instructions for Oregon Employers (150-211-155-2)",
+      "url": "https://www.oregon.gov/dor/forms/FormsPubs/combined-payroll_211-155-2_2026.pdf"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-or-federal-tax": {
+      "name": "PolicyEngine US parameters, OR federal tax liability subtraction cap (cites the 2026 Publication OR-ESTIMATE and 2026 withholding formulas)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/or/tax/income/subtractions/federal_tax_liability/cap/single.yaml"
+    },
+    "or-wbf-2026": {
+      "name": "Oregon DCBS, Workers' Benefit Fund assessment",
+      "url": "https://www.oregon.gov/dcbs/wbf/pages/index.aspx"
+    },
+    "portland-personal-tax": {
+      "name": "City of Portland Revenue Division, personal income taxes (Metro and Multnomah County)",
+      "url": "https://www.portland.gov/revenue/personal-tax"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "ors-315-273": {
+      "name": "Oregon Revised Statutes 315.273, Oregon Kids Credit (2025 edition)",
+      "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors315.html"
+    },
+    "or-40-inst-2025": {
+      "name": "Oregon Department of Revenue, 2025 Form OR-40 instructions (rev. 01-29-26), Oregon Kids Credit worksheet",
+      "url": "https://www.oregon.gov/dor/forms/FormsPubs/form-or-40-inst_101-040-1_2025.pdf"
+    },
+    "or-sb1507-2026": {
+      "name": "Oregon SB 1507 (2026), Oregon Laws 2026 chapter 142, enrolled: ORS 315.266",
+      "url": "https://olis.oregonlegislature.gov/liz/2026R1/Downloads/MeasureDocument/SB1507/Enrolled"
+    },
+    "or-leg-summary-2026": {
+      "name": "Oregon Department of Revenue, 2026 summary of legislation",
+      "url": "https://www.oregon.gov/dor/pages/2026-summary-of-legislation.aspx"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "or-estimate-2026",
+        "or-wh-formulas-2026",
+        "tf-2026"
+      ],
+      "section": "Publication OR-ESTIMATE page 3, rate charts S and J for 2026",
+      "confidence": "primary",
+      "note": "Chart S covers single filers. Chart J covers joint filers, heads of household and qualifying surviving spouses, so head of household uses the joint schedule. The printed base amounts reproduce within a dollar (the charts round each tier's base to whole dollars): $10,618 at $125,000 on Chart S against a computed $10,618.50, and $21,237 at $250,000 on Chart J. The 2026 withholding formulas use the same thresholds and base amounts. Tax Foundation agrees. The $125,000 and $250,000 thresholds are not indexed.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0475
+        },
+        {
+          "from": 4550,
+          "rate": 0.0675
+        },
+        {
+          "from": 11400,
+          "rate": 0.0875
+        },
+        {
+          "from": 125000,
+          "rate": 0.099
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0475
+        },
+        {
+          "from": 9100,
+          "rate": 0.0675
+        },
+        {
+          "from": 22800,
+          "rate": 0.0875
+        },
+        {
+          "from": 250000,
+          "rate": 0.099
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0475
+        },
+        {
+          "from": 9100,
+          "rate": 0.0675
+        },
+        {
+          "from": 22800,
+          "rate": 0.0875
+        },
+        {
+          "from": 250000,
+          "rate": 0.099
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "or-sb1507-2026",
+        "or-leg-summary-2026"
+      ],
+      "section": "SB 1507 sections 3 and 10, amending ORS 315.266(1)",
+      "confidence": "primary",
+      "note": "\"14 percent of the earned income credit allowable to the individual for the same tax year under section 32\", or 17% \"for a taxpayer with a dependent under the age of three at the close of the tax year\", refundable, for tax years beginning on or after January 1, 2026. It was 9% and 12% before, which the 2025 instructions and the legislature's online statute page still showed on 2026-11-12.",
+      "name": "Oregon earned income credit",
+      "refundable": true,
+      "match": [
+        0.14,
+        0.14,
+        0.14,
+        0.14
+      ],
+      "youngChildMatch": {
+        "underAge": 3,
+        "match": 0.17
+      }
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "or-40-inst-2025",
+          "ors-315-273"
+        ],
+        "section": "2025 OR-40 instructions, Oregon Kids Credit worksheet lines 5 to 10; ORS 315.273(2) to (5)",
+        "confidence": "primary",
+        "valuesTaxYear": 2025,
+        "note": "$1,050 per dependent child \"under the age of six years at the close of the tax year\", for up to five, refundable. The credit is cut by the share of $5,000 that modified AGI is over $26,550, so it is zero at $31,550, with one limit for every filing status. The worksheet rounds that share to two decimals, which is not reproduced (it moves the credit by at most about $5 a child). Modified AGI adds back large losses and a few federal deductions the calculator does not have, so federal AGI is used. The amount and the limit are indexed and are the 2025 figures: the 2026 ones were not published as of 2026-11-12. Applying the statutory formula to CPI gives $1,050 and $27,250 for 2026, an estimate that is not used. The credit ends after tax year 2028.",
+        "name": "Oregon Kids Credit",
+        "refundable": true,
+        "maxChildren": 5,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 6,
+            "amount": 1050
+          }
+        ],
+        "phaseOut": {
+          "basis": "federal_agi",
+          "start": {
+            "single": 26550,
+            "mfj": 26550,
+            "hoh": 26550
+          },
+          "amount": 0.21,
+          "per": 1,
+          "rounding": "none",
+          "appliesTo": "each"
+        }
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "or-payroll-2026",
+        "or-wh-formulas-2026",
+        "or-estimate-2026",
+        "tf-2026"
+      ],
+      "section": "Combined Payroll Tax Report Instructions, \"Employers of Oregon nonresidents\": standard deduction amounts for tax year 2026",
+      "confidence": "primary",
+      "note": "Read from the 2026 payroll instructions, which list the tax year 2026 amounts for every filing status. The 2026 withholding formulas (Rev. 12-31-25) use the same $2,910 and $5,820, and Tax Foundation agrees. Publication OR-ESTIMATE (Rev. 10-07-25) printed earlier estimates of $2,900 single, $4,650 head of household and $5,800 joint, labeled as estimated indexed figures. The later final amounts are used here. Recheck against the 2026 Form OR-40 instructions once published.",
+      "single": 2910,
+      "mfj": 5820,
+      "hoh": 4685
+    },
+    "personalExemption": {
+      "cites": [
+        "or-wh-formulas-2026",
+        "or-estimate-2026",
+        "tf-2026"
+      ],
+      "section": "Withholding Tax Formulas, annual formulas: \"263 x allowances\". OR-ESTIMATE worksheet footnote for the AGI limits.",
+      "confidence": "primary",
+      "note": "Official sources disagree on the 2026 credit. The withholding formulas (Rev. 12-31-25), which say they reflect the inflation-adjusted exemption credit, use $263. Publication OR-ESTIMATE (Rev. 10-07-25) gives $260 as an estimated indexed figure. Tax Foundation's 2026 table shows $256, which is the 2025 amount. $263 is used because it is from the later publication, the one whose standard deduction matches the final 2026 amounts. Recheck against the 2026 Form OR-40 instructions once published. The AGI limits are a hard cutoff on federal AGI and are read from OR-ESTIMATE.",
+      "kind": "credit",
+      "single": 263,
+      "mfj": 526,
+      "hoh": 263,
+      "dependent": 263,
+      "agiLimit": {
+        "single": 100000,
+        "mfj": 200000,
+        "hoh": 200000
+      }
+    },
+    "federalTaxDeduction": {
+      "cites": [
+        "pe-or-federal-tax",
+        "or-estimate-2026"
+      ],
+      "confidence": "secondary",
+      "note": "Oregon subtracts federal income tax after credits, up to a cap. The 2026 cap is $8,750 and drops by $1,750 per step above $125,000 of federal AGI single ($5,000 steps, gone at $145,000) or $250,000 joint and head of household ($10,000 steps, gone at $290,000). Step values are PolicyEngine's, which cites the 2026 OR-ESTIMATE figures. Whether a step starts at or just above its threshold was not checked. Checked against PolicyEngine US 2.118.6 with oracle/compare.py on 2026-11-12.",
+      "share": {
+        "basis": "federal_agi",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 1
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 1
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 1
+            }
+          ]
+        }
+      },
+      "cap": {
+        "basis": "federal_agi",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 8750
+            },
+            {
+              "income": 125000,
+              "value": 7000
+            },
+            {
+              "income": 130000,
+              "value": 5250
+            },
+            {
+              "income": 135000,
+              "value": 3500
+            },
+            {
+              "income": 140000,
+              "value": 1750
+            },
+            {
+              "income": 145000,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 8750
+            },
+            {
+              "income": 250000,
+              "value": 7000
+            },
+            {
+              "income": 260000,
+              "value": 5250
+            },
+            {
+              "income": 270000,
+              "value": 3500
+            },
+            {
+              "income": 280000,
+              "value": 1750
+            },
+            {
+              "income": 290000,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 8750
+            },
+            {
+              "income": 250000,
+              "value": 7000
+            },
+            {
+              "income": 260000,
+              "value": 5250
+            },
+            {
+              "income": 270000,
+              "value": 3500
+            },
+            {
+              "income": 280000,
+              "value": 1750
+            },
+            {
+              "income": 290000,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "or-payroll-2026",
+      "or-wh-formulas-2026",
+      "or-estimate-2026",
+      "tf-2026",
+      "or-wbf-2026",
+      "portland-personal-tax",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "The federal tax subtraction figures are from OR-ESTIMATE and the withholding formulas. The payroll tax flag and rates are read from the 2026 payroll instructions and the DCBS page (Workers' Benefit Fund, 1.8 cents an hour in 2026, half from the employee). Local flag read on the Portland Revenue Division page. The transit district taxes are on employers. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": true,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Oregon lets filers subtract their federal income tax, up to $8,750. The limit shrinks above $125,000 of income single or $250,000 joint and head of household. This is included.",
+      "Employees pay the statewide transit tax of 0.1% of wages, 0.6% of wages up to $184,500 for Paid Leave Oregon, and 0.9 cents an hour for the Workers' Benefit Fund. Not included.",
+      "The Portland area has two local income taxes on higher incomes: Metro's 1% of taxable income over $128,000 single or $205,000 joint, and Multnomah County's 1.5% over $125,000 for an individual, with a higher rate above $250,000. Not included.",
+      "Not modeled: the kicker refund in years when one is declared.",
+      "The Oregon Kids Credit ($1,050 for each child under 6, for incomes up to about $31,550) is included with the 2025 figures, because the 2026 ones are not published yet."
+    ],
+    "maintainerNotes": [
+      "Tax Foundation lists Oregon among states with local income taxes. Which localities and at what rates was not read from an official source. The TriMet and Lane Transit District payroll taxes are imposed on employers, not withheld from employees.",
+      "Replaced on 2026-11-12 when the rule was modeled: Not modeled: Oregon lets filers subtract federal income tax liability, up to $8,750 for 2026. The cap steps down to $7,000, $5,250, $3,500, $1,750 and then $0 as income rises from $125,000 to $145,000 for single filers and from $250,000 to $290,000 for joint filers. Leaving it out overstates Oregon tax by up to about $765 for a filer in the 8.75% bracket."
+    ]
+  }
+}

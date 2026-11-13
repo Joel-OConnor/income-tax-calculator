@@ -1,0 +1,177 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "AR",
+  "name": "Arkansas",
+  "sources": {
+    "ar-act1-2026": {
+      "name": "Arkansas Act 1 of 2026, First Extraordinary Session (HB 1001), amending A.C.A. 26-51-201(a)(4), approved May 6, 2026",
+      "url": "https://www.arkleg.state.ar.us/Home/FTPDocument?path=%2FACTS%2F2026S1%2FPublic%2FACT1.pdf"
+    },
+    "ar-wh-2026": {
+      "name": "Arkansas DFA, Withholding Tax Formula Method, effective 01/01/2026",
+      "url": "https://www.dfa.arkansas.gov/wp-content/uploads/whformula_2026.pdf"
+    },
+    "ar-1000f-2025": {
+      "name": "Arkansas DFA, 2025 AR1000F and AR1000NR Instructions",
+      "url": "https://www.dfa.arkansas.gov/wp-content/uploads/2025_AR1000F_and_AR1000NR_Instructions.pdf"
+    },
+    "pe-ar-low-income": {
+      "name": "PolicyEngine US parameters, AR low income tax table, single (cites DFA 2025 tax tables)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ar/tax/income/rates/low_income_tax_tables/single.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ar-act1-2026",
+        "ar-wh-2026",
+        "tf-2026"
+      ],
+      "section": "A.C.A. 26-51-201(a)(4)(A), table for net income of $94,700 or less",
+      "confidence": "primary",
+      "note": "Read from Act 1 of 2026, which applies to tax years beginning on or after January 1, 2026 and cuts the top rate from 3.9% to 3.7%. One schedule for every filing status. This is the table for net income up to $94,700. Income above that uses a second table (see rules notes), which this schema cannot hold. The dollar thresholds in the Act equal DFA's 2025 indexed brackets, and the Act says the tables are adjusted annually, so DFA may publish slightly higher 2026 thresholds. No 2026 indexed bracket card was found. Tax Foundation (as of early 2026) shows the high-income table with a 3.9% top rate and 2025 widths, which predates the Act. DFA's 2026 withholding formula was also published before the Act and still uses 3.9%.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 5600,
+          "rate": 0.02
+        },
+        {
+          "from": 11200,
+          "rate": 0.03
+        },
+        {
+          "from": 16000,
+          "rate": 0.034
+        },
+        {
+          "from": 26400,
+          "rate": 0.037
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 5600,
+          "rate": 0.02
+        },
+        {
+          "from": 11200,
+          "rate": 0.03
+        },
+        {
+          "from": 16000,
+          "rate": 0.034
+        },
+        {
+          "from": 26400,
+          "rate": 0.037
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 5600,
+          "rate": 0.02
+        },
+        {
+          "from": 11200,
+          "rate": 0.03
+        },
+        {
+          "from": 16000,
+          "rate": 0.034
+        },
+        {
+          "from": 26400,
+          "rate": 0.037
+        }
+      ]
+    },
+    "surtaxes": [],
+    "standardDeduction": {
+      "cites": [
+        "ar-1000f-2025",
+        "ar-wh-2026",
+        "tf-2026"
+      ],
+      "section": "2025 AR1000F instructions, Standard Deduction table (page 14)",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "2025 return amounts. The deduction is indexed each year and the 2026 return amount was not published when this was written. DFA's withholding formula effective January 1, 2026 uses $2,470, and Tax Foundation lists $2,470 single and $4,940 joint as its 2026 figures.",
+      "single": 2470,
+      "mfj": 4940,
+      "hoh": 2470
+    },
+    "personalExemption": {
+      "cites": [
+        "ar-1000f-2025",
+        "ar-wh-2026",
+        "tf-2026"
+      ],
+      "section": "2025 AR1000F instructions, lines 7A and 7B (page 12)",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "Personal tax credit of $29 each for the taxpayer, spouse and each dependent. Head of household filers get one extra credit, so $58. Read from the 2025 instructions. DFA's 2026 withholding formula also uses $29 per exemption. Tax Foundation agrees for single, joint and dependent.",
+      "kind": "credit",
+      "single": 29,
+      "mfj": 58,
+      "hoh": 58,
+      "dependent": 29
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "ar-act1-2026",
+      "ar-1000f-2025",
+      "ar-wh-2026",
+      "pe-ar-low-income",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "The high-income table note is from Act 1 of 2026. 401k, HSA and cafeteria plan treatment read in the 2025 AR1000F instructions and the withholding instructions, which list sections 125 and 401(k) as adopted. Arkansas allows the IRA and HSA deductions (AR1000ADJ), with the IRA phase-out run on Arkansas income. PolicyEngine gives neither deduction. Arkansas bars local income taxes (A.C.A. 26-73-103). Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions, apart from the high-income table that is not modeled and the IRA and direct HSA deductions, which PolicyEngine leaves out. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Not modeled: filers with net income above $94,700 use a different table on all of their income, 2% up to $4,700 and 3.7% above it, less a bracket adjustment that falls from $290 at $94,701 to $0 above $97,600 (A.C.A. 26-51-201(a)(4)(B) and (C)). Their tax is about $287 higher than the modeled brackets give.",
+      "Not modeled: Arkansas has separate low-income tax tables that reduce or remove tax at low incomes, roughly below $17,500 for a single filer.",
+      "Not modeled: married couples can file separately on the same return (filing status 4), so each spouse uses the brackets on their own income. The 2025 instructions say this may reduce tax when both spouses have income.",
+      "DFA's withholding formula effective January 1, 2026 still uses the 3.9% top rate, so 2026 paychecks may be withheld slightly above the final 3.7% liability unless DFA has issued a revised formula.",
+      "Arkansas builds its own adjusted gross income on Form AR1000F instead of starting from federal AGI. For ordinary wage earners the two match, so the starting point is set to federal_agi."
+    ],
+    "maintainerNotes": [
+      "Not modeled: low income tax tables wipe out or reduce tax at low AGI. Per PolicyEngine, citing DFA's 2025 tables, a single filer owes nothing below about $14,650 of AGI and the table ends at $17,500. Joint and head of household filers have their own tables, which depend on the number of dependents."
+    ]
+  }
+}

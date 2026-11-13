@@ -1,0 +1,161 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "GA",
+  "name": "Georgia",
+  "sources": {
+    "dor-wh-guide-2026-09": {
+      "name": "Georgia Department of Revenue, Employer's Withholding Tax Guide 2026, revised September 2026",
+      "url": "https://dor.georgia.gov/document/document/2026-employers-tax-guide-updated-september-2026/download"
+    },
+    "dor-tax-updates": {
+      "name": "Georgia Department of Revenue, Important Tax Updates, \"2026 Income Tax Changes\"",
+      "url": "https://dor.georgia.gov/taxes/important-tax-updates"
+    },
+    "pe-ga-rate": {
+      "name": "PolicyEngine US parameters, GA flat income tax rate (cites HB 463 of 2025-2026 and O.C.G.A. 48-7-20)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ga/tax/income/main/flat_rate.yaml"
+    },
+    "pe-ga-std": {
+      "name": "PolicyEngine US parameters, GA standard deduction (cites HB 463 and O.C.G.A. 48-7-27)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ga/tax/income/deductions/standard/amount.yaml"
+    },
+    "pe-ga-low-income": {
+      "name": "PolicyEngine US parameters, GA low income credit (cites IT-511 booklet)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ga/tax/income/credits/low_income/amount.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "ga-hb136-2025": {
+      "name": "Georgia HB 136 (2025), Act 182, as passed: O.C.G.A. 48-7-29.27",
+      "url": "https://www.legis.ga.gov/api/legislation/document/20252026/239327"
+    },
+    "ga-dor-child-credit": {
+      "name": "Georgia Department of Revenue, Qualifying Child Credit",
+      "url": "https://dor.georgia.gov/qualifying-child-credit"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "dor-wh-guide-2026-09",
+        "dor-tax-updates",
+        "pe-ga-rate",
+        "tf-2026"
+      ],
+      "section": "Withholding guide, \"What's New for Tax Year 2026\"",
+      "confidence": "primary",
+      "note": "Flat 4.99%. HB 463 was signed May 11, 2026 and applies to tax years beginning on or after January 1, 2026. Tax Foundation shows 5.19% because its table is as of January 1, 2026, before the retroactive cut. The state publications win. PolicyEngine agrees with 4.99%. One schedule for all filing statuses.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0499
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0499
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0499
+        }
+      ]
+    },
+    "surtaxes": [],
+    "childCredits": [
+      {
+        "cites": [
+          "ga-hb136-2025",
+          "ga-dor-child-credit"
+        ],
+        "section": "O.C.G.A. 48-7-29.27",
+        "confidence": "primary",
+        "note": "\"$250.00 for each qualifying child\" who \"has not yet attained age six\", for taxable years beginning on or after January 1, 2026. No income limit and no cap on children. It cannot exceed the tax and does not carry forward. The 2026 session laws were not read for amendments.",
+        "name": "Georgia child tax credit",
+        "refundable": false,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 6,
+            "amount": 250
+          }
+        ]
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "dor-wh-guide-2026-09",
+        "dor-tax-updates",
+        "pe-ga-std",
+        "tf-2026"
+      ],
+      "section": "Withholding guide, \"What's New for Tax Year 2026\" and Table E",
+      "confidence": "primary",
+      "note": "Raised by HB 463 for 2026. Tax Foundation still shows the pre-HB 463 amounts of $12,000 single and $24,000 joint. The state publications win. PolicyEngine agrees with the new amounts.",
+      "single": 15000,
+      "mfj": 30000,
+      "hoh": 15000
+    },
+    "personalExemption": {
+      "cites": [
+        "dor-wh-guide-2026-09",
+        "tf-2026"
+      ],
+      "section": "Withholding guide, \"What's New for Tax Year 2026\" and Table E column (4)",
+      "confidence": "primary",
+      "note": "Georgia has a dependent exemption only. No exemption for the filer or spouse since 2024. HB 463 raised the dependent amount from $4,000 to $5,000 for 2026. Tax Foundation still shows $4,000.",
+      "kind": "deduction",
+      "single": 0,
+      "mfj": 0,
+      "hoh": 0,
+      "dependent": 5000
+    }
+  },
+  "rules": {
+    "cites": [
+      "dor-wh-guide-2026-09",
+      "dor-tax-updates",
+      "pe-ga-rate",
+      "pe-ga-std",
+      "pe-ga-low-income",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Local tax flag is from Tax Foundation footnote (a), which does not list Georgia. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "The 2026 rate cut was signed on May 11, 2026 and is retroactive to January 1, 2026. Employers withheld at 5.19% before that date, so 2026 paychecks early in the year were over-withheld relative to the final rate.",
+      "Not modeled: Georgia did not adopt the federal overtime and tip deductions. HB 463 instead lets up to $1,750 of qualified overtime pay and up to $1,750 of cash tips be subtracted from Georgia income for tax years 2026 through 2028.",
+      "Not modeled: a low income credit of $5 to $26 per exemption for filers with federal AGI under $20,000."
+    ],
+    "maintainerNotes": [
+      "Not modeled: low income credit of $5 to $26 per exemption for filers with federal AGI under $20,000 (PolicyEngine, from the IT-511 booklet).",
+      "PolicyEngine's reading of HB 463 is that further rate cuts of 0.125 points a year (floor 3.99%) and further increases to the standard deduction and dependent exemption can start in 2027 if revenue triggers are met. Recheck all three groups for 2027.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): our Georgia tax was $250 higher for joint filers with children aged 5 and 10. Amount and age limit inferred from that, not read in a Georgia publication."
+    ]
+  }
+}

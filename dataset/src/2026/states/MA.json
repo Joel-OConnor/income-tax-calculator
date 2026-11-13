@@ -1,0 +1,211 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "MA",
+  "name": "Massachusetts",
+  "sources": {
+    "mgl-62-4": {
+      "name": "Massachusetts General Laws chapter 62, section 4, Rates of tax",
+      "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section4"
+    },
+    "mgl-62-3": {
+      "name": "Massachusetts General Laws chapter 62, section 3, Taxable income: deductions and exemptions",
+      "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section3"
+    },
+    "dor-surtax-cert-fy26": {
+      "name": "Massachusetts Department of Revenue letter to the Comptroller, July 20, 2026 (FY26 period 4 surtax certification), copy hosted by a third party",
+      "url": "https://arizent.brightspotcdn.com/5d/1e/d6f17b52459a8c75563195e0bfdc/fy26-period-4-surtax-certification.pdf"
+    },
+    "pe-ma-rate": {
+      "name": "PolicyEngine US parameters, MA Part B income tax rate (cites MGL c.62 s.4 and Form 1 instructions)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ma/tax/income/rates/part_b.yaml"
+    },
+    "pe-ma-exemptions": {
+      "name": "PolicyEngine US parameters, MA personal exemptions (cites MGL c.62 s.3 and Form 1 instructions)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ma/tax/income/exemptions/personal.yaml"
+    },
+    "pe-ma-exempt-status": {
+      "name": "PolicyEngine US parameters, MA AGI limit to be exempt from income tax (cites MGL c.62 s.5)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ma/tax/income/exempt_status/limit/base.yaml"
+    },
+    "pe-ma-retirement-deduction": {
+      "name": "PolicyEngine US parameters, MA deduction for Social Security, Medicare and public retirement contributions",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ma/tax/income/deductions/public_retirement_contributions.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "ma-dor-tax-rates": {
+      "name": "Massachusetts Department of Revenue, Tax Rates (updated December 30, 2025)",
+      "url": "https://www.mass.gov/info-details/tax-rates"
+    },
+    "ma-differences": {
+      "name": "Mass.gov, Differences Between MA and Federal Tax Law for Personal Income (updated October 22, 2026)",
+      "url": "https://www.mass.gov/info-details/differences-between-ma-and-federal-tax-law-for-personal-income"
+    },
+    "ma-pfml-rates-2026": {
+      "name": "Mass.gov, Family and medical leave contribution rates for employers",
+      "url": "https://www.mass.gov/info-details/family-and-medical-leave-contribution-rates-for-employers"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "mgl-62-6": {
+      "name": "Massachusetts General Laws chapter 62, section 6(x), child and family tax credit",
+      "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter62/Section6"
+    },
+    "ma-form1-inst-2025": {
+      "name": "Massachusetts Department of Revenue, 2025 Form 1 instructions, line 46 (NBER copy)",
+      "url": "https://taxsim.nber.org/historical_state_tax_forms/MA/2025/ma-dor-2025-inc-form-1-inst.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ma-dor-tax-rates",
+        "mgl-62-4",
+        "pe-ma-rate",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "Flat 5% on wages and other Part B income, same for every filing status. Read on the Department of Revenue rates page. Tax Foundation shows the 4% surtax as a 9% second bracket. Here it is in surtaxes.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.05
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.05
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.05
+        }
+      ]
+    },
+    "surtaxes": [
+      {
+        "cites": [
+          "ma-dor-tax-rates",
+          "dor-surtax-cert-fy26",
+          "mgl-62-4",
+          "tf-2026"
+        ],
+        "section": "DOR rates page, personal income row; MGL c.62 s.4(d)",
+        "confidence": "primary",
+        "note": "The 2026 threshold of $1,107,750 was read on the Department of Revenue rates page and matches the DOR certification letter. The statute gives one threshold for all filing statuses, indexed yearly. Tax Foundation and PolicyEngine still show the 2025 threshold of $1,083,150.",
+        "name": "4% surtax on income over $1 million (indexed)",
+        "rate": 0.04,
+        "over": {
+          "single": 1107750,
+          "mfj": 1107750,
+          "hoh": 1107750
+        }
+      }
+    ],
+    "earnedIncomeCredit": {
+      "cites": [
+        "mgl-62-6"
+      ],
+      "section": "MGL c.62 s.6(h)(1)",
+      "confidence": "primary",
+      "note": "\"40 per cent of the federal credit received by the taxpayer for the taxable year\", refundable, on the federal credit as in effect for the year.",
+      "name": "Massachusetts earned income credit",
+      "refundable": true,
+      "match": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "mgl-62-6",
+          "ma-form1-inst-2025"
+        ],
+        "section": "MGL c.62 s.6(x); 2025 Form 1 line 46",
+        "confidence": "primary",
+        "note": "\"$440 for each such dependent\" under the age of 13, refundable, with no income limit and no cap. The same $440 goes to a disabled dependent or spouse and to a dependent 65 or older, which the calculator cannot tell from its inputs, so only children under 13 are counted. The amount is fixed in statute. mass.gov could not be read on 2026-11-12, so the form wording is from the 2025 instructions.",
+        "name": "Massachusetts child and family tax credit",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 13,
+            "amount": 440
+          }
+        ]
+      }
+    ],
+    "standardDeduction": null,
+    "personalExemption": {
+      "cites": [
+        "mgl-62-3",
+        "tf-2026",
+        "pe-ma-exemptions"
+      ],
+      "section": "MGL c.62 s.3 B(b)(1), (1A), (2), (3)",
+      "confidence": "secondary",
+      "note": "The statute sets base amounts that rise to caps of $4,400 single, $6,800 head of household and $8,800 joint, plus $1,000 per dependent. That the caps are the amounts in force is from Tax Foundation (2026, single and joint) and PolicyEngine (head of household). Not read from a 2026 DOR form.",
+      "kind": "deduction",
+      "single": 4400,
+      "mfj": 8800,
+      "hoh": 6800,
+      "dependent": 1000
+    },
+    "payrollTaxDeduction": {
+      "cites": [
+        "pe-ma-retirement-deduction"
+      ],
+      "confidence": "secondary",
+      "note": "Form 1 line 11: up to $2,000 per person of Social Security, Medicare and public retirement contributions. Only the filer's own payroll tax is counted, since there is one earner. Checked against PolicyEngine US 2.118.6 with oracle/compare.py on 2026-11-12.",
+      "mode": "additional",
+      "capPerEarner": 2000
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "pe-ma-exempt-status",
+      "pe-ma-retirement-deduction",
+      "ma-differences",
+      "ma-pfml-rates-2026",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "IRA flag read on mass.gov: traditional IRA contributions are not deductible for Massachusetts. The same page lists no difference for 401k deferrals, HSAs or cafeteria plan premiums, and the 2025 Form 1 instructions take wages from the federal return and the HSA deduction from federal Schedule 1. Commuter benefits are tax-free up to $335 a month, $5 below the federal limit, which is not modeled. Paid leave: employers may withhold up to 0.46% of eligible wages (0.18% family, 0.28% medical) for 2026. The no-tax thresholds and the $2,000 deduction are from PolicyEngine. Massachusetts builds its own gross income from federal gross income, so federal_agi is an approximation. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": true,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Employees pay up to 0.46% of wages, up to $184,500, for paid family and medical leave. Not included.",
+      "Massachusetts lets each earner deduct up to $2,000 of the Social Security and Medicare tax they pay. This is included.",
+      "Not modeled: no tax is owed when Massachusetts AGI is at or below $8,000 single, $14,400 head of household or $16,400 joint (plus $1,000 per dependent for the last two), and a limited income credit reduces tax just above those amounts.",
+      "There is no standard deduction.",
+      "The $440 credit is included for each child under 13. Not modeled: the same credit for a dependent who is disabled or 65 or older.",
+      "Massachusetts gives no deduction for traditional IRA contributions. This is included."
+    ],
+    "maintainerNotes": [
+      "Employees pay a paid family and medical leave contribution. Tax Foundation lists the employee share as 0.46% of eligible wages.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): our Massachusetts tax was higher by $440 per child on top of the $100 from the payroll tax deduction. Not read in a Massachusetts publication.",
+      "Replaced on 2026-11-12 when the rule was modeled: Not modeled: a deduction of up to $2,000 per person for Social Security, Medicare and public retirement contributions. Wage earners paying FICA qualify, so tax is overstated by up to $100 per earner.",
+      "Until 2026-11-12 the engine wrongly gave Massachusetts filers the federal IRA deduction. PolicyEngine and mass.gov both say there is none.",
+      "From 2027 the paid leave split changes under Chapter 101 of the Acts of 2026. The employee maximum stays 0.46%."
+    ]
+  }
+}

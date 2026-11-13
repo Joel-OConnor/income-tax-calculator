@@ -1,0 +1,170 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "KS",
+  "name": "Kansas",
+  "sources": {
+    "ksa-79-32-110": {
+      "name": "Kansas Statutes Annotated 79-32,110, Tax imposed; rates",
+      "url": "https://ksrevisor.gov/statutes/chapters/ch79/079_032_0110.html"
+    },
+    "ksa-79-32-119": {
+      "name": "Kansas Statutes Annotated 79-32,119, Kansas standard deduction",
+      "url": "https://ksrevisor.gov/statutes/chapters/ch79/079_032_0119.html"
+    },
+    "ksa-79-32-121": {
+      "name": "Kansas Statutes Annotated 79-32,121, Kansas personal exemptions",
+      "url": "https://ksrevisor.gov/statutes/chapters/ch79/079_032_0121.html"
+    },
+    "notice-25-06": {
+      "name": "Kansas Department of Revenue Notice 25-06, Decreases of Income and Privilege Tax Rates, Contingent on Revenue (October 2, 2025)",
+      "url": "https://ksrevenue.gov/taxnotices/notice25-06.pdf"
+    },
+    "ip25": {
+      "name": "Kansas Department of Revenue, 2025 Individual Income Tax booklet (Form K-40 instructions)",
+      "url": "https://www.ksrevenue.gov/pdf/ip25.pdf"
+    },
+    "pe-ks-hoh-exemption": {
+      "name": "PolicyEngine US parameters, KS head of household additional exemption (cites the K-40 form and instructions)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ks/tax/income/exemptions/by_filing_status/hoh_additional_amount.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "ks-intangibles": {
+      "name": "Kansas Department of Revenue, intangibles tax",
+      "url": "https://www.ksrevenue.gov/perstaxtypesint.html"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "ksa-79-32-205": {
+      "name": "K.S.A. 79-32,205, earned income tax credit",
+      "url": "https://kslegislature.gov/b2025_26/laws/079_000_0000_chapter/079_032_0000_article/079_032_0205_section/079_032_0205_k/"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ksa-79-32-110",
+        "notice-25-06",
+        "ip25",
+        "tf-2026"
+      ],
+      "section": "K.S.A. 79-32,110(a)(1) and (a)(2), schedules for tax year 2024 and all tax years thereafter",
+      "confidence": "primary",
+      "note": "The statute's schedules apply to 2024 and every later year unless the rates are cut under K.S.A. 79-32,110c. Notice 25-06 says there is no rate reduction for tax year 2026. The brackets reproduce the statute's amounts at the top threshold ($1,196 for all other individuals, $2,392 for joint). Head of household uses the schedule for all other individuals, the same as single. Tax Foundation and PolicyEngine agree. The rates are not indexed.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.052
+        },
+        {
+          "from": 23000,
+          "rate": 0.0558
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.052
+        },
+        {
+          "from": 46000,
+          "rate": 0.0558
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.052
+        },
+        {
+          "from": 23000,
+          "rate": 0.0558
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "ksa-79-32-205"
+      ],
+      "section": "K.S.A. 79-32,205(a) and (b)",
+      "confidence": "primary",
+      "note": "\"17% for tax year 2013, and all tax years thereafter\" of the federal credit, with the excess over tax refunded. Residents only.",
+      "name": "Kansas earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.17,
+        0.17,
+        0.17,
+        0.17
+      ]
+    },
+    "standardDeduction": {
+      "cites": [
+        "ksa-79-32-119",
+        "ip25",
+        "tf-2026"
+      ],
+      "section": "K.S.A. 79-32,119(c)(2), amounts for tax year 2024 and all tax years thereafter",
+      "confidence": "primary",
+      "note": "Fixed in statute and not indexed. The 2025 booklet prints the same amounts. Tax Foundation agrees on single and joint.",
+      "single": 3605,
+      "mfj": 8240,
+      "hoh": 6180
+    },
+    "personalExemption": {
+      "cites": [
+        "ksa-79-32-121",
+        "ip25",
+        "pe-ks-hoh-exemption",
+        "tf-2026"
+      ],
+      "section": "K.S.A. 79-32,121(a), amounts for tax year 2025 and all tax years thereafter; 2025 booklet, Exemptions and Dependents",
+      "confidence": "primary",
+      "note": "Statute: $18,320 joint, $9,160 for every other filing status, $2,320 per dependent. The head of household figure of $11,480 is $9,160 plus an additional $2,320 exemption that the 2025 K-40 booklet allows head of household filers. That extra amount does not appear in the statute text and was read only in the 2025 booklet, so confirm it in the 2026 booklet. PolicyEngine models the same extra amount. Tax Foundation agrees on single, joint and dependent.",
+      "kind": "deduction",
+      "single": 9160,
+      "mfj": 18320,
+      "hoh": 11480,
+      "dependent": 2320
+    }
+  },
+  "rules": {
+    "cites": [
+      "ksa-79-32-119",
+      "ip25",
+      "tf-2026",
+      "ks-intangibles",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "No local tax on wages: the Kansas local intangibles tax is on earnings from savings, stocks and bonds, read on the Department of Revenue page. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Not modeled: additional standard deduction for filers who are 65 or older or blind ($850 each for single and head of household, $700 each for married, per K.S.A. 79-32,119(b)).",
+      "Not modeled: extra $2,320 exemption in the year a child is born and for a qualified disabled veteran, and the food sales tax credit."
+    ],
+    "maintainerNotes": [
+      "Tax Foundation footnote (a) lists Kansas among states where some jurisdictions levy payroll taxes, flat-rate wage taxes, or interest and dividend income taxes, without an average rate. From general knowledge the Kansas case is a local intangibles tax on interest and dividends in some localities, not a tax on wages, so the local flag is false. Needs checking.",
+      "Rates can drop in later years under K.S.A. 79-32,110c when state revenue beats an inflation-adjusted base. KDOR Notice 26-11 (October 2026) covers the August 2026 determination, which would apply to tax year 2027. It was not read here. Recheck for 2027."
+    ]
+  }
+}

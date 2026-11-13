@@ -1,0 +1,140 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "MI",
+  "name": "Michigan",
+  "sources": {
+    "mcl-206-51": {
+      "name": "Michigan Compiled Laws 206.51, Income Tax Act of 1967, tax rate",
+      "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-206-51"
+    },
+    "pe-mi-rate": {
+      "name": "PolicyEngine US parameters, MI income tax rate (cites the Michigan Treasury notice of April 15, 2026 on the 2026 rate)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/mi/tax/income/rate.yaml"
+    },
+    "pe-mi-exemption": {
+      "name": "PolicyEngine US parameters, MI personal exemption (cites the Michigan 2026 Income Tax Withholding Guide, Form 446)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/mi/tax/income/exemptions/personal.yaml"
+    },
+    "pe-mi-tips-overtime": {
+      "name": "PolicyEngine US parameters, MI qualified tips and overtime deduction in effect (cites Public Act 24 of 2025 and MCL 206.30)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/mi/tax/income/deductions/qualified_tips_and_overtime/in_effect.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "mi-treasury-rate-2026": {
+      "name": "Michigan Treasury notice, 4.25% Income Tax Rate for Individuals and Fiduciaries in 2026 Tax Year (April 15, 2026)",
+      "url": "https://www.michigan.gov/treasury/reference/taxpayer-notices/2026/04/15/425-income-tax-rate-for-individuals-and-fiduciaries-in-2026-tax-year"
+    },
+    "mi-withholding-by-year": {
+      "name": "Michigan Treasury, Withholding Tax Information by Calendar Year",
+      "url": "https://www.michigan.gov/taxes/business-taxes/withholding/calendar-year-tax-information"
+    },
+    "tf-local-2023": {
+      "name": "Tax Foundation, Local Income Taxes: A Primer (2023, updated 2024), Table 2",
+      "url": "https://taxfoundation.org/research/all/state/local-income-taxes-2023/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "mcl-206-272": {
+      "name": "MCL 206.272, Michigan earned income tax credit",
+      "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-206-272"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "mi-treasury-rate-2026",
+        "mcl-206-51",
+        "pe-mi-rate",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "Flat rate, same for every filing status. The statute sets 4.25% but allows a formula-based cut in some years. The Treasury notice of April 15, 2026 confirms no cut applies and the 2026 rate is 4.25%. PolicyEngine and Tax Foundation agree.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0425
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0425
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0425
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "mcl-206-272"
+      ],
+      "section": "MCL 206.272(1)(d) and (3)",
+      "confidence": "primary",
+      "note": "\"For tax years that begin after December 31, 2022, 30%\" of the federal credit, with the excess refunded.",
+      "name": "Michigan earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    "standardDeduction": null,
+    "personalExemption": {
+      "cites": [
+        "mi-withholding-by-year",
+        "pe-mi-exemption",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "$5,900 per person for 2026 (filer, spouse and each dependent), indexed yearly. Read on the Treasury withholding page. PolicyEngine and Tax Foundation agree.",
+      "kind": "deduction",
+      "single": 5900,
+      "mfj": 11800,
+      "hoh": 5900,
+      "dependent": 5900
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "pe-mi-tips-overtime",
+      "tf-local-2023",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "The tips and overtime deduction is from PolicyEngine. Detroit's 2.4% is from Tax Foundation's table. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": true,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Detroit and a number of other Michigan cities levy their own income taxes on residents and on nonresidents who work there. Not modeled.",
+      "Not modeled: for tax years 2026 through 2028 Michigan allows a deduction for federally qualified tips and qualified overtime pay.",
+      "There is no standard deduction for filers below retirement age."
+    ],
+    "maintainerNotes": []
+  }
+}

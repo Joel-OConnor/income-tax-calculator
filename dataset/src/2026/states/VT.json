@@ -1,0 +1,209 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "VT",
+  "name": "Vermont",
+  "sources": {
+    "vt-in114-2026": {
+      "name": "Vermont Department of Taxes, 2026 Form IN-114 Instructions, \"2026 Preliminary Vermont Tax Rates\" (Rev. 10/25)",
+      "url": "https://tax.vermont.gov/sites/tax/files/documents/IN-114-Instr-2026.pdf"
+    },
+    "vt-booklet-2025": {
+      "name": "Vermont Department of Taxes, 2025 Income Tax Return Booklet (Form IN-111 lines 4 and 5e)",
+      "url": "https://tax.vermont.gov/sites/tax/files/documents/Income-Booklet-2025.pdf"
+    },
+    "vt-gb1210-2026": {
+      "name": "Vermont Department of Taxes, 2026 Income Tax Withholding Instructions, Tables, and Charts (GB-1210)",
+      "url": "https://tax.vermont.gov/sites/tax/files/documents/GB-1210-2026.pdf"
+    },
+    "vt-ccc": {
+      "name": "Vermont Department of Taxes, Child Care Contribution",
+      "url": "https://tax.vermont.gov/business/child-care-contribution"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "vt-32-5830f": {
+      "name": "32 V.S.A. 5830f, Vermont child tax credit, as amended by Act 71 of 2025",
+      "url": "https://legislature.vermont.gov/statutes/section/32/151/05830f"
+    },
+    "vt-32-5828b": {
+      "name": "32 V.S.A. 5828b, Vermont earned income tax credit",
+      "url": "https://legislature.vermont.gov/statutes/section/32/151/05828b"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "vt-in114-2026",
+        "tf-2026"
+      ],
+      "section": "2026 Preliminary Vermont Tax Rates, Schedules X, Y-1 and Z",
+      "confidence": "primary",
+      "note": "The department labels these 2026 schedules preliminary. Recheck against the final 2026 rate schedules when the 2026 return booklet is out. The printed base tax for the top bracket ($16,601 single, $18,916 joint, $17,630 head of household) is reproduced by these brackets. Tax Foundation shows the 2025 thresholds and says so in its footnote (j).",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0335
+        },
+        {
+          "from": 50750,
+          "rate": 0.066
+        },
+        {
+          "from": 122850,
+          "rate": 0.076
+        },
+        {
+          "from": 256300,
+          "rate": 0.0875
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0335
+        },
+        {
+          "from": 84700,
+          "rate": 0.066
+        },
+        {
+          "from": 204750,
+          "rate": 0.076
+        },
+        {
+          "from": 312050,
+          "rate": 0.0875
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0335
+        },
+        {
+          "from": 68000,
+          "rate": 0.066
+        },
+        {
+          "from": 175500,
+          "rate": 0.076
+        },
+        {
+          "from": 284150,
+          "rate": 0.0875
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "vt-32-5828b"
+      ],
+      "section": "32 V.S.A. 5828b(a) and (b)",
+      "confidence": "primary",
+      "note": "\"for an individual who claims one or more qualifying children 38 percent or for an individual who does not claim one or more qualifying children 100 percent\" of the federal credit, refundable. The 100% is from Act 71 of 2025.",
+      "name": "Vermont earned income tax credit",
+      "refundable": true,
+      "match": [
+        1,
+        0.38,
+        0.38,
+        0.38
+      ]
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "vt-32-5830f",
+          "vt-booklet-2025"
+        ],
+        "section": "32 V.S.A. 5830f(a) and (b); 2025 income tax booklet, child tax credit table",
+        "confidence": "primary",
+        "note": "$1,000 per qualifying child \"six years of age or younger as of the close of the calendar year\" (raised from five by Act 71 of 2025), refundable. Each child's credit is reduced \"by $20.00 for each $1,000.00, or fraction thereof\" of adjusted gross income over $125,000, whatever the filing status. The booklet table confirms it is per child and is zero from $174,001.",
+        "name": "Vermont child tax credit",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 7,
+            "amount": 1000
+          }
+        ],
+        "phaseOut": {
+          "basis": "federal_agi",
+          "start": {
+            "single": 125000,
+            "mfj": 125000,
+            "hoh": 125000
+          },
+          "amount": 20,
+          "per": 1000,
+          "rounding": "up",
+          "appliesTo": "each"
+        }
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "vt-booklet-2025",
+        "tf-2026"
+      ],
+      "section": "2025 Form IN-111 instructions, Line 4",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "2025 amounts. The deduction is indexed yearly and the 2026 amounts were not published as of November 2026. The 2026 preliminary bracket thresholds are about 2.7% above 2025, so expect the 2026 single amount to be about $200 higher. Tax Foundation shows the same 2025 single and joint amounts and footnotes them as 2025.",
+      "single": 7650,
+      "mfj": 15300,
+      "hoh": 11450
+    },
+    "personalExemption": {
+      "cites": [
+        "vt-booklet-2025",
+        "vt-gb1210-2026",
+        "tf-2026"
+      ],
+      "section": "2025 Form IN-111, Line 5e",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "2025 amount of $5,300 per exemption (filer, spouse and each dependent). Indexed yearly. The 2026 withholding guide sets one annual withholding allowance at $5,400, which suggests the 2026 exemption will be $5,400, but the department had not published the 2026 exemption itself as of November 2026.",
+      "kind": "deduction",
+      "single": 5300,
+      "mfj": 10600,
+      "hoh": 5300,
+      "dependent": 5300
+    }
+  },
+  "rules": {
+    "cites": [
+      "vt-ccc",
+      "tf-2026",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "No local income taxes per Tax Foundation footnote (a), which does not list Vermont. The payroll tax flag is read on the department's Child Care Contribution page: employers may withhold up to 0.11% of wages. The 3% minimum tax is from Tax Foundation footnote (hh). Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Vermont's Child Care Contribution is a 0.44% payroll tax on wages. Employers may choose to withhold up to a quarter of it (0.11% of wages) from employees, so some employees see it on their pay stub and some do not.",
+      "Not modeled: filers with federal AGI over $150,000 pay the greater of the bracket tax or 3% of federal AGI.",
+      "Not modeled: an extra standard deduction for filers who are 65 or older or blind ($1,250 each for 2025)."
+    ],
+    "maintainerNotes": [
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): our Vermont tax was about $1,000 higher for a joint filer at $90,000 with children aged 5 and 10."
+    ]
+  }
+}

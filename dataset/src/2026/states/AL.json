@@ -1,0 +1,518 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "AL",
+  "name": "Alabama",
+  "sources": {
+    "al-wh-2026": {
+      "name": "Alabama Department of Revenue, Withholding Tax Tables and Instructions for Employers and Withholding Agents (revised January 2026)",
+      "url": "https://www.revenue.alabama.gov/wp-content/uploads/2026/01/whbooklet_0126.pdf"
+    },
+    "al-f40-2025": {
+      "name": "Alabama Department of Revenue, 2025 Form 40 Booklet (instructions, standard deduction chart, tax table)",
+      "url": "https://www.revenue.alabama.gov/wp-content/uploads/2026/01/25f40bk.pdf"
+    },
+    "pe-al-std-max": {
+      "name": "PolicyEngine US parameters, AL standard deduction maximum amount (cites Code of Alabama 40-18-15 and Form 40 booklets)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/al/tax/income/deductions/standard/amount/max.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-al-federal-tax": {
+      "name": "PolicyEngine US parameters, AL federal income tax deduction (cites the 2024 Alabama income tax instructions, page 31)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/al/tax/income/deductions/federal_tax/credits.yaml"
+    },
+    "pe-al-itemized": {
+      "name": "PolicyEngine US parameters, AL itemized deduction sources (cites Alabama Schedule A and the 2024 instructions, page 18)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/al/tax/income/deductions/itemized/sources.yaml"
+    },
+    "tf-local-2023": {
+      "name": "Tax Foundation, Local Income Taxes: A Primer (2023, updated 2024), Table 2",
+      "url": "https://taxfoundation.org/research/all/state/local-income-taxes-2023/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "al-wh-2026",
+        "al-f40-2025",
+        "tf-2026"
+      ],
+      "section": "Formula for Computing Alabama Withholding Tax, line 5 (page 6)",
+      "confidence": "primary",
+      "note": "Read from the January 2026 withholding formula, which gives one schedule for single, head of family and married filing separately, and another for married filing jointly. Head of household uses the single schedule. The 2025 Form 40 tax table reproduces from these rates ($758 single and $718 joint at $15,900 to $16,000 of taxable income). Tax Foundation agrees for single and joint. Rates are statutory and not indexed.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 500,
+          "rate": 0.04
+        },
+        {
+          "from": 3000,
+          "rate": 0.05
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 1000,
+          "rate": 0.04
+        },
+        {
+          "from": 6000,
+          "rate": 0.05
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 500,
+          "rate": 0.04
+        },
+        {
+          "from": 3000,
+          "rate": 0.05
+        }
+      ]
+    },
+    "surtaxes": [],
+    "standardDeduction": {
+      "cites": [
+        "al-wh-2026",
+        "al-f40-2025",
+        "pe-al-std-max",
+        "tf-2026"
+      ],
+      "section": "Schedule of Standard Deduction Amounts (page 7)",
+      "confidence": "primary",
+      "note": "These are the maximum amounts, which apply at Alabama AGI of $25,999 or less. phaseOut reproduces the official chart: from $26,000 the deduction drops for each $500 tier of Alabama AGI ($26,000 to $26,499 is the first), by $25 single, $175 joint and $135 head of family per tier, until it reaches the floor of $2,500 single, $5,000 joint and $2,500 head of family at $35,500 and above. All 21 rows of each chart were checked against the schedule. Same chart in the 2026 withholding booklet and the 2025 Form 40 booklet. PolicyEngine and Tax Foundation agree on the maximums.",
+      "single": 3000,
+      "mfj": 8500,
+      "hoh": 5200,
+      "phaseOut": {
+        "basis": "state_agi",
+        "unit": "amount",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 3000
+            },
+            {
+              "income": 25999,
+              "value": 2975
+            },
+            {
+              "income": 26499,
+              "value": 2950
+            },
+            {
+              "income": 26999,
+              "value": 2925
+            },
+            {
+              "income": 27499,
+              "value": 2900
+            },
+            {
+              "income": 27999,
+              "value": 2875
+            },
+            {
+              "income": 28499,
+              "value": 2850
+            },
+            {
+              "income": 28999,
+              "value": 2825
+            },
+            {
+              "income": 29499,
+              "value": 2800
+            },
+            {
+              "income": 29999,
+              "value": 2775
+            },
+            {
+              "income": 30499,
+              "value": 2750
+            },
+            {
+              "income": 30999,
+              "value": 2725
+            },
+            {
+              "income": 31499,
+              "value": 2700
+            },
+            {
+              "income": 31999,
+              "value": 2675
+            },
+            {
+              "income": 32499,
+              "value": 2650
+            },
+            {
+              "income": 32999,
+              "value": 2625
+            },
+            {
+              "income": 33499,
+              "value": 2600
+            },
+            {
+              "income": 33999,
+              "value": 2575
+            },
+            {
+              "income": 34499,
+              "value": 2550
+            },
+            {
+              "income": 34999,
+              "value": 2525
+            },
+            {
+              "income": 35499,
+              "value": 2500
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 8500
+            },
+            {
+              "income": 25999,
+              "value": 8325
+            },
+            {
+              "income": 26499,
+              "value": 8150
+            },
+            {
+              "income": 26999,
+              "value": 7975
+            },
+            {
+              "income": 27499,
+              "value": 7800
+            },
+            {
+              "income": 27999,
+              "value": 7625
+            },
+            {
+              "income": 28499,
+              "value": 7450
+            },
+            {
+              "income": 28999,
+              "value": 7275
+            },
+            {
+              "income": 29499,
+              "value": 7100
+            },
+            {
+              "income": 29999,
+              "value": 6925
+            },
+            {
+              "income": 30499,
+              "value": 6750
+            },
+            {
+              "income": 30999,
+              "value": 6575
+            },
+            {
+              "income": 31499,
+              "value": 6400
+            },
+            {
+              "income": 31999,
+              "value": 6225
+            },
+            {
+              "income": 32499,
+              "value": 6050
+            },
+            {
+              "income": 32999,
+              "value": 5875
+            },
+            {
+              "income": 33499,
+              "value": 5700
+            },
+            {
+              "income": 33999,
+              "value": 5525
+            },
+            {
+              "income": 34499,
+              "value": 5350
+            },
+            {
+              "income": 34999,
+              "value": 5175
+            },
+            {
+              "income": 35499,
+              "value": 5000
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 5200
+            },
+            {
+              "income": 25999,
+              "value": 5065
+            },
+            {
+              "income": 26499,
+              "value": 4930
+            },
+            {
+              "income": 26999,
+              "value": 4795
+            },
+            {
+              "income": 27499,
+              "value": 4660
+            },
+            {
+              "income": 27999,
+              "value": 4525
+            },
+            {
+              "income": 28499,
+              "value": 4390
+            },
+            {
+              "income": 28999,
+              "value": 4255
+            },
+            {
+              "income": 29499,
+              "value": 4120
+            },
+            {
+              "income": 29999,
+              "value": 3985
+            },
+            {
+              "income": 30499,
+              "value": 3850
+            },
+            {
+              "income": 30999,
+              "value": 3715
+            },
+            {
+              "income": 31499,
+              "value": 3580
+            },
+            {
+              "income": 31999,
+              "value": 3445
+            },
+            {
+              "income": 32499,
+              "value": 3310
+            },
+            {
+              "income": 32999,
+              "value": 3175
+            },
+            {
+              "income": 33499,
+              "value": 3040
+            },
+            {
+              "income": 33999,
+              "value": 2905
+            },
+            {
+              "income": 34499,
+              "value": 2770
+            },
+            {
+              "income": 34999,
+              "value": 2635
+            },
+            {
+              "income": 35499,
+              "value": 2500
+            }
+          ]
+        }
+      }
+    },
+    "personalExemption": {
+      "cites": [
+        "al-wh-2026",
+        "al-f40-2025",
+        "tf-2026"
+      ],
+      "section": "Formula for Computing Alabama Withholding Tax, lines 2C and 2D (page 6)",
+      "confidence": "primary",
+      "note": "Head of family gets the same $3,000 as a joint return. The dependent amount depends on Alabama AGI and phaseOut holds the tiers: $1,000 at $50,000 or less, $500 above $50,000 up to $100,000, and $300 above $100,000, the same for every filing status. Both the 2026 withholding booklet and the 2025 Form 40 instructions give these three tiers. Tax Foundation agrees on the single, joint and $1,000 dependent amounts.",
+      "kind": "deduction",
+      "single": 1500,
+      "mfj": 3000,
+      "hoh": 3000,
+      "dependent": 1000,
+      "phaseOut": {
+        "basis": "state_agi",
+        "appliesTo": "dependent",
+        "unit": "amount",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 1000
+            },
+            {
+              "income": 50000,
+              "value": 500
+            },
+            {
+              "income": 100000,
+              "value": 300
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 1000
+            },
+            {
+              "income": 50000,
+              "value": 500
+            },
+            {
+              "income": 100000,
+              "value": 300
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 1000
+            },
+            {
+              "income": 50000,
+              "value": 500
+            },
+            {
+              "income": 100000,
+              "value": 300
+            }
+          ]
+        }
+      }
+    },
+    "federalTaxDeduction": {
+      "cites": [
+        "pe-al-federal-tax"
+      ],
+      "confidence": "secondary",
+      "note": "Alabama deducts federal income tax after credits in full, with no cap. Checked against PolicyEngine US 2.118.6 with oracle/compare.py on 2026-11-12. Not read in the Alabama instructions directly.",
+      "share": {
+        "basis": "state_agi",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 1
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 1
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 1
+            }
+          ]
+        }
+      }
+    },
+    "payrollTaxDeduction": {
+      "cites": [
+        "pe-al-itemized"
+      ],
+      "confidence": "secondary",
+      "note": "Alabama's Schedule A lets itemizers deduct the employee share of Social Security and Medicare tax. It is the only itemized deduction modeled, so it is used whenever it beats the standard deduction. Checked against PolicyEngine US 2.118.6 with oracle/compare.py on 2026-11-12. Not read on Alabama's Schedule A directly.",
+      "mode": "insteadOfStandardDeduction"
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "al-f40-2025",
+      "al-wh-2026",
+      "tf-local-2023",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "The federal tax deduction and retirement contribution notes are from the Department of Revenue publications cited. 401k, IRA, HSA and cafeteria plan treatment read in the 2025 Form 40 booklet and the withholding guide, which list sections 125 and 401(k) as recognized by Alabama. Birmingham's 1% occupational tax is from Tax Foundation's table. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": true,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Some Alabama cities and counties levy occupational taxes on wages. Birmingham's is 1%. Not included.",
+      "Alabama lets filers deduct their federal income tax. This is included.",
+      "Alabama builds its own adjusted gross income instead of starting from federal AGI. For ordinary wage earners the two match.",
+      "State of Alabama employees' contributions to the state retirement systems are taxable for Alabama even though they are deferred federally. Not modeled.",
+      "Alabama lets itemizers deduct the Social Security and Medicare tax they pay. This is used in place of the standard deduction whenever it is larger, which is the case for most people earning over about $33,000."
+    ],
+    "maintainerNotes": [
+      "Not modeled: Alabama lets filers deduct their federal income tax (2025 Form 40 instructions, line 12, and line 2B of the 2026 withholding formula). Alabama tax is overstated by about 5% of the filer's federal income tax.",
+      "Alabama builds its own adjusted gross income on Form 40 instead of starting from federal AGI. For ordinary wage earners the two match, so the starting point is set to federal_agi.",
+      "State of Alabama employees' contributions to the state retirement systems are taxable for Alabama even though they are deferred federally (2025 Form 40 instructions, line 5 note). This is not the same as 401k contributions.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): at every income tested our Alabama tax was higher by 5% of (federal income tax + Social Security and Medicare tax - $2,500), from $159 at $40,000 single to $3,216 at $250,000. PolicyEngine itemizes for Alabama using FICA. Modeling the federal tax deduction and FICA itemizing would close this.",
+      "Replaced on 2026-11-12 when the rule was modeled: Not modeled: Alabama lets filers deduct their federal income tax, so Alabama tax here is overstated by about 5% of your federal income tax.",
+      "Replaced on 2026-11-12 when the rule was modeled: Not modeled: Alabama lets itemizers deduct the Social Security and Medicare tax they pay. That beats the standard deduction for most people earning over about $33,000, so Alabama tax here is overstated for them."
+    ]
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "NE",
+  "name": "Nebraska",
+  "sources": {
+    "ne-1040n-es-2026": {
+      "name": "Nebraska Department of Revenue, 2026 Form 1040N-ES, Nebraska Individual Estimated Income Tax Payment Vouchers",
+      "url": "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/2025/f_1040N-ES.pdf"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "ne-77-2715-07": {
+      "name": "Neb. Rev. Stat. 77-2715.07, credits against income tax",
+      "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.07"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ne-1040n-es-2026",
+        "tf-2026"
+      ],
+      "section": "2026 Nebraska Estimated Income Tax Rate Schedule, page 6",
+      "confidence": "primary",
+      "note": "The schedule prints four brackets, but for 2026 the third and fourth are both 4.55% (the schedule says so, citing Neb. Rev. Stat. 77-2715.03), so they are merged here. The dropped thresholds are $39,900 single, $79,800 joint and $59,160 head of household. Cumulative check: the schedule's fourth-bracket base amounts of $1,514.58 (single), $3,029.16 (joint) and $2,198.88 (head of household) are reproduced by these brackets. Tax Foundation shows the same three-bracket form. PolicyEngine agrees and shows the top rate falling to 3.99% for 2027.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0246
+        },
+        {
+          "from": 4130,
+          "rate": 0.0351
+        },
+        {
+          "from": 24760,
+          "rate": 0.0455
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0246
+        },
+        {
+          "from": 8250,
+          "rate": 0.0351
+        },
+        {
+          "from": 49530,
+          "rate": 0.0455
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0246
+        },
+        {
+          "from": 7700,
+          "rate": 0.0351
+        },
+        {
+          "from": 39620,
+          "rate": 0.0455
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "ne-77-2715-07"
+      ],
+      "section": "77-2715.07(2)(e)",
+      "confidence": "primary",
+      "note": "\"A refundable credit equal to ten percent of the federal credit allowed under section 32\". Not for nonresidents.",
+      "name": "Nebraska earned income credit",
+      "refundable": true,
+      "match": [
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ]
+    },
+    "standardDeduction": {
+      "cites": [
+        "ne-1040n-es-2026",
+        "tf-2026"
+      ],
+      "section": "Nebraska Individual Estimated Income Tax Worksheet, line 5",
+      "confidence": "primary",
+      "note": "Tax Foundation agrees for single and joint. Filers who are 65 or older or blind get an additional amount ($2,050 unmarried, $1,700 married, per condition), not modeled.",
+      "single": 8850,
+      "mfj": 17700,
+      "hoh": 12950
+    },
+    "personalExemption": {
+      "cites": [
+        "ne-1040n-es-2026",
+        "tf-2026"
+      ],
+      "section": "2026 Nebraska Estimated Income Tax Rate Schedule, header note",
+      "confidence": "primary",
+      "note": "A $176 credit for each Nebraska personal exemption (filer, spouse and each dependent). Tax Foundation shows the same amounts.",
+      "kind": "credit",
+      "single": 176,
+      "mfj": 352,
+      "hoh": 176,
+      "dependent": 176
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "No local income tax: Nebraska is not in Tax Foundation footnote (a). Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Not modeled: Nebraska's child care credits for lower incomes, which need a child in licensed care and an application."
+    ],
+    "maintainerNotes": [
+      "Child Care Refundable Tax Credit (https://revenue.nebraska.gov/node/1425), read 2026-11-12: $2,000 per child under 6 at household income up to $75,000, $1,000 up to $150,000, but only for a child in licensed child care, by application on Form 7203, and capped at $15 million a year statewide. Not something to compute from income and age, so it stays in the general note."
+    ]
+  }
+}

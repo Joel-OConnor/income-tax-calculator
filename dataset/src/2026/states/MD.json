@@ -1,0 +1,367 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "MD",
+  "name": "Maryland",
+  "sources": {
+    "md-pvw-2026": {
+      "name": "Comptroller of Maryland, 2026 Payment Voucher Worksheet for Estimated Tax and Extension Payments (PVW)",
+      "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/forms/worksheets/2026-pv-worksheet.pdf"
+    },
+    "md-withholding-2026": {
+      "name": "Comptroller of Maryland, 2026 Maryland Employer Withholding Guide (revised December 2025)",
+      "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/withholding/2026/withholding-guide.pdf"
+    },
+    "tg-10-105": {
+      "name": "Maryland Code, Tax-General section 10-105, State income tax rates",
+      "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-105&enactments=false"
+    },
+    "tg-10-217": {
+      "name": "Maryland Code, Tax-General section 10-217, Standard deduction",
+      "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-217&enactments=false"
+    },
+    "tg-10-211": {
+      "name": "Maryland Code, Tax-General section 10-211, Exemptions",
+      "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-211&enactments=false"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "md-paid-leave": {
+      "name": "Maryland Paid Leave, employer contributions",
+      "url": "https://paidleave.maryland.gov/employers/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "tg-10-751": {
+      "name": "Maryland Tax-General Article 10-751, child tax credit",
+      "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-751&enactments=false"
+    },
+    "md-booklet-2025": {
+      "name": "Comptroller of Maryland, 2025 Resident Tax Booklet, Worksheet 21C",
+      "url": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/2025/resident-booklet.pdf"
+    },
+    "tg-10-704": {
+      "name": "Maryland Tax-General Article 10-704, earned income credit",
+      "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtg&section=10-704&enactments=false"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "md-pvw-2026",
+        "tg-10-105",
+        "tf-2026"
+      ],
+      "section": "PVW Tax Rate Schedules I and II",
+      "confidence": "primary",
+      "note": "Read from the 2026 estimated tax worksheet and the statute. Head of household uses the joint schedule (Schedule II). The brackets reproduce the printed top-bracket figures: $58,385.00 at $1,000,000 (Schedule I) and $69,822.50 at $1,200,000 (Schedule II). Tax Foundation agrees for single and joint.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 1000,
+          "rate": 0.03
+        },
+        {
+          "from": 2000,
+          "rate": 0.04
+        },
+        {
+          "from": 3000,
+          "rate": 0.0475
+        },
+        {
+          "from": 100000,
+          "rate": 0.05
+        },
+        {
+          "from": 125000,
+          "rate": 0.0525
+        },
+        {
+          "from": 150000,
+          "rate": 0.055
+        },
+        {
+          "from": 250000,
+          "rate": 0.0575
+        },
+        {
+          "from": 500000,
+          "rate": 0.0625
+        },
+        {
+          "from": 1000000,
+          "rate": 0.065
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 1000,
+          "rate": 0.03
+        },
+        {
+          "from": 2000,
+          "rate": 0.04
+        },
+        {
+          "from": 3000,
+          "rate": 0.0475
+        },
+        {
+          "from": 150000,
+          "rate": 0.05
+        },
+        {
+          "from": 175000,
+          "rate": 0.0525
+        },
+        {
+          "from": 225000,
+          "rate": 0.055
+        },
+        {
+          "from": 300000,
+          "rate": 0.0575
+        },
+        {
+          "from": 600000,
+          "rate": 0.0625
+        },
+        {
+          "from": 1200000,
+          "rate": 0.065
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.02
+        },
+        {
+          "from": 1000,
+          "rate": 0.03
+        },
+        {
+          "from": 2000,
+          "rate": 0.04
+        },
+        {
+          "from": 3000,
+          "rate": 0.0475
+        },
+        {
+          "from": 150000,
+          "rate": 0.05
+        },
+        {
+          "from": 175000,
+          "rate": 0.0525
+        },
+        {
+          "from": 225000,
+          "rate": 0.055
+        },
+        {
+          "from": 300000,
+          "rate": 0.0575
+        },
+        {
+          "from": 600000,
+          "rate": 0.0625
+        },
+        {
+          "from": 1200000,
+          "rate": 0.065
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "tg-10-704",
+        "md-booklet-2025"
+      ],
+      "section": "Tax-General 10-704(c)(1) to (3); 2025 resident booklet, Instruction 18",
+      "confidence": "primary",
+      "note": "With a child: a nonrefundable credit of 50% of the federal credit up to the state tax, or a refund of the amount by which 45% of it exceeds the tax, which comes to the better of the two. Without a child: 100% of the federal credit, refundable, with no cap since 2023, and computed \"without regard to the minimum age requirement\", so under-25s qualify and 65 and over do not. The Comptroller's booklet limits the 100% to unmarried filers and sends married couples without children to the 50% and 45% worksheet. That split is not modeled: every filer without a child gets 100% here. The separate county credit is not modeled.",
+      "name": "Maryland earned income credit",
+      "refundable": true,
+      "match": [
+        1,
+        0.45,
+        0.45,
+        0.45
+      ],
+      "nonrefundableMatch": [
+        0,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "childlessMinAge": 0
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "tg-10-751",
+          "md-booklet-2025"
+        ],
+        "section": "Tax-General 10-751(b) to (d); 2025 resident booklet Worksheet 21C",
+        "confidence": "primary",
+        "note": "$500 for each dependent \"under the age of 6 years\" on the last day of the year, refundable, no cap. Each child's $500 is reduced \"by $50 for each $1,000, or fraction thereof\" of federal AGI over $15,000, the same for every filing status, so nothing is left from $24,001. The worksheet shows the reduction is per child. A child under 17 with a disability also qualifies, which the calculator cannot tell. Not indexed. The 2026 booklet was not out on 2026-11-12.",
+        "name": "Maryland child tax credit",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 6,
+            "amount": 500
+          }
+        ],
+        "phaseOut": {
+          "basis": "federal_agi",
+          "start": {
+            "single": 15000,
+            "mfj": 15000,
+            "hoh": 15000
+          },
+          "amount": 50,
+          "per": 1000,
+          "rounding": "up",
+          "appliesTo": "each"
+        }
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "md-pvw-2026",
+        "tg-10-217",
+        "md-withholding-2026",
+        "tf-2026"
+      ],
+      "section": "PVW Line 4; Tax-General 10-217(b)",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "These are the 2025 statutory amounts ($3,350, and $6,700 for joint, head of household and surviving spouse). The statute indexes them for tax years after 2025, rounding the increase down to a multiple of $50. Official 2026 documents disagree: the 2026 PVW worksheet still prints $3,350 and $6,700, while the 2026 withholding guide uses $3,400. So the 2026 single amount is probably $3,400, and the joint amount ($6,800 or $6,850 depending on rounding) was not found in any Comptroller publication. Tax Foundation shows $3,350 and $6,700. Recheck when the 2026 Form 502 instructions are out.",
+      "single": 3350,
+      "mfj": 6700,
+      "hoh": 6700
+    },
+    "personalExemption": {
+      "cites": [
+        "md-pvw-2026",
+        "tg-10-211",
+        "tf-2026"
+      ],
+      "section": "PVW Line 6 exemption chart; Tax-General 10-211(b) and (c)",
+      "confidence": "primary",
+      "note": "$3,200 per exemption for filer, spouse and each dependent. Rule (Tax-General 10-211(c), same as the 2026 PVW chart): each exemption is $3,200 when federal AGI is $100,000 or less, $1,600 when over $100,000 but not over $125,000, $800 when over $125,000 but not over $150,000, and $0 above $150,000. For joint filers, heads of household and surviving spouses the tiers are $150,000, $175,000 and $200,000. The tiers cut every regular exemption, dependents included, so the schedule is a fraction of the full amount (1, 0.5, 0.25, 0) applied to all. It replaces the earlier agiLimit, which is the last tier. The $1,000 extra exemptions for age 65 or blindness are not reduced and are not in this file. Tax Foundation agrees.",
+      "kind": "deduction",
+      "single": 3200,
+      "mfj": 6400,
+      "hoh": 3200,
+      "dependent": 3200,
+      "phaseOut": {
+        "basis": "federal_agi",
+        "appliesTo": "all",
+        "unit": "fraction",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 100000,
+              "value": 0.5
+            },
+            {
+              "income": 125000,
+              "value": 0.25
+            },
+            {
+              "income": 150000,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 150000,
+              "value": 0.5
+            },
+            {
+              "income": 175000,
+              "value": 0.25
+            },
+            {
+              "income": 200000,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 150000,
+              "value": 0.5
+            },
+            {
+              "income": 175000,
+              "value": 0.25
+            },
+            {
+              "income": 200000,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "md-withholding-2026",
+      "md-pvw-2026",
+      "tf-2026",
+      "md-paid-leave",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "Local tax flag and county rates are read from the 2026 withholding guide and PVW worksheet, and Tax Foundation footnote (a) agrees. The capital gains surtax is read from the PVW worksheet. No employee payroll contribution in 2026: paidleave.maryland.gov says payroll deductions begin January 1, 2027 (0.9% split evenly, up to the Social Security wage base). Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": true,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Every county and Baltimore City levies an income tax on Maryland taxable net income. 2026 rates run from 2.25% to 3.30%, and Anne Arundel and Frederick counties use graduated local rates. Not modeled, and it is a large share of the total.",
+      "Not modeled: an additional 2% tax on net capital gain income when federal AGI is over $350,000.",
+      "Employee paid family and medical leave contributions begin January 1, 2027, so nothing is withheld in 2026."
+    ],
+    "maintainerNotes": [
+      "Set hasStatePayrollTax to true for 2027: Maryland paid leave deductions start January 1, 2027 at 0.45% for the employee."
+    ]
+  }
+}

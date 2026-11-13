@@ -1,0 +1,230 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "DE",
+  "name": "Delaware",
+  "sources": {
+    "de-rate-table": {
+      "name": "Delaware Division of Revenue, Tax Rate Changes (personal income tax table for tax years 2014 and later)",
+      "url": "https://revenue.delaware.gov/software-developer/tax-rate-changes/"
+    },
+    "de-code-1102": {
+      "name": "Delaware Code Title 30, Chapter 11, Subchapter I, section 1102(a)(14)",
+      "url": "https://delcode.delaware.gov/title30/c011/sc01/index.html"
+    },
+    "de-code-sc02": {
+      "name": "Delaware Code Title 30, Chapter 11, Subchapter II, sections 1108 (standard deduction) and 1110 (personal credits)",
+      "url": "https://delcode.delaware.gov/title30/c011/sc02/index.html"
+    },
+    "pe-de-std": {
+      "name": "PolicyEngine US parameters, DE standard deduction (cites 30 Del. C. 1108 and PIT-RES instructions)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/de/tax/income/deductions/standard/amount.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "de-19-3705": {
+      "name": "19 Del. C. ch. 37, Delaware Paid Leave contributions",
+      "url": "https://delcode.delaware.gov/title19/c037/index.html"
+    },
+    "de-22-901": {
+      "name": "22 Del. C. ch. 9, municipal wage tax",
+      "url": "https://delcode.delaware.gov/title22/c009/"
+    },
+    "tf-local-2023": {
+      "name": "Tax Foundation, Local Income Taxes: A Primer (2023, updated 2024), Table 2",
+      "url": "https://taxfoundation.org/research/all/state/local-income-taxes-2023/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "de-30-1117": {
+      "name": "30 Del. C. 1117, earned income tax credit",
+      "url": "https://delcode.delaware.gov/title30/c011/sc02/index.html#1117"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "de-rate-table",
+        "de-code-1102",
+        "tf-2026"
+      ],
+      "section": "Personal income tax table, tax years 2014 and later; 30 Del. C. 1102(a)(14)",
+      "confidence": "primary",
+      "note": "One schedule for every filing status. The statute applies it to taxable years beginning after December 31, 2013 with no later schedule, and the Division of Revenue table says tax years 2014 and later. The brackets reproduce the printed base tax of $2,943.50 at $60,000. Tax Foundation agrees.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 2000,
+          "rate": 0.022
+        },
+        {
+          "from": 5000,
+          "rate": 0.039
+        },
+        {
+          "from": 10000,
+          "rate": 0.048
+        },
+        {
+          "from": 20000,
+          "rate": 0.052
+        },
+        {
+          "from": 25000,
+          "rate": 0.0555
+        },
+        {
+          "from": 60000,
+          "rate": 0.066
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 2000,
+          "rate": 0.022
+        },
+        {
+          "from": 5000,
+          "rate": 0.039
+        },
+        {
+          "from": 10000,
+          "rate": 0.048
+        },
+        {
+          "from": 20000,
+          "rate": 0.052
+        },
+        {
+          "from": 25000,
+          "rate": 0.0555
+        },
+        {
+          "from": 60000,
+          "rate": 0.066
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 2000,
+          "rate": 0.022
+        },
+        {
+          "from": 5000,
+          "rate": 0.039
+        },
+        {
+          "from": 10000,
+          "rate": 0.048
+        },
+        {
+          "from": 20000,
+          "rate": 0.052
+        },
+        {
+          "from": 25000,
+          "rate": 0.0555
+        },
+        {
+          "from": 60000,
+          "rate": 0.066
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "de-30-1117"
+      ],
+      "section": "30 Del. C. 1117(a)(2)",
+      "confidence": "primary",
+      "note": "The filer chooses: \"20% of the corresponding federal earned income tax credit, not to exceed the tax otherwise due\", or 4.5% of it with the excess refundable. No carryforward of the 20%. The engine takes whichever leaves less tax.",
+      "name": "Delaware earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.045,
+        0.045,
+        0.045,
+        0.045
+      ],
+      "nonrefundableMatch": [
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    "standardDeduction": {
+      "cites": [
+        "de-code-sc02",
+        "pe-de-std",
+        "tf-2026"
+      ],
+      "section": "30 Del. C. 1108(a)(3)",
+      "confidence": "primary",
+      "note": "Statutory amounts for taxable periods beginning after December 31, 1999, not indexed. $3,250 for an individual, $6,500 on a joint return. Head of household is an individual return, so $3,250, which PolicyEngine confirms. Tax Foundation agrees for single and joint. Filers 65 or older or blind get $2,500 more, not modeled.",
+      "single": 3250,
+      "mfj": 6500,
+      "hoh": 3250
+    },
+    "personalExemption": {
+      "cites": [
+        "de-code-sc02",
+        "tf-2026"
+      ],
+      "section": "30 Del. C. 1110(b)",
+      "confidence": "primary",
+      "note": "Personal credit of $110 per exemption (filer, spouse and each dependent), not indexed. The credit cannot exceed the tax due. Residents 60 or older get another $110, not modeled. Tax Foundation agrees.",
+      "kind": "credit",
+      "single": 110,
+      "mfj": 220,
+      "hoh": 110,
+      "dependent": 110
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "de-19-3705",
+      "de-22-901",
+      "tf-local-2023",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "Payroll flag read in 19 Del. C. 3705: 0.8% total for 2025 and 2026, of which the employer may deduct no more than half from the employee. Smaller employers owe less. Wilmington's 1.25% is from Tax Foundation's table, and 22 Del. C. ch. 9 caps a city wage tax at 1.25%. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": true,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Wilmington taxes the wages of people who live or work there at 1.25%. Not included.",
+      "Employers may take up to 0.4% of wages from employees for Delaware Paid Leave. Not included.",
+      "Not modeled: married couples can file separately on a combined return, which usually costs a two-earner couple less than the joint schedule used here."
+    ],
+    "maintainerNotes": [
+      "Wilmington levies a city wage tax on people who live or work there. Not modeled. The city name is from general knowledge.",
+      "Employees can be charged a share of the Delaware Paid Leave contribution, which began in 2025. From general knowledge, needs checking.",
+      "Not modeled: married couples can file separately on a combined return, so each spouse uses the brackets on their own income. A two-earner couple usually pays less this way than the joint schedule gives. From general knowledge."
+    ]
+  }
+}

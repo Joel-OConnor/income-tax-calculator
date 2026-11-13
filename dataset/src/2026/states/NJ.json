@@ -1,0 +1,339 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "NJ",
+  "name": "New Jersey",
+  "sources": {
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-nj-hoh": {
+      "name": "PolicyEngine US parameters, NJ head of household rates (cites NJ-1040 instructions and N.J.S.A. 54A:2-1)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/nj/tax/income/main/head_of_household.yaml"
+    },
+    "nj-1040i": {
+      "name": "New Jersey NJ-1040 instructions, tax rate schedules",
+      "url": "https://www.nj.gov/treasury/taxation/pdf/current/1040i.pdf"
+    },
+    "nj-tb39r": {
+      "name": "NJ Division of Taxation, Technical Bulletin TB-39(R), cafeteria plans",
+      "url": "https://www.nj.gov/treasury/taxation/pdf/pubs/tb/tb39r.pdf"
+    },
+    "nj-tb24r": {
+      "name": "NJ Division of Taxation, Technical Bulletin TB-24(R), commuter transportation benefits",
+      "url": "https://www.nj.gov/treasury/taxation/pdf/pubs/tb/tb-24R.pdf"
+    },
+    "nj-git1-2": {
+      "name": "NJ Division of Taxation, GIT-1 & 2 Retirement Income (tax year 2025)",
+      "url": "https://www.nj.gov/treasury/taxation/pdf/pubs/tgi-ee/git1&2.pdf"
+    },
+    "nj-tam-2011-14": {
+      "name": "NJ Division of Taxation, TAM 2011-14, health coverage and medical expenses",
+      "url": "https://www.nj.gov/treasury/taxation/pdf/pubs/tams/tam14.pdf"
+    },
+    "nj-labor-rates-2026": {
+      "name": "NJ Department of Labor, 2026 contribution rates and wage bases",
+      "url": "https://www.nj.gov/labor/ea/employer-services/rate-info/"
+    },
+    "nj-pl-2026-c26": {
+      "name": "New Jersey P.L.2026, c.26 (S4531), child tax credit amounts for 2026 to 2028, amending N.J.S.A. 54A:4-17.1",
+      "url": "https://pub.njleg.state.nj.us/Bills/2026/PL26/26_.PDF"
+    },
+    "nj-pl-2021-c130": {
+      "name": "New Jersey P.L.2021, c.130, amending N.J.S.A. 54A:4-7 (earned income tax credit)",
+      "url": "https://pub.njleg.gov/bills/2020/PL21/130_.PDF"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "state_gross_income",
+    "brackets": {
+      "cites": [
+        "tf-2026",
+        "pe-nj-hoh",
+        "nj-1040i"
+      ],
+      "confidence": "secondary",
+      "note": "Single and joint from Tax Foundation, head of household from PolicyEngine. The two agree where they overlap. Not yet read from the NJ-1040 instructions directly.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.014
+        },
+        {
+          "from": 20000,
+          "rate": 0.0175
+        },
+        {
+          "from": 35000,
+          "rate": 0.035
+        },
+        {
+          "from": 40000,
+          "rate": 0.05525
+        },
+        {
+          "from": 75000,
+          "rate": 0.0637
+        },
+        {
+          "from": 500000,
+          "rate": 0.0897
+        },
+        {
+          "from": 1000000,
+          "rate": 0.1075
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.014
+        },
+        {
+          "from": 20000,
+          "rate": 0.0175
+        },
+        {
+          "from": 50000,
+          "rate": 0.0245
+        },
+        {
+          "from": 70000,
+          "rate": 0.035
+        },
+        {
+          "from": 80000,
+          "rate": 0.05525
+        },
+        {
+          "from": 150000,
+          "rate": 0.0637
+        },
+        {
+          "from": 500000,
+          "rate": 0.0897
+        },
+        {
+          "from": 1000000,
+          "rate": 0.1075
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.014
+        },
+        {
+          "from": 20000,
+          "rate": 0.0175
+        },
+        {
+          "from": 50000,
+          "rate": 0.0245
+        },
+        {
+          "from": 70000,
+          "rate": 0.035
+        },
+        {
+          "from": 80000,
+          "rate": 0.05525
+        },
+        {
+          "from": 150000,
+          "rate": 0.0637
+        },
+        {
+          "from": 500000,
+          "rate": 0.0897
+        },
+        {
+          "from": 1000000,
+          "rate": 0.1075
+        }
+      ]
+    },
+    "surtaxes": [],
+    "medicalExpenseDeduction": {
+      "cites": [
+        "nj-1040i",
+        "nj-tam-2011-14"
+      ],
+      "section": "NJ-1040 instructions, line 31",
+      "confidence": "primary",
+      "note": "Medical expenses over 2% of gross income are deductible, and insurance premiums count. Only the health premiums entered in the calculator are counted, since New Jersey taxes them. TAM 2011-14 states the two points side by side, not in one sentence.",
+      "incomeFloor": 0.02
+    },
+    "earnedIncomeCredit": {
+      "cites": [
+        "nj-pl-2021-c130",
+        "nj-1040i"
+      ],
+      "section": "N.J.S.A. 54A:4-7(a)(2)(l); 2025 NJ-1040 instructions, line 58",
+      "confidence": "primary",
+      "note": "\"40% for taxable years beginning on or after January 1, 2020\" of the federal credit, refundable. A filer without a child who is kept out of the federal credit only by age qualifies from 18 with no upper limit, and gets 40% of the federal maximum for no children whatever their income (the 2025 instructions say \"enter $260\", which is 40% of $649). For 2026 that is 40% of $664. The codified statute could not be opened on 2026-11-12, so the text is from the 2021 chapter law and the 2025 instructions.",
+      "name": "New Jersey earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "childlessMinAge": 18,
+      "childlessMaxAge": null,
+      "widerAgesGetMaximum": true
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "nj-pl-2026-c26",
+          "nj-1040i"
+        ],
+        "section": "P.L.2026, c.26; 2025 NJ-1040 instructions, child tax credit line (taxable income from line 42)",
+        "confidence": "primary",
+        "note": "Refundable credit for each child who \"has not attained the age of six years as of the close of the taxable year\". For 2026, 2027 and 2028 the amounts are $1,250, $1,000, $750, $500 and $250 by New Jersey taxable income, read in the chapter law. One table for every filing status, nothing over $80,000. Outside those years the table is $1,000 down to $200. The Division of Taxation's web page still showed the 2025 table on 2026-11-12.",
+        "name": "New Jersey child tax credit",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 6,
+            "amount": 1250
+          }
+        ],
+        "amountByIncome": {
+          "basis": "state_taxable_income",
+          "points": {
+            "single": [
+              {
+                "income": 0,
+                "value": 1250
+              },
+              {
+                "income": 30000,
+                "value": 1000
+              },
+              {
+                "income": 40000,
+                "value": 750
+              },
+              {
+                "income": 50000,
+                "value": 500
+              },
+              {
+                "income": 60000,
+                "value": 250
+              },
+              {
+                "income": 80000,
+                "value": 0
+              }
+            ],
+            "mfj": [
+              {
+                "income": 0,
+                "value": 1250
+              },
+              {
+                "income": 30000,
+                "value": 1000
+              },
+              {
+                "income": 40000,
+                "value": 750
+              },
+              {
+                "income": 50000,
+                "value": 500
+              },
+              {
+                "income": 60000,
+                "value": 250
+              },
+              {
+                "income": 80000,
+                "value": 0
+              }
+            ],
+            "hoh": [
+              {
+                "income": 0,
+                "value": 1250
+              },
+              {
+                "income": 30000,
+                "value": 1000
+              },
+              {
+                "income": 40000,
+                "value": 750
+              },
+              {
+                "income": 50000,
+                "value": 500
+              },
+              {
+                "income": 60000,
+                "value": 250
+              },
+              {
+                "income": 80000,
+                "value": 0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "standardDeduction": null,
+    "personalExemption": {
+      "cites": [
+        "tf-2026"
+      ],
+      "confidence": "secondary",
+      "note": "Tax Foundation lists single, couple and dependent only. Head of household is assumed equal to single.",
+      "kind": "deduction",
+      "single": 1000,
+      "mfj": 2000,
+      "hoh": 1000,
+      "dependent": 1500
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "nj-tb39r",
+      "nj-tb24r",
+      "nj-git1-2",
+      "nj-tam-2011-14",
+      "nj-labor-rates-2026",
+      "nj-1040i"
+    ],
+    "confidence": "primary",
+    "note": "Read in the 2025 NJ-1040 instructions: 401(k) contributions up to the federal limit are exempt, contributions to any other retirement plan are taxed, and cafeteria and commuter benefits are exempt only when not taken by salary reduction or premium conversion. TB-39(R) taxes premium conversion and flexible spending amounts, TB-24(R) taxes commuter payroll deductions, and GIT-1 & 2 says IRA contributions are taxed. HSAs: the instructions exempt only Archer MSAs and Title 54A has no HSA exclusion, though no Division page says so in as many words. Medical deduction above 2% of gross income is from the instructions (line 31) and TAM 2011-14, which treats insurance premiums as medical expenses. Worker rates read on the Department of Labor page. No local wage tax: Newark's payroll tax is on employers.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": true,
+    "taxesIraContributions": true,
+    "taxesHealthPremiums": true,
+    "taxesFsaContributions": true,
+    "taxesCommuterBenefits": true,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "New Jersey taxes most money taken from pay before federal tax: health premiums, flexible spending and commuter accounts, HSA contributions, and retirement plans other than a 401(k), such as a 403(b) or 457. This is included, with the retirement contribution you enter treated as a 401(k), which New Jersey does not tax.",
+      "Employees pay unemployment, workforce, disability and family leave contributions: 0.425% of the first $44,800 of wages and 0.42% of the first $171,100, about $909 a year at most. Not included.",
+      "Health premiums that New Jersey taxes count as medical expenses, which are deductible above 2% of income. This is included for premiums only.",
+      "New Jersey gives no deduction for traditional IRA contributions. This is included."
+    ],
+    "maintainerNotes": [
+      "Tax Foundation shows the 5.525% rate rounded to 5.53%. The statutory rate is used here.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): PolicyEngine taxes 401k contributions in New Jersey (its tax was $637 higher on a $10,000 contribution). We exclude them. New Jersey does exclude 401(k) deferrals, so ours is kept, but the flag was confirmed on 2026-11-12 in the 2025 NJ-1040 instructions and N.J.S.A. 54A:6-21.",
+      "Until 2026-11-12 health premiums, FSA and commuter deductions were treated as untaxed in New Jersey. TB-39(R) and TB-24(R) say otherwise.",
+      "Not checked: whether expenses repaid from a flexible spending account that New Jersey taxed count toward the medical deduction. Only premiums are counted.",
+      "A2634 (2026 session) would bring HSAs into line with federal law. Recheck for 2027."
+    ]
+  }
+}

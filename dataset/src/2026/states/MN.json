@@ -1,0 +1,978 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "MN",
+  "name": "Minnesota",
+  "sources": {
+    "mn-dor-2026-brackets": {
+      "name": "Minnesota Department of Revenue news release, December 16, 2025, \"Minnesota income tax brackets, standard deduction and dependent exemption amounts for 2026\"",
+      "url": "https://www.revenue.state.mn.us/press-release/2025-12-16/minnesota-income-tax-brackets-standard-deduction-and-dependent-exemption"
+    },
+    "mn-dor-inflation-2026": {
+      "name": "Minnesota Department of Revenue, Tax Year 2026 Inflation-Adjusted Amounts in Minnesota Statutes",
+      "url": "https://www.revenue.state.mn.us/sites/default/files/2025-12/inflation-adjusted-amounts-2026.pdf"
+    },
+    "mn-stat-290-0123": {
+      "name": "Minnesota Statutes 290.0123, Standard deduction (subd. 5, Deduction limited)",
+      "url": "https://www.revisor.mn.gov/statutes/cite/290.0123"
+    },
+    "mn-stat-290-0121": {
+      "name": "Minnesota Statutes 290.0121, Dependent exemption (subd. 2, Disallowed exemption amount)",
+      "url": "https://www.revisor.mn.gov/statutes/cite/290.0121"
+    },
+    "pe-mn-exemption-phaseout": {
+      "name": "PolicyEngine US parameters, MN dependent exemption phase-out fraction (cites Minn. Stat. 290.0121 subd. 2 and M1 instructions)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/mn/tax/income/exemptions/agi_step_fraction.yaml"
+    },
+    "pe-mn-std-reduction": {
+      "name": "PolicyEngine US parameters, MN standard deduction reduction (cites Minn. Stat. 290.0123 subd. 5 and Schedule M1SA)",
+      "url": "https://github.com/PolicyEngine/policyengine-us/tree/main/policyengine_us/parameters/gov/states/mn/tax/income/deductions/standard/reduction"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "mn-268b-14": {
+      "name": "Minn. Stat. 268B.14, paid leave premiums",
+      "url": "https://www.revisor.mn.gov/statutes/cite/268B.14"
+    },
+    "mn-deed-premium-2026": {
+      "name": "Minnesota DEED bulletin, 2026 Paid Leave premium rate",
+      "url": "https://content.govdelivery.com/accounts/MNDEED/bulletins/3d3828d"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "mn-stat-290-0661": {
+      "name": "Minnesota Statutes 290.0661, Minnesota child tax credit",
+      "url": "https://www.revisor.mn.gov/statutes/cite/290.0661"
+    },
+    "mn-stat-290-0671": {
+      "name": "Minnesota Statutes 290.0671, Minnesota working family credit",
+      "url": "https://www.revisor.mn.gov/statutes/cite/290.0671"
+    },
+    "mn-m1cwfc-2025": {
+      "name": "Minnesota Department of Revenue, 2025 Schedule M1CWFC, Minnesota Child and Working Family Credits",
+      "url": "https://www.revenue.state.mn.us/sites/default/files/2026-07/m1cwfc-25.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "mn-dor-2026-brackets",
+        "mn-dor-inflation-2026",
+        "tf-2026"
+      ],
+      "section": "2026 Minnesota Individual Income Tax Brackets table; 290.06 subd. 2c in the inflation-adjusted amounts",
+      "confidence": "primary",
+      "note": "Read from the DOR news release and matched against the DOR inflation-adjusted amounts PDF. Tax Foundation and PolicyEngine show the same figures. The release does not print cumulative tax amounts, so there was nothing to reproduce.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0535
+        },
+        {
+          "from": 33310,
+          "rate": 0.068
+        },
+        {
+          "from": 109430,
+          "rate": 0.0785
+        },
+        {
+          "from": 203150,
+          "rate": 0.0985
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0535
+        },
+        {
+          "from": 48700,
+          "rate": 0.068
+        },
+        {
+          "from": 193480,
+          "rate": 0.0785
+        },
+        {
+          "from": 337930,
+          "rate": 0.0985
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0535
+        },
+        {
+          "from": 41010,
+          "rate": 0.068
+        },
+        {
+          "from": 164800,
+          "rate": 0.0785
+        },
+        {
+          "from": 270060,
+          "rate": 0.0985
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "mn-dor-inflation-2026",
+        "mn-stat-290-0671"
+      ],
+      "section": "290.0671 subd. 1(a) and (b); Tax Year 2026 Inflation-Adjusted Amounts",
+      "confidence": "primary",
+      "note": "The working family credit for a filer with no qualifying children who \"has attained the age of 19, but not attained age 65\": 4% of the first $9,690 of earned income, reduced by 12% of income over $32,680, or $38,770 joint. That is the schedule for no children. For filers with a child under 18 the same credit is inside the child credit entry, where it is phased out together with it, so the other three entries are empty and the match is zero. The extra amount for children 18 or older is not modeled.",
+      "name": "Minnesota working family credit",
+      "refundable": true,
+      "match": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "schedule": [
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9690,
+              "value": 387.6
+            },
+            {
+              "income": 32680,
+              "value": 387.6
+            },
+            {
+              "income": 35910,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9690,
+              "value": 387.6
+            },
+            {
+              "income": 38770,
+              "value": 387.6
+            },
+            {
+              "income": 42000,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9690,
+              "value": 387.6
+            },
+            {
+              "income": 32680,
+              "value": 387.6
+            },
+            {
+              "income": 35910,
+              "value": 0
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ],
+      "childlessMinAge": 19
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "mn-dor-inflation-2026",
+          "mn-stat-290-0661",
+          "mn-stat-290-0671",
+          "mn-m1cwfc-2025"
+        ],
+        "section": "Tax Year 2026 Inflation-Adjusted Amounts, rows for 290.0661 subd. 3 and 4 and 290.0671; 290.0661 subd. 4; 2025 Schedule M1CWFC line 10",
+        "confidence": "primary",
+        "note": "$1,800 per child under 18 for 2026 (indexed from 2026, it was $1,750), refundable, no cap. It is combined with the working family credit, 4% of the first $9,690 of earned income, and \"the combined amount of the credits is reduced by 12 percent of earned income or adjusted gross income, whichever is greater, in excess of the phaseout threshold\": $38,770 joint, $32,680 for everyone else. earnedIncomeAddOn is the working family credit for a filer with a child. Earned income is used as the basis, since wages are never below AGI for the calculator's inputs. Left out: the working family credit for filers with no child under 18, the extra $1,020 to $2,770 for children 18 or older, the investment income limit, and advance payments.",
+        "name": "Minnesota child and working family credits",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 18,
+            "amount": 1800
+          }
+        ],
+        "earnedIncomeAddOn": {
+          "rate": 0.04,
+          "upTo": 9690
+        },
+        "phaseOut": {
+          "basis": "earned_income",
+          "start": {
+            "single": 32680,
+            "mfj": 38770,
+            "hoh": 32680
+          },
+          "amount": 0.12,
+          "per": 1,
+          "rounding": "none",
+          "appliesTo": "total"
+        }
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "mn-dor-2026-brackets",
+        "mn-dor-inflation-2026",
+        "mn-stat-290-0123",
+        "pe-mn-std-reduction"
+      ],
+      "section": "290.0123 subd. 1 and subd. 5",
+      "confidence": "primary",
+      "note": "Tax Foundation's table shows the same single and joint amounts, though its footnote (vv) on the Minnesota row describes a different, smaller deduction that does not match the DOR figures. Phase-out rule (290.0123 subd. 5): the deduction is reduced by the lesser of (1) 3% of AGI over the first threshold but not over the second, plus 10% of AGI over the second threshold, or (2) 80% of the deduction. Above a third threshold the reduction is a flat 80%. The DOR's 2026 thresholds are $244,400, $337,800 and $1,107,750, the same for single, joint and head of household. The percentages are from the statute and the thresholds from the DOR's inflation-adjusted amounts. The points are generated from that rule: full deduction up to $244,400, deduction minus $2,802 at $337,800, and 20% of the deduction from the income where the 80% cap is reached ($432,180 single, $554,580 joint, $493,780 head of household), which is below $1,107,750 in every case, so the flat 80% rule adds nothing. PolicyEngine implements the same formula. The statute says \"adjusted gross income\"; it is entered as federal AGI. The extra deduction for age 65 or blindness is not in the schema, so the schedule covers the base deduction only.",
+      "single": 15300,
+      "mfj": 30600,
+      "hoh": 23000,
+      "phaseOut": {
+        "basis": "federal_agi",
+        "unit": "amount",
+        "interpolation": "linear",
+        "points": {
+          "single": [
+            {
+              "income": 244400,
+              "value": 15300
+            },
+            {
+              "income": 337800,
+              "value": 12498
+            },
+            {
+              "income": 432180,
+              "value": 3060
+            }
+          ],
+          "mfj": [
+            {
+              "income": 244400,
+              "value": 30600
+            },
+            {
+              "income": 337800,
+              "value": 27798
+            },
+            {
+              "income": 554580,
+              "value": 6120
+            }
+          ],
+          "hoh": [
+            {
+              "income": 244400,
+              "value": 23000
+            },
+            {
+              "income": 337800,
+              "value": 20198
+            },
+            {
+              "income": 493780,
+              "value": 4600
+            }
+          ]
+        }
+      }
+    },
+    "personalExemption": {
+      "cites": [
+        "mn-dor-2026-brackets",
+        "mn-dor-inflation-2026",
+        "mn-stat-290-0121",
+        "pe-mn-exemption-phaseout"
+      ],
+      "section": "290.0121 subd. 1 and 2",
+      "confidence": "primary",
+      "note": "Minnesota has a dependent exemption only, nothing for the filer or spouse. Phase-out rule (290.0121 subd. 2): the exemption is cut by 2 percentage points for each $2,500, or fraction of $2,500, by which federal AGI exceeds the threshold, up to 100%. The DOR's 2026 thresholds are $244,500 single, $305,600 head of household and $366,700 joint. The points are generated from that rule: 50 steps of 0.02, the first just above the threshold, and nothing left above the threshold plus $122,500. The rule is from the statute and the thresholds from the DOR's inflation-adjusted amounts. PolicyEngine implements the same formula.",
+      "kind": "deduction",
+      "single": 0,
+      "mfj": 0,
+      "hoh": 0,
+      "dependent": 5300,
+      "phaseOut": {
+        "basis": "federal_agi",
+        "appliesTo": "dependent",
+        "unit": "fraction",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 244500,
+              "value": 0.98
+            },
+            {
+              "income": 247000,
+              "value": 0.96
+            },
+            {
+              "income": 249500,
+              "value": 0.94
+            },
+            {
+              "income": 252000,
+              "value": 0.92
+            },
+            {
+              "income": 254500,
+              "value": 0.9
+            },
+            {
+              "income": 257000,
+              "value": 0.88
+            },
+            {
+              "income": 259500,
+              "value": 0.86
+            },
+            {
+              "income": 262000,
+              "value": 0.84
+            },
+            {
+              "income": 264500,
+              "value": 0.82
+            },
+            {
+              "income": 267000,
+              "value": 0.8
+            },
+            {
+              "income": 269500,
+              "value": 0.78
+            },
+            {
+              "income": 272000,
+              "value": 0.76
+            },
+            {
+              "income": 274500,
+              "value": 0.74
+            },
+            {
+              "income": 277000,
+              "value": 0.72
+            },
+            {
+              "income": 279500,
+              "value": 0.7
+            },
+            {
+              "income": 282000,
+              "value": 0.68
+            },
+            {
+              "income": 284500,
+              "value": 0.66
+            },
+            {
+              "income": 287000,
+              "value": 0.64
+            },
+            {
+              "income": 289500,
+              "value": 0.62
+            },
+            {
+              "income": 292000,
+              "value": 0.6
+            },
+            {
+              "income": 294500,
+              "value": 0.58
+            },
+            {
+              "income": 297000,
+              "value": 0.56
+            },
+            {
+              "income": 299500,
+              "value": 0.54
+            },
+            {
+              "income": 302000,
+              "value": 0.52
+            },
+            {
+              "income": 304500,
+              "value": 0.5
+            },
+            {
+              "income": 307000,
+              "value": 0.48
+            },
+            {
+              "income": 309500,
+              "value": 0.46
+            },
+            {
+              "income": 312000,
+              "value": 0.44
+            },
+            {
+              "income": 314500,
+              "value": 0.42
+            },
+            {
+              "income": 317000,
+              "value": 0.4
+            },
+            {
+              "income": 319500,
+              "value": 0.38
+            },
+            {
+              "income": 322000,
+              "value": 0.36
+            },
+            {
+              "income": 324500,
+              "value": 0.34
+            },
+            {
+              "income": 327000,
+              "value": 0.32
+            },
+            {
+              "income": 329500,
+              "value": 0.3
+            },
+            {
+              "income": 332000,
+              "value": 0.28
+            },
+            {
+              "income": 334500,
+              "value": 0.26
+            },
+            {
+              "income": 337000,
+              "value": 0.24
+            },
+            {
+              "income": 339500,
+              "value": 0.22
+            },
+            {
+              "income": 342000,
+              "value": 0.2
+            },
+            {
+              "income": 344500,
+              "value": 0.18
+            },
+            {
+              "income": 347000,
+              "value": 0.16
+            },
+            {
+              "income": 349500,
+              "value": 0.14
+            },
+            {
+              "income": 352000,
+              "value": 0.12
+            },
+            {
+              "income": 354500,
+              "value": 0.1
+            },
+            {
+              "income": 357000,
+              "value": 0.08
+            },
+            {
+              "income": 359500,
+              "value": 0.06
+            },
+            {
+              "income": 362000,
+              "value": 0.04
+            },
+            {
+              "income": 364500,
+              "value": 0.02
+            },
+            {
+              "income": 367000,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 366700,
+              "value": 0.98
+            },
+            {
+              "income": 369200,
+              "value": 0.96
+            },
+            {
+              "income": 371700,
+              "value": 0.94
+            },
+            {
+              "income": 374200,
+              "value": 0.92
+            },
+            {
+              "income": 376700,
+              "value": 0.9
+            },
+            {
+              "income": 379200,
+              "value": 0.88
+            },
+            {
+              "income": 381700,
+              "value": 0.86
+            },
+            {
+              "income": 384200,
+              "value": 0.84
+            },
+            {
+              "income": 386700,
+              "value": 0.82
+            },
+            {
+              "income": 389200,
+              "value": 0.8
+            },
+            {
+              "income": 391700,
+              "value": 0.78
+            },
+            {
+              "income": 394200,
+              "value": 0.76
+            },
+            {
+              "income": 396700,
+              "value": 0.74
+            },
+            {
+              "income": 399200,
+              "value": 0.72
+            },
+            {
+              "income": 401700,
+              "value": 0.7
+            },
+            {
+              "income": 404200,
+              "value": 0.68
+            },
+            {
+              "income": 406700,
+              "value": 0.66
+            },
+            {
+              "income": 409200,
+              "value": 0.64
+            },
+            {
+              "income": 411700,
+              "value": 0.62
+            },
+            {
+              "income": 414200,
+              "value": 0.6
+            },
+            {
+              "income": 416700,
+              "value": 0.58
+            },
+            {
+              "income": 419200,
+              "value": 0.56
+            },
+            {
+              "income": 421700,
+              "value": 0.54
+            },
+            {
+              "income": 424200,
+              "value": 0.52
+            },
+            {
+              "income": 426700,
+              "value": 0.5
+            },
+            {
+              "income": 429200,
+              "value": 0.48
+            },
+            {
+              "income": 431700,
+              "value": 0.46
+            },
+            {
+              "income": 434200,
+              "value": 0.44
+            },
+            {
+              "income": 436700,
+              "value": 0.42
+            },
+            {
+              "income": 439200,
+              "value": 0.4
+            },
+            {
+              "income": 441700,
+              "value": 0.38
+            },
+            {
+              "income": 444200,
+              "value": 0.36
+            },
+            {
+              "income": 446700,
+              "value": 0.34
+            },
+            {
+              "income": 449200,
+              "value": 0.32
+            },
+            {
+              "income": 451700,
+              "value": 0.3
+            },
+            {
+              "income": 454200,
+              "value": 0.28
+            },
+            {
+              "income": 456700,
+              "value": 0.26
+            },
+            {
+              "income": 459200,
+              "value": 0.24
+            },
+            {
+              "income": 461700,
+              "value": 0.22
+            },
+            {
+              "income": 464200,
+              "value": 0.2
+            },
+            {
+              "income": 466700,
+              "value": 0.18
+            },
+            {
+              "income": 469200,
+              "value": 0.16
+            },
+            {
+              "income": 471700,
+              "value": 0.14
+            },
+            {
+              "income": 474200,
+              "value": 0.12
+            },
+            {
+              "income": 476700,
+              "value": 0.1
+            },
+            {
+              "income": 479200,
+              "value": 0.08
+            },
+            {
+              "income": 481700,
+              "value": 0.06
+            },
+            {
+              "income": 484200,
+              "value": 0.04
+            },
+            {
+              "income": 486700,
+              "value": 0.02
+            },
+            {
+              "income": 489200,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 1
+            },
+            {
+              "income": 305600,
+              "value": 0.98
+            },
+            {
+              "income": 308100,
+              "value": 0.96
+            },
+            {
+              "income": 310600,
+              "value": 0.94
+            },
+            {
+              "income": 313100,
+              "value": 0.92
+            },
+            {
+              "income": 315600,
+              "value": 0.9
+            },
+            {
+              "income": 318100,
+              "value": 0.88
+            },
+            {
+              "income": 320600,
+              "value": 0.86
+            },
+            {
+              "income": 323100,
+              "value": 0.84
+            },
+            {
+              "income": 325600,
+              "value": 0.82
+            },
+            {
+              "income": 328100,
+              "value": 0.8
+            },
+            {
+              "income": 330600,
+              "value": 0.78
+            },
+            {
+              "income": 333100,
+              "value": 0.76
+            },
+            {
+              "income": 335600,
+              "value": 0.74
+            },
+            {
+              "income": 338100,
+              "value": 0.72
+            },
+            {
+              "income": 340600,
+              "value": 0.7
+            },
+            {
+              "income": 343100,
+              "value": 0.68
+            },
+            {
+              "income": 345600,
+              "value": 0.66
+            },
+            {
+              "income": 348100,
+              "value": 0.64
+            },
+            {
+              "income": 350600,
+              "value": 0.62
+            },
+            {
+              "income": 353100,
+              "value": 0.6
+            },
+            {
+              "income": 355600,
+              "value": 0.58
+            },
+            {
+              "income": 358100,
+              "value": 0.56
+            },
+            {
+              "income": 360600,
+              "value": 0.54
+            },
+            {
+              "income": 363100,
+              "value": 0.52
+            },
+            {
+              "income": 365600,
+              "value": 0.5
+            },
+            {
+              "income": 368100,
+              "value": 0.48
+            },
+            {
+              "income": 370600,
+              "value": 0.46
+            },
+            {
+              "income": 373100,
+              "value": 0.44
+            },
+            {
+              "income": 375600,
+              "value": 0.42
+            },
+            {
+              "income": 378100,
+              "value": 0.4
+            },
+            {
+              "income": 380600,
+              "value": 0.38
+            },
+            {
+              "income": 383100,
+              "value": 0.36
+            },
+            {
+              "income": 385600,
+              "value": 0.34
+            },
+            {
+              "income": 388100,
+              "value": 0.32
+            },
+            {
+              "income": 390600,
+              "value": 0.3
+            },
+            {
+              "income": 393100,
+              "value": 0.28
+            },
+            {
+              "income": 395600,
+              "value": 0.26
+            },
+            {
+              "income": 398100,
+              "value": 0.24
+            },
+            {
+              "income": 400600,
+              "value": 0.22
+            },
+            {
+              "income": 403100,
+              "value": 0.2
+            },
+            {
+              "income": 405600,
+              "value": 0.18
+            },
+            {
+              "income": 408100,
+              "value": 0.16
+            },
+            {
+              "income": 410600,
+              "value": 0.14
+            },
+            {
+              "income": 413100,
+              "value": 0.12
+            },
+            {
+              "income": 415600,
+              "value": 0.1
+            },
+            {
+              "income": 418100,
+              "value": 0.08
+            },
+            {
+              "income": 420600,
+              "value": 0.06
+            },
+            {
+              "income": 423100,
+              "value": 0.04
+            },
+            {
+              "income": 425600,
+              "value": 0.02
+            },
+            {
+              "income": 428100,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "mn-dor-inflation-2026",
+      "mn-268b-14",
+      "mn-deed-premium-2026",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "No local income tax: Minnesota is not in Tax Foundation footnote (a). Payroll flag read in Minn. Stat. 268B.14 (employers pay at least half, wages capped at the Social Security maximum) and a DEED bulletin giving the 2026 rate of 0.88%. The program's own premium pages sit behind a CAPTCHA. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Minnesota's child tax credit ($1,800 per child) and working family credit are included. Both shrink above $32,680 of income, or $38,770 for joint filers. Not modeled: the working family credit's extra amount for children 18 or older.",
+      "Not modeled: a 1% tax on net investment income over $1 million. It does not apply to wages.",
+      "Employers may deduct up to 0.44% of wages, up to $184,500, for Minnesota Paid Leave, which started January 1, 2026. Not included."
+    ],
+    "maintainerNotes": [
+      "Not modeled: a 1% tax on net investment income over $1 million (Tax Foundation footnote (oo)). It does not apply to wages.",
+      "Minnesota Paid Leave premiums started January 1, 2026. Employers may deduct up to half of the premium from pay, reported as 0.44% of wages for 2026. Needs checking against the state Paid Leave site."
+    ]
+  }
+}

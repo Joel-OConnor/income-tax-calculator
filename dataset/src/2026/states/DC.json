@@ -1,0 +1,281 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "DC",
+  "name": "District of Columbia",
+  "sources": {
+    "dc-otr-rates": {
+      "name": "DC Office of Tax and Revenue, DC Individual and Fiduciary Income Tax Rates",
+      "url": "https://otr.cfo.dc.gov/page/dc-individual-and-fiduciary-income-tax-rates"
+    },
+    "dc-d40-2025": {
+      "name": "DC Office of Tax and Revenue, 2025 D-40 Booklet",
+      "url": "https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2025_D40_Book_082026_v1.pdf"
+    },
+    "dc-act-26-214": {
+      "name": "D.C. Act 26-214 (emergency act adding the basic standard deduction, D.C. Code 47-1801.04(3A))",
+      "url": "https://code.dccouncil.gov/us/dc/council/acts/26-214"
+    },
+    "ey-dc-2026": {
+      "name": "EY Tax News 2026-1962, District of Columbia budget bill decouples from select OBBBA provisions (September 15, 2026)",
+      "url": "https://taxnews.ey.com/news/2026-1962"
+    },
+    "pe-dc-std": {
+      "name": "PolicyEngine US parameters, DC basic standard deduction (cites D.C. Code 47-1801.04(3A) and the 2025 D-40 booklet)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/dc/tax/income/deductions/standard/amount.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "dc-code-32-541-03": {
+      "name": "D.C. Code 32-541.03, paid leave contributions",
+      "url": "https://code.dccouncil.gov/us/dc/council/code/sections/32-541.03"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dc-code-47-1806-04": {
+      "name": "D.C. Code 47-1806.04(f), earned income tax credit",
+      "url": "https://code.dccouncil.gov/us/dc/council/code/sections/47-1806.04"
+    },
+    "dc-d40-2025-eitc": {
+      "name": "DC Office of Tax and Revenue, 2025 D-40 booklet, earned income credit worksheets",
+      "url": "https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2025_D40_Book_082026_v1.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "dc-otr-rates",
+        "dc-d40-2025",
+        "tf-2026"
+      ],
+      "section": "Rate schedule for tax years beginning after 12/31/2021",
+      "confidence": "primary",
+      "note": "One schedule for every filing status, not indexed. OTR's rate page applies it to tax years beginning after December 31, 2021, and the 2025 D-40 booklet repeats it. The brackets reproduce the printed $91,525 at $1,000,000. Tax Foundation agrees.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.04
+        },
+        {
+          "from": 10000,
+          "rate": 0.06
+        },
+        {
+          "from": 40000,
+          "rate": 0.065
+        },
+        {
+          "from": 60000,
+          "rate": 0.085
+        },
+        {
+          "from": 250000,
+          "rate": 0.0925
+        },
+        {
+          "from": 500000,
+          "rate": 0.0975
+        },
+        {
+          "from": 1000000,
+          "rate": 0.1075
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.04
+        },
+        {
+          "from": 10000,
+          "rate": 0.06
+        },
+        {
+          "from": 40000,
+          "rate": 0.065
+        },
+        {
+          "from": 60000,
+          "rate": 0.085
+        },
+        {
+          "from": 250000,
+          "rate": 0.0925
+        },
+        {
+          "from": 500000,
+          "rate": 0.0975
+        },
+        {
+          "from": 1000000,
+          "rate": 0.1075
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.04
+        },
+        {
+          "from": 10000,
+          "rate": 0.06
+        },
+        {
+          "from": 40000,
+          "rate": 0.065
+        },
+        {
+          "from": 60000,
+          "rate": 0.085
+        },
+        {
+          "from": 250000,
+          "rate": 0.0925
+        },
+        {
+          "from": 500000,
+          "rate": 0.0975
+        },
+        {
+          "from": 1000000,
+          "rate": 0.1075
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "dc-code-47-1806-04",
+        "dc-d40-2025-eitc",
+        "dc-act-26-214"
+      ],
+      "section": "D.C. Code 47-1806.04(f)(1)(B-2)(ii) and (C)(ii); 2025 D-40 booklet pages 24 to 26",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "With a qualifying child: 85% of the federal credit for tax years 2026 through 2028 (100% before and after), refundable. That text is in the code from the FY2027 Budget Support Emergency Act (D.C. Act 26-416), and the permanent bill has the same words, but its act number was not found on 2026-11-12. Without a child DC runs its own formula: the federal phase-in to the federal maximum ($664 at $8,680 for 2026), then a phase-out of 8.48% above DC's own indexed threshold. The threshold here is the 2025 one, $23,288, because the 2026 figure is not published, which is why the group is marked as 2025. The schedule's last point is $23,288 plus $664 divided by 0.0848.",
+      "name": "DC earned income tax credit",
+      "refundable": true,
+      "match": [
+        1,
+        0.85,
+        0.85,
+        0.85
+      ],
+      "schedule": [
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 8680,
+              "value": 664
+            },
+            {
+              "income": 23288,
+              "value": 664
+            },
+            {
+              "income": 31118.19,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 8680,
+              "value": 664
+            },
+            {
+              "income": 23288,
+              "value": 664
+            },
+            {
+              "income": 31118.19,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 8680,
+              "value": 664
+            },
+            {
+              "income": 23288,
+              "value": 664
+            },
+            {
+              "income": 31118.19,
+              "value": 0
+            }
+          ]
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    "standardDeduction": {
+      "cites": [
+        "dc-d40-2025",
+        "dc-act-26-214",
+        "ey-dc-2026",
+        "pe-dc-std",
+        "tf-2026"
+      ],
+      "section": "2025 D-40 Booklet, Standard Deduction (page 13)",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "2025 amounts, read from the 2025 D-40 booklet. Starting in 2025 DC set its own standard deduction, lower than the federal one. For tax years after 2025 the same amounts are raised by a DC cost-of-living adjustment, rounded down to $50 (D.C. Act 26-214, and per EY the Fiscal Year 2027 budget legislation keeps this through 2029). OTR had not published the 2026 adjusted amounts when this was written, so the 2026 figures will be somewhat higher. Tax Foundation shows the federal $16,100 single and $32,200 joint, which does not reflect the decoupling and is not used. Congress passed a resolution in February 2026 disapproving DC's first permanent decoupling act, and OTR's 2025 booklet still uses the DC amounts, so recheck against the 2026 D-40 booklet.",
+      "single": 15000,
+      "mfj": 30000,
+      "hoh": 22500
+    },
+    "personalExemption": null
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "dc-d40-2025",
+      "ey-dc-2026",
+      "dc-code-32-541-03",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "Local tax flag follows Tax Foundation footnote (a), which does not list DC. Tax Foundation shows no personal exemption. No employee payroll contribution: D.C. Code 32-541.03 puts the 0.75% paid leave contribution on the employer. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "DC paid family leave is funded by employers only, so nothing is withheld from employees.",
+      "Not modeled: married couples can file separately on the same return, so each spouse uses the brackets on their own income (the 2025 D-40 booklet gives these filers the $30,000 joint standard deduction). A two-earner couple usually pays less this way than the joint figure here.",
+      "Not modeled: filers 65 or older or blind get an additional standard deduction ($1,600, or $2,000 if unmarried, in the 2025 booklet).",
+      "Per EY, the Fiscal Year 2027 budget legislation adds DC deductions for qualified tips and overtime starting in 2026. Check the final law and OTR guidance before treating the federal overtime deduction as allowed in DC.",
+      "No DC child tax credit is included for 2026. The credit passed in 2024 was repealed before it took effect, and a temporary replacement ($1,000 per child, shrinking above $55,000 of income, or $70,000 for couples) was disapproved by Congress and has since expired. Check with the Office of Tax and Revenue if this matters to you."
+    ],
+    "maintainerNotes": [
+      "DC paid family leave is funded by an employer payroll tax only, so nothing is withheld from employees. From general knowledge.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): our DC tax was $1,042 higher for a joint filer with two children at $90,000 and $780 higher for a head of household with one child at $60,000. At $250,000 single PolicyEngine was $1,275 higher, which looks like the loss of the DC standard deduction when it itemizes federally.",
+      "DC child tax credit, checked 2026-11-12. D.C. Code 47-1806.17 ($420 per child under 6) was repealed by the FY2026 Budget Support Act, D.C. Law 26-55 section 7062 (https://code.dccouncil.gov/us/dc/council/laws/26-55), and the 2025 D-40 booklet says \"This credit is repealed for 2025\". Temporary D.C. Law 26-89 revived it as $1,000 per child under 18, reduced by $50 per $1,000 of AGI over $55,000 or $70,000 joint (https://code.dccouncil.gov/us/dc/council/laws/26-89). Congress disapproved that act (Public Law 119-78), and it expires after 225 days in any case. The FY2027 Budget Support Emergency Act (D.C. Act 26-416) does not mention the credit. OTR had published nothing for 2026, and the permanent FY2027 act was not read. PolicyEngine models the $1,000 version, so it shows less DC tax for families than we do. Recheck when the 2026 D-40 is out.",
+      "The FY2027 Budget Support Emergency Act sets DC's earned income credit match at 85% of the federal credit for 2026 through 2028 for filers with a child (it was 100% for 2025). Not modeled."
+    ]
+  }
+}

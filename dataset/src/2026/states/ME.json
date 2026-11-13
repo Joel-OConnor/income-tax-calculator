@@ -1,0 +1,331 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "ME",
+  "name": "Maine",
+  "sources": {
+    "mrs-36-5111": {
+      "name": "Maine Revised Statutes Title 36, section 5111, Imposition and rate of tax",
+      "url": "https://www.mainelegislature.org/legis/statutes/36/title36sec5111.html"
+    },
+    "mrs-36-5124-c": {
+      "name": "Maine Revised Statutes Title 36, section 5124-C, Standard deduction",
+      "url": "https://www.mainelegislature.org/legis/statutes/36/title36sec5124-C.html"
+    },
+    "mrs-36-5126-a": {
+      "name": "Maine Revised Statutes Title 36, section 5126-A, Personal exemptions on or after January 1, 2018",
+      "url": "https://www.mainelegislature.org/legis/statutes/36/title36sec5126-A.html"
+    },
+    "mrs-26-850-f": {
+      "name": "Maine Revised Statutes Title 26, section 850-F, Paid family and medical leave premiums",
+      "url": "https://legislature.maine.gov/statutes/26/title26sec850-F.html"
+    },
+    "pe-me-single": {
+      "name": "PolicyEngine US parameters, ME single rates (cites Maine Revenue Services 2026 Individual Income Tax Rate Schedules, rev. May 2026)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/me/tax/income/main/single.yaml"
+    },
+    "pe-me-joint": {
+      "name": "PolicyEngine US parameters, ME joint rates (cites Maine Revenue Services 2026 Individual Income Tax Rate Schedules, rev. May 2026)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/me/tax/income/main/joint.yaml"
+    },
+    "pe-me-hoh": {
+      "name": "PolicyEngine US parameters, ME head of household rates (cites Maine Revenue Services 2026 Individual Income Tax Rate Schedules, rev. May 2026)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/me/tax/income/main/head_of_household.yaml"
+    },
+    "pe-me-ded-phaseout": {
+      "name": "PolicyEngine US parameters, ME standard/itemized deduction phase-out start (cites the 2026 Maine estimated tax worksheet)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/me/tax/income/deductions/phase_out/start.yaml"
+    },
+    "pe-me-exemption-phaseout": {
+      "name": "PolicyEngine US parameters, ME personal exemption phase-out start (cites the 2026 Maine estimated tax worksheet)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/me/tax/income/deductions/personal_exemption/phaseout/start.yaml"
+    },
+    "pe-me-dependent-credit": {
+      "name": "PolicyEngine US parameters, ME dependent exemption credit amount (cites 36 MRS 5219-SS and the 2025 Form 1040ME instructions)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/me/tax/income/credits/dependent_exemption/amount.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "mrs-36-5219-ss": {
+      "name": "Maine Revised Statutes Title 36, section 5219-SS, Dependent exemption tax credit",
+      "url": "https://www.mainelegislature.org/legis/statutes/36/title36sec5219-SS.html"
+    },
+    "me-pfml-faq-2026": {
+      "name": "Maine Paid Family and Medical Leave, employer FAQ (July 2026)",
+      "url": "https://www1.maine.gov/paidleave/docs/2026/employers/faq/employerFAQenglish.pdf"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "me-dep-credit-ws-2025": {
+      "name": "Maine Revenue Services, Dependent Exemption Tax Credit Worksheet for Tax Year 2025",
+      "url": "https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/25_dependent_exemption_tx_cr_fillable.pdf"
+    },
+    "mrs-36-5219-s": {
+      "name": "36 MRS 5219-S, Maine earned income credit",
+      "url": "https://legislature.maine.gov/statutes/36/title36sec5219-S.html"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "pe-me-single",
+        "pe-me-joint",
+        "pe-me-hoh",
+        "mrs-36-5111",
+        "tf-2026"
+      ],
+      "confidence": "secondary",
+      "note": "Rates (5.8%, 6.75%, 7.15%) read from the statute. The 2026 indexed thresholds are from PolicyEngine, which cites Maine Revenue Services' 2026 rate schedule. That schedule could not be fetched (HTTP 403): https://www.maine.gov/revenue/sites/maine.gov.revenue/files/2026-05/ind_tax_rate_sched_2026_rev.pdf. Tax Foundation prints each single and joint threshold $1 lower ($27,399, $64,849, $54,849, $129,749), otherwise it agrees. Cumulative-tax check against the official schedule not done.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.058
+        },
+        {
+          "from": 27400,
+          "rate": 0.0675
+        },
+        {
+          "from": 64850,
+          "rate": 0.0715
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.058
+        },
+        {
+          "from": 54850,
+          "rate": 0.0675
+        },
+        {
+          "from": 129750,
+          "rate": 0.0715
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.058
+        },
+        {
+          "from": 41100,
+          "rate": 0.0675
+        },
+        {
+          "from": 97300,
+          "rate": 0.0715
+        }
+      ]
+    },
+    "surtaxes": [
+      {
+        "cites": [
+          "mrs-36-5111"
+        ],
+        "section": "36 MRS 5111, subsection 7",
+        "confidence": "primary",
+        "note": "New for tax years beginning on or after January 1, 2026: 2% on the portion of Maine taxable income above the threshold. Married filing separately is half the joint amount. Tax Foundation's table (as of January 1, 2026) predates it and does not show it. Thresholds are indexed in later years.",
+        "name": "Income tax surcharge",
+        "rate": 0.02,
+        "over": {
+          "single": 1000000,
+          "mfj": 1500000,
+          "hoh": 1500000
+        }
+      }
+    ],
+    "earnedIncomeCredit": {
+      "cites": [
+        "mrs-36-5219-s"
+      ],
+      "section": "36 MRS 5219-S(1-A), (4) to (6)",
+      "confidence": "primary",
+      "note": "\"50% of the federal earned income credit for the same taxable year for a resident eligible individual who does not have a qualifying child and 25%\" for everyone else, refundable for residents. A filer without a child who is \"at least 18 years of age and has not attained 25\" also qualifies, with the credit worked out as if they were federally eligible.",
+      "name": "Maine earned income credit",
+      "refundable": true,
+      "match": [
+        0.5,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "childlessMinAge": 18
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "mrs-36-5219-ss",
+          "me-dep-credit-ws-2025",
+          "pe-me-dependent-credit"
+        ],
+        "section": "36 MRS 5219-SS(1), (4) and (5); 2025 worksheet lines 1 to 10",
+        "confidence": "primary",
+        "valuesTaxYear": 2025,
+        "note": "The dependent exemption tax credit: $305 for each child or dependent who gets the federal child tax credit or credit for other dependents, doubled to $610 for one under 6 at the end of the year. Refundable for residents. The total is reduced by $20 for each $500 or fraction of Maine AGI over $100,000 (single), $125,000 (head of household) or $150,000 (joint). Both the amount and the thresholds are indexed, and these are the 2025 figures from the worksheet: the 2026 ones were not published as of 2026-11-12. An estimate from Maine's published cost-of-living factors is $315 and thresholds about 2.3% higher, not used. The Maine Revenue Services web page for this credit is out of date.",
+        "name": "Maine dependent exemption tax credit",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 6,
+            "amount": 610
+          },
+          {
+            "fromAge": 6,
+            "underAge": 17,
+            "amount": 305
+          }
+        ],
+        "perOtherDependent": 305,
+        "phaseOut": {
+          "basis": "state_agi",
+          "start": {
+            "single": 100000,
+            "mfj": 150000,
+            "hoh": 125000
+          },
+          "amount": 20,
+          "per": 500,
+          "rounding": "up",
+          "appliesTo": "total"
+        }
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "mrs-36-5124-c",
+        "pe-me-ded-phaseout",
+        "tf-2026"
+      ],
+      "section": "36 MRS 5124-C, subsections 1-C and 2",
+      "confidence": "secondary",
+      "note": "Amounts are read from the statute, which fixes the 2026 basic amount at $15,700 single, 1.5 times that for head of household and 2 times for joint. Tax Foundation shows $8,350 and $16,700 under a pre-OBBBA conformity footnote, which disagrees with the statute. The statute is used. Phase-out rule (subsection 2, read from the statute): the deduction is reduced by the deduction times (Maine AGI minus a threshold) divided by $75,000 single, $150,000 joint or $112,500 head of household, with the fraction capped at 1 and no rounding, so it is linear. The denominators are not indexed. The thresholds ($80,000, $160,000 and $120,000 in the statute) are indexed yearly. The 2026 thresholds of $102,250 single, $204,550 joint and $153,400 head of household are from PolicyEngine, which is why the group is secondary. Maine's 2026 worksheet with those thresholds could not be fetched (HTTP 403): https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/26_item_stand_%20ded_phaseout_wksht_0.pdf. To regenerate: points are (threshold, 1) and (threshold plus denominator, 0).",
+      "single": 15700,
+      "mfj": 31400,
+      "hoh": 23550,
+      "phaseOut": {
+        "basis": "state_agi",
+        "unit": "fraction",
+        "interpolation": "linear",
+        "points": {
+          "single": [
+            {
+              "income": 102250,
+              "value": 1
+            },
+            {
+              "income": 177250,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 204550,
+              "value": 1
+            },
+            {
+              "income": 354550,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 153400,
+              "value": 1
+            },
+            {
+              "income": 265900,
+              "value": 0
+            }
+          ]
+        }
+      }
+    },
+    "personalExemption": {
+      "cites": [
+        "tf-2026",
+        "mrs-36-5126-a",
+        "pe-me-exemption-phaseout"
+      ],
+      "confidence": "secondary",
+      "note": "The statute gives a $4,150 base per filer and spouse, indexed yearly. The 2026 indexed amount of $5,300 is from Tax Foundation. PolicyEngine stores only the 2025 amount ($5,150). Phase-out rule (36 MRS 5126-A subsection 2, read from the statute): the filer and spouse exemption is reduced by the exemption times (Maine AGI minus an applicable amount) divided by $125,000, with the fraction capped at 1 and no rounding, so it is linear. The applicable amounts ($266,700 single, $320,000 joint, $293,350 head of household in the statute) are indexed. The 2026 amounts of $341,000, $409,150 and $375,050 are from PolicyEngine. To regenerate: points are (applicable amount, 1) and (applicable amount plus $125,000, 0). Dependents get a tax credit, not an exemption. It is in childCredits.",
+      "kind": "deduction",
+      "single": 5300,
+      "mfj": 10600,
+      "hoh": 5300,
+      "dependent": 0,
+      "phaseOut": {
+        "basis": "state_agi",
+        "appliesTo": "filer",
+        "unit": "fraction",
+        "interpolation": "linear",
+        "points": {
+          "single": [
+            {
+              "income": 341000,
+              "value": 1
+            },
+            {
+              "income": 466000,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 409150,
+              "value": 1
+            },
+            {
+              "income": 534150,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 375050,
+              "value": 1
+            },
+            {
+              "income": 500050,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "mrs-26-850-f",
+      "mrs-36-5219-ss",
+      "pe-me-dependent-credit",
+      "me-pfml-faq-2026",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "Local tax flag is from Tax Foundation footnote (a), which lists no Maine local income taxes. Payroll flag read in 26 MRS 850-F and the program's July 2026 employer FAQ: 1% of wages for employers of 15 or more, no more than 0.5% from the employee. The dependent credit rule is read from 36 MRS 5219-SS. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Employers may withhold up to 0.5% of wages, up to $184,500, for paid family and medical leave. Not included.",
+      "Maine's credit for dependents uses the 2025 amounts ($305, or $610 for a child under 6) and income limits, because the 2026 figures are not published yet."
+    ],
+    "maintainerNotes": [
+      "Not modeled: the dependent exemption tax credit is doubled for dependents under age 6, and the total credit is reduced by $20 for each $500 or part of $500 of Maine AGI over $100,000 single, $150,000 joint or $125,000 head of household (statute figures, 2026 indexing not confirmed). It is left out because the group has a single phaseOut, already used for the filer exemption, and the doubling depends on the child's age."
+    ]
+  }
+}

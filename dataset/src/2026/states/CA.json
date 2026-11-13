@@ -1,0 +1,510 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "CA",
+  "name": "California",
+  "sources": {
+    "ftb-tax-news-2026-10": {
+      "name": "California FTB Tax News, October 2026, \"2026 Indexing\"",
+      "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/2026/10.html"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "ca-sch-ca-2025": {
+      "name": "FTB, 2025 Instructions for Schedule CA (540), lines 1h and 13",
+      "url": "https://www.ftb.ca.gov/forms/2025/2025-540-ca-instructions.html"
+    },
+    "ca-edd-rates-2026": {
+      "name": "California EDD, Rates and Withholding (2026 SDI rate)",
+      "url": "https://edd.ca.gov/en/payroll_taxes/rates_and_withholding/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "ca-rtc-17052-1": {
+      "name": "California Revenue and Taxation Code section 17052.1, young child tax credit",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=17052.1"
+    },
+    "ca-3514-2025": {
+      "name": "Franchise Tax Board, 2025 Form FTB 3514 booklet, California Earned Income Tax Credit",
+      "url": "https://www.ftb.ca.gov/forms/2025/2025-3514-booklet.html"
+    },
+    "ca-rtc-17052": {
+      "name": "California Revenue and Taxation Code section 17052, earned income tax credit",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=17052"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ftb-tax-news-2026-10"
+      ],
+      "section": "2026 California tax rate schedules X, Y, Z",
+      "confidence": "primary",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.01
+        },
+        {
+          "from": 11456,
+          "rate": 0.02
+        },
+        {
+          "from": 27157,
+          "rate": 0.04
+        },
+        {
+          "from": 42861,
+          "rate": 0.06
+        },
+        {
+          "from": 59498,
+          "rate": 0.08
+        },
+        {
+          "from": 75197,
+          "rate": 0.093
+        },
+        {
+          "from": 384109,
+          "rate": 0.103
+        },
+        {
+          "from": 460927,
+          "rate": 0.113
+        },
+        {
+          "from": 768213,
+          "rate": 0.123
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.01
+        },
+        {
+          "from": 22912,
+          "rate": 0.02
+        },
+        {
+          "from": 54314,
+          "rate": 0.04
+        },
+        {
+          "from": 85722,
+          "rate": 0.06
+        },
+        {
+          "from": 118996,
+          "rate": 0.08
+        },
+        {
+          "from": 150394,
+          "rate": 0.093
+        },
+        {
+          "from": 768218,
+          "rate": 0.103
+        },
+        {
+          "from": 921854,
+          "rate": 0.113
+        },
+        {
+          "from": 1536426,
+          "rate": 0.123
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.01
+        },
+        {
+          "from": 22927,
+          "rate": 0.02
+        },
+        {
+          "from": 54316,
+          "rate": 0.04
+        },
+        {
+          "from": 70018,
+          "rate": 0.06
+        },
+        {
+          "from": 86654,
+          "rate": 0.08
+        },
+        {
+          "from": 102356,
+          "rate": 0.093
+        },
+        {
+          "from": 522385,
+          "rate": 0.103
+        },
+        {
+          "from": 626864,
+          "rate": 0.113
+        },
+        {
+          "from": 1044771,
+          "rate": 0.123
+        }
+      ]
+    },
+    "surtaxes": [
+      {
+        "cites": [
+          "tf-2026"
+        ],
+        "confidence": "secondary",
+        "note": "From Tax Foundation footnote (l). The threshold is the same for every filing status and is not indexed.",
+        "name": "Mental Health Services Tax",
+        "rate": 0.01,
+        "over": {
+          "single": 1000000,
+          "mfj": 1000000,
+          "hoh": 1000000
+        }
+      }
+    ],
+    "earnedIncomeCredit": {
+      "cites": [
+        "ca-3514-2025",
+        "ca-rtc-17052"
+      ],
+      "section": "2025 FTB 3514 booklet, EITC Table and worksheet Part I; R&TC 17052(b) and (o)",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "California's own credit, not a share of the federal one, refundable. The FTB publishes it as a table in $50 bands of earned income. The schedule here is the statute's formula, which reproduces the 2025 table to within $1 in every band: 85% of 7.65%, 34%, 40% or 45% of earned income up to $4,661, $6,998 or $9,823, down at the same rate, then a second, slower tier from about $5,468, $11,798, $17,779 or $17,987 that reaches zero just under $32,900. The earned income amounts are printed in the worksheet. The second-tier starts and rates are not published and were fitted to the table. Peaks are $303, $2,022, $3,340 and $3,757 (the FTB's rounded maximums are $302, $2,016, $3,339 and $3,756). A filer without a child must be 18 or older, with no upper age. The 2026 table comes out in late December. Not checked: the $4,814 investment income limit, and the rule that takes the smaller credit when federal AGI differs from earned income.",
+      "name": "California earned income tax credit",
+      "refundable": true,
+      "schedule": [
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 4661,
+              "value": 303.08
+            },
+            {
+              "income": 5468,
+              "value": 252.38
+            },
+            {
+              "income": 32900,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 4661,
+              "value": 303.08
+            },
+            {
+              "income": 5468,
+              "value": 252.38
+            },
+            {
+              "income": 32900,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 4661,
+              "value": 303.08
+            },
+            {
+              "income": 5468,
+              "value": 252.38
+            },
+            {
+              "income": 32900,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 6998,
+              "value": 2022.42
+            },
+            {
+              "income": 11798,
+              "value": 634.79
+            },
+            {
+              "income": 32894.42,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 6998,
+              "value": 2022.42
+            },
+            {
+              "income": 11798,
+              "value": 634.79
+            },
+            {
+              "income": 32894.42,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 6998,
+              "value": 2022.42
+            },
+            {
+              "income": 11798,
+              "value": 634.79
+            },
+            {
+              "income": 32894.42,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9823,
+              "value": 3339.82
+            },
+            {
+              "income": 17779,
+              "value": 634.71
+            },
+            {
+              "income": 32894.75,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9823,
+              "value": 3339.82
+            },
+            {
+              "income": 17779,
+              "value": 634.71
+            },
+            {
+              "income": 32894.75,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9823,
+              "value": 3339.82
+            },
+            {
+              "income": 17779,
+              "value": 634.71
+            },
+            {
+              "income": 32894.75,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9823,
+              "value": 3757.3
+            },
+            {
+              "income": 17987,
+              "value": 634.49
+            },
+            {
+              "income": 32886.41,
+              "value": 0
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9823,
+              "value": 3757.3
+            },
+            {
+              "income": 17987,
+              "value": 634.49
+            },
+            {
+              "income": 32886.41,
+              "value": 0
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 9823,
+              "value": 3757.3
+            },
+            {
+              "income": 17987,
+              "value": 634.49
+            },
+            {
+              "income": 32886.41,
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "childlessMinAge": 18,
+      "childlessMaxAge": null
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "ca-3514-2025",
+          "ca-rtc-17052-1"
+        ],
+        "section": "2025 FTB 3514 lines 23 to 28 and Step 1; R&TC 17052.1(a) and (c)",
+        "confidence": "primary",
+        "valuesTaxYear": 2025,
+        "note": "One refundable credit per return, not per child, for a filer who gets the California earned income credit and has a child \"younger than six years of age as of the last day of the taxable year\". $1,189 for 2025, reduced by $21.71 for each $100 of earned income over $27,425, prorated as the form does it (the statute says \"or fraction thereof\", the form divides to two decimals). Gone at $32,901 of earned income, and federal AGI must also be under $32,901. All of these are indexed and are the 2025 figures: the FTB publishes the 2026 ones in late December. The earned income credit itself is not modeled, and its investment income limit is not checked.",
+        "name": "California young child tax credit",
+        "refundable": true,
+        "per": "return",
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 6,
+            "amount": 1189
+          }
+        ],
+        "incomeLimit": {
+          "basis": "federal_agi",
+          "single": 32900,
+          "mfj": 32900,
+          "hoh": 32900
+        },
+        "phaseOut": {
+          "basis": "earned_income",
+          "start": {
+            "single": 27425,
+            "mfj": 27425,
+            "hoh": 27425
+          },
+          "amount": 21.71,
+          "per": 100,
+          "rounding": "none",
+          "appliesTo": "each"
+        }
+      }
+    ],
+    "standardDeduction": {
+      "cites": [
+        "ftb-tax-news-2026-10"
+      ],
+      "confidence": "primary",
+      "single": 5900,
+      "mfj": 11800,
+      "hoh": 11800
+    },
+    "personalExemption": {
+      "cites": [
+        "ftb-tax-news-2026-10",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "Credit amounts read from the FTB article. These credits phase out at high AGI (Tax Foundation footnote (k) gives the 2025 thresholds). The phase-out is not modeled and the 2026 thresholds were not in the article.",
+      "kind": "credit",
+      "single": 158,
+      "mfj": 316,
+      "hoh": 158,
+      "dependent": 491
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "ca-sch-ca-2025",
+      "ca-edd-rates-2026",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "HSA flag read in the 2025 Schedule CA (540) instructions: employer HSA contributions are added back on line 1h and the HSA deduction on line 13 is not allowed. SDI rate of 1.3% on all wages read on the EDD page. No local income tax: R&TC 17041.5 bars cities and counties from taxing income. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": true,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Employees pay 1.3% of all wages for State Disability Insurance, with no cap. Not included.",
+      "California does not recognize HSAs, so contributions are taxed by the state.",
+      "California's earned income credit (up to $3,756, for earned income under $32,900) and its young child tax credit (up to $1,189 a return for a child under 6) are included with the 2025 figures, because the 2026 ones are not published yet."
+    ],
+    "maintainerNotes": [
+      "Employees pay state disability insurance on all wages. Tax Foundation lists the rate as 1.3%.",
+      "Check whether California allows the federal overtime deduction. It likely does not.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): PolicyEngine's California tax was $11 to $106 higher in every case because it projects 2026 thresholds and the standard deduction ($5,835) instead of using the FTB's published figures ($5,900). Ours are the published ones."
+    ]
+  }
+}

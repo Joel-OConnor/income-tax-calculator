@@ -1,0 +1,133 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "IL",
+  "name": "Illinois",
+  "sources": {
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    },
+    "il-35-ilcs-5-212": {
+      "name": "35 ILCS 5/212, Illinois earned income tax credit",
+      "url": "https://www.ilga.gov/Documents/legislation/ilcs/documents/003500050K212.htm"
+    },
+    "il-35-ilcs-5-244": {
+      "name": "35 ILCS 5/244, Illinois child tax credit",
+      "url": "https://www.ilga.gov/Documents/legislation/ilcs/documents/003500050K244.htm"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "tf-2026"
+      ],
+      "confidence": "secondary",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.0495
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.0495
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.0495
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "il-35-ilcs-5-212"
+      ],
+      "section": "35 ILCS 5/212(a)(vi), (b), (b-5) and (b-10)",
+      "confidence": "primary",
+      "note": "\"20% of the federal tax credit for each taxable year beginning on or after January 1, 2023\", refundable. Filers without a child qualify from 18 with no upper age, \"without regard to any age requirements\", on the federal credit they would otherwise get.",
+      "name": "Illinois earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "childlessMinAge": 18,
+      "childlessMaxAge": null
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "il-35-ilcs-5-244"
+        ],
+        "section": "35 ILCS 5/244",
+        "confidence": "primary",
+        "note": "\"40% of the credit allowed to the taxpayer under Section 212\" (the Illinois earned income credit) for a taxpayer with \"at least one qualifying child who is younger than 12 years of age as of the last day of the taxable year\", for tax years from 2025. One credit per return, refundable, no sunset. The band only says which ages qualify, so its amount is zero.",
+        "name": "Illinois child tax credit",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 12,
+            "amount": 0
+          }
+        ],
+        "earnedIncomeCreditShare": 0.4
+      }
+    ],
+    "standardDeduction": null,
+    "personalExemption": {
+      "cites": [
+        "tf-2026"
+      ],
+      "confidence": "secondary",
+      "note": "Tax Foundation marks this as the 2026 inflation-adjusted amount and lists single, couple and dependent only. The head of household amount and AGI limit are assumed equal to single.",
+      "kind": "deduction",
+      "single": 2925,
+      "mfj": 5850,
+      "hoh": 2925,
+      "dependent": 2925,
+      "agiLimit": {
+        "single": 250000,
+        "mfj": 500000,
+        "hoh": 250000
+      }
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [],
+    "maintainerNotes": [
+      "Child tax credit, 35 ILCS 5/244 (https://www.ilga.gov/legislation/ilcs/documents/003500050K244.htm), read 2026-11-12: 40% of the Illinois earned income credit for a filer with at least one child under 12 at year end, one credit per return, refundable, no sunset. It needs the federal earned income credit, which the engine does not compute."
+    ]
+  }
+}

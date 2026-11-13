@@ -1,0 +1,254 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "CO",
+  "name": "Colorado",
+  "sources": {
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-co-addback": {
+      "name": "PolicyEngine US parameters, CO add-back of federal deductions (cites the Colorado Individual Income Tax Guide and the 2025 104 Book, additions line 4)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/co/tax/income/additions/federal_deductions/exemption.yaml"
+    },
+    "co-sb25-144": {
+      "name": "Colorado SB25-144 (signed), 2026 paid family and medical leave premium",
+      "url": "https://content.leg.colorado.gov/sites/default/files/2025a_144_signed.pdf"
+    },
+    "denver-opt": {
+      "name": "City and County of Denver, Business Tax FAQ, occupational privilege tax",
+      "url": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Department-of-Finance/Our-Divisions/Treasury/Business-Tax-Information/Business-Tax-FAQ"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "co-dr0104cn-2025": {
+      "name": "Colorado Department of Revenue, DR 0104CN Colorado Child Tax Credit, 2025",
+      "url": "https://tax.colorado.gov/DR0104CN"
+    },
+    "co-hb23-1112": {
+      "name": "Colorado HB23-1112, child tax credit (C.R.S. 39-22-129), as signed",
+      "url": "https://leg.colorado.gov/sites/default/files/2023a_1112_signed.pdf"
+    },
+    "co-fatc-2026-11": {
+      "name": "Colorado Department of Revenue, Income Tax Topics: Family Affordability Tax Credit, November 2026",
+      "url": "https://tax.colorado.gov/sites/default/files/2026-11/ITT_Family_Affordability_Tax_Credit_Nov_2026.pdf"
+    },
+    "co-eitc-topic": {
+      "name": "Colorado Department of Revenue, Income Tax Topics: Earned Income Tax Credit",
+      "url": "https://tax.colorado.gov/income-tax-topics-earned-income-tax-credit"
+    },
+    "co-crs-39-22-123-5": {
+      "name": "C.R.S. 39-22-123.5, earned income tax credit (2024 official publication of Title 39)",
+      "url": "https://content.leg.colorado.gov/sites/default/files/images/olls/crs2024-title-39.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_taxable_income",
+    "brackets": {
+      "cites": [
+        "tf-2026"
+      ],
+      "confidence": "secondary",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0.044
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0.044
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0.044
+        }
+      ]
+    },
+    "surtaxes": [],
+    "earnedIncomeCredit": {
+      "cites": [
+        "co-crs-39-22-123-5",
+        "co-eitc-topic"
+      ],
+      "section": "C.R.S. 39-22-123.5(2)(d)(II)(C) and (4); department table \"2026 and later 25%\"",
+      "confidence": "primary",
+      "note": "\"For income tax years commencing on or after January 1, 2026, twenty-five percent of the federal credit\", refundable. It was 50% for 2024 and 2025. A higher percentage needed a revenue trigger that was not met for 2026 (Legislative Council memo of March 24, 2026). Filers without a child qualify from age 19 if not a student, with the credit they would have been allowed federally.",
+      "name": "Colorado earned income tax credit",
+      "refundable": true,
+      "match": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "childlessMinAge": 19
+    },
+    "childCredits": [
+      {
+        "cites": [
+          "co-dr0104cn-2025",
+          "co-hb23-1112",
+          "co-fatc-2026-11"
+        ],
+        "section": "2025 DR 0104CN, credit table; C.R.S. 39-22-129",
+        "confidence": "primary",
+        "valuesTaxYear": 2025,
+        "note": "$1,200, $600 or $200 per child under 6 at the end of the year, by federal AGI, refundable. The dollar amounts are fixed in statute. The AGI tiers are indexed and these are the 2025 ones from the form: the 2026 tiers were not published as of 2026-11-12. The statute raises them only when inflation moves a limit by $1,000 or more, so expect each 2026 limit to be about $1,000 to $2,000 higher. Recheck when the 2026 DR 0104CN is out. The separate Family Affordability Tax Credit is not allowed for 2026 (co-fatc-2026-11), so it is not entered.",
+        "name": "Colorado child tax credit",
+        "refundable": true,
+        "bands": [
+          {
+            "fromAge": 0,
+            "underAge": 6,
+            "amount": 1200
+          }
+        ],
+        "amountByIncome": {
+          "basis": "federal_agi",
+          "points": {
+            "single": [
+              {
+                "income": 0,
+                "value": 1200
+              },
+              {
+                "income": 26000,
+                "value": 600
+              },
+              {
+                "income": 51000,
+                "value": 200
+              },
+              {
+                "income": 77000,
+                "value": 0
+              }
+            ],
+            "mfj": [
+              {
+                "income": 0,
+                "value": 1200
+              },
+              {
+                "income": 36000,
+                "value": 600
+              },
+              {
+                "income": 61000,
+                "value": 200
+              },
+              {
+                "income": 87000,
+                "value": 0
+              }
+            ],
+            "hoh": [
+              {
+                "income": 0,
+                "value": 1200
+              },
+              {
+                "income": 26000,
+                "value": 600
+              },
+              {
+                "income": 51000,
+                "value": 200
+              },
+              {
+                "income": 77000,
+                "value": 0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "standardDeduction": null,
+    "personalExemption": null,
+    "taxAdjustments": [
+      {
+        "cites": [
+          "pe-co-addback"
+        ],
+        "confidence": "secondary",
+        "note": "Filers with federal AGI of $300,000 or more add back their federal deduction above $1,000 ($2,000 joint). For a standard deduction filer that is a fixed amount, so it is entered as tax: 4.4% of ($16,100 - $1,000) single, ($32,200 - $2,000) joint, ($24,150 - $1,000) head of household. Redo these when the rate or the federal standard deduction changes. Wrong for filers who itemize or who are 65 or older. Checked against PolicyEngine US 2.118.6 with oracle/compare.py on 2026-11-12.",
+        "name": "Add-back of federal deductions at $300,000 and above",
+        "effect": "add",
+        "basis": "federal_agi",
+        "interpolation": "step",
+        "points": {
+          "single": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 299999,
+              "value": 664.4
+            }
+          ],
+          "mfj": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 299999,
+              "value": 1328.8
+            }
+          ],
+          "hoh": [
+            {
+              "income": 0,
+              "value": 0
+            },
+            {
+              "income": 299999,
+              "value": 1018.6
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "co-sb25-144",
+      "denver-opt",
+      "pe-us-model"
+    ],
+    "confidence": "secondary",
+    "note": "Starting point is from Tax Foundation footnote (o). Paid leave premium of 0.88% of wages for 2026 read in SB25-144. The even split with the employer and the Social Security wage cap were seen only in a search summary of famli.colorado.gov, which blocks automated reading. Local flag set to true for Denver's occupational privilege tax, $5.75 a month from each employee, read on the city's page. Aurora repealed its tax from 2025. Glendale, Greenwood Village and Sheridan were not checked. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": true,
+    "hasStatePayrollTax": true,
+    "notes": [
+      "Colorado starts from federal taxable income, so the federal standard deduction is already applied. No separate state standard deduction.",
+      "Employees pay 0.44% of wages, up to $184,500, toward the state paid family and medical leave premium. Not included.",
+      "Filers with federal AGI of $300,000 or more must add back most of their federal standard deduction. This is included.",
+      "Denver takes a flat $5.75 a month from people who work there. Not included.",
+      "Colorado's child tax credit for children under 6 uses the 2025 income limits, because the 2026 limits are not published yet. It ends at federal AGI of $77,000, or $87,000 for joint filers.",
+      "Colorado's Family Affordability Tax Credit is not available for 2026."
+    ],
+    "maintainerNotes": [
+      "Check whether Colorado requires adding back the federal overtime deduction.",
+      "From the PolicyEngine comparison run on 2026-11-12 (oracle/compare.py): our Colorado tax was $1,329 lower for a joint filer at $300,000, equal to 4.4% of about $30,200. Lower incomes matched. The add-back rule itself was not read in a Colorado publication.",
+      "Replaced on 2026-11-12 when the rule was modeled: Not modeled: filers with federal AGI of $300,000 or more must add back most of their federal deductions, which raises Colorado tax by roughly $1,300 for a joint filer.",
+      "Family Affordability Tax Credit (C.R.S. 39-22-130): the revenue trigger was not met, so no credit for 2026 (co-fatc-2026-11). A replacement credit under HB26-1223 may start in 2027."
+    ]
+  }
+}

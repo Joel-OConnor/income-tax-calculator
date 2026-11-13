@@ -1,0 +1,146 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "ID",
+  "name": "Idaho",
+  "sources": {
+    "istc-rate-schedule": {
+      "name": "Idaho State Tax Commission, Individual Income Tax Rate Schedule",
+      "url": "https://tax.idaho.gov/taxes/income-tax/individual-income/individual-income-tax-rate-schedule/"
+    },
+    "id-63-3024": {
+      "name": "Idaho Code 63-3024, Individuals' tax and tax on estates and trusts",
+      "url": "https://legislature.idaho.gov/statutesrules/idstat/title63/t63ch30/sect63-3024/"
+    },
+    "id-63-3022": {
+      "name": "Idaho Code 63-3022, Adjustments to taxable income",
+      "url": "https://legislature.idaho.gov/statutesrules/idstat/title63/t63ch30/sect63-3022/"
+    },
+    "istc-wh-2026": {
+      "name": "Idaho State Tax Commission, Table for Percentage Computation Method of Withholding (EPB00744, 07-23-2026)",
+      "url": "https://tax.idaho.gov/wp-content/uploads/pubs/EPB00744/EPB00744_07-23-2026.pdf"
+    },
+    "pe-id": {
+      "name": "PolicyEngine US parameters, Idaho income tax (rate schedules, grocery credit, permanent building fund tax, Schedule 1-A deductions)",
+      "url": "https://github.com/PolicyEngine/policyengine-us/tree/main/policyengine_us/parameters/gov/states/id/tax/income"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "istc-rate-schedule",
+        "id-63-3024",
+        "istc-wh-2026",
+        "pe-id",
+        "tf-2026"
+      ],
+      "section": "Rate schedule page, 2025 table; Idaho Code 63-3024(2)",
+      "confidence": "primary",
+      "valuesTaxYear": 2025,
+      "note": "The 5.3% rate is current law for 2026 (Idaho Code 63-3024 and the July 2026 withholding tables). The zero-rate threshold is indexed every year, and the Tax Commission's schedule page still listed 2025 as its latest year when read on 2026-11-12, so the $4,811 and $9,622 thresholds are 2025 values. Expect the 2026 thresholds to be slightly higher. Tax Foundation also uses the 2025 widths (its footnote j) and PolicyEngine stores no 2026 threshold. Head of household uses the joint threshold: 63-3024(2)(b) treats a head of household return as a joint return. The schedule page labels its columns only Single and Married.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 4811,
+          "rate": 0.053
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 9622,
+          "rate": 0.053
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 9622,
+          "rate": 0.053
+        }
+      ]
+    },
+    "surtaxes": [],
+    "standardDeduction": {
+      "cites": [
+        "id-63-3022",
+        "istc-wh-2026",
+        "tf-2026"
+      ],
+      "section": "Idaho Code 63-3022(j)(1); withholding table, annual payroll period",
+      "confidence": "secondary",
+      "note": "Idaho uses the federal standard deduction: 63-3022(j) defines it by reference to Internal Revenue Code section 63. These are the 2026 federal amounts. The 2026 withholding tables start tax at $16,100 (single, including head of household) and $32,200 (married), and Tax Foundation lists $16,100 and $32,200. The $24,150 head of household figure is the 2026 federal amount from this dataset's federal.json (IRS Rev. Proc. 2025-32). It was not read in an Idaho publication, and the withholding table's grouping of head of household with single is a withholding simplification.",
+      "single": 16100,
+      "mfj": 32200,
+      "hoh": 24150
+    },
+    "personalExemption": {
+      "cites": [
+        "pe-id"
+      ],
+      "confidence": "secondary",
+      "note": "Idaho has no personal exemption. This is the grocery credit, a flat credit for the filer, spouse and each dependent. $155 per person is PolicyEngine's figure (citing House Bill 231 of 2025), and the 2026 comparison with PolicyEngine agrees to within a few dollars. The real credit is refundable; here it can only reduce Idaho tax to zero. Not read in a Tax Commission publication.",
+      "kind": "credit",
+      "single": 155,
+      "mfj": 310,
+      "hoh": 155,
+      "dependent": 155
+    }
+  },
+  "rules": {
+    "cites": [
+      "pe-id",
+      "tf-2026",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "Local tax flag is from Tax Foundation footnote (a), which does not list Idaho. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. Not read in the state's own instructions. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Idaho uses the federal standard deduction amounts.",
+      "Not modeled: a $10 permanent building fund tax added to each return.",
+      "Not modeled: Idaho appears to allow the federal overtime and tip deductions through 2028, so Idaho tax here may be overstated for workers with overtime pay.",
+      "Idaho's $205 per child tax credit ended after 2025.",
+      "Idaho's grocery credit of $155 per person is included as a credit against Idaho tax."
+    ],
+    "maintainerNotes": [
+      "Idaho's return starts from federal AGI and then takes the federal standard deduction or itemized deductions. Tax Foundation footnote (o) describes this as including the federal standard deduction in the starting point. Either reading gives the same taxable income for a standard deduction filer.",
+      "Not modeled: $10 permanent building fund tax added to each return that is required to be filed (PolicyEngine, citing Idaho Code 57-1110).",
+      "Not modeled: grocery credit, $155 per person from 2025 (PolicyEngine, citing House Bill 231 of 2025).",
+      "Not modeled: PolicyEngine records that Idaho allows the federal Schedule 1-A deductions (overtime, tips, senior, car loan interest) from 2025 through 2028. With a federal AGI starting point the engine will not pick these up for Idaho.",
+      "Not modeled: the grocery credit, about $155 per person.",
+      "An EY tax alert (August 2026) reports that Idaho's $205 per child tax credit expired after tax year 2025, which is why the withholding tables were reissued in July 2026. Not checked against a Tax Commission page.",
+      "Idaho Code 63-3029L limits the $205 child tax credit to taxable years \"before January 1, 2026\" (https://legislature.idaho.gov/statutesrules/idstat/Title63/T63CH30/SECT63-3029L/). The 2026 extension bill S1450 did not get out of committee. Checked 2026-11-12."
+    ]
+  }
+}

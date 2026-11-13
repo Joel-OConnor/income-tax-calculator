@@ -1,0 +1,127 @@
+{
+  "taxYear": 2026,
+  "jurisdiction": "MS",
+  "name": "Mississippi",
+  "sources": {
+    "ms-dor-tax-rates": {
+      "name": "Mississippi Department of Revenue, Tax Rates, Exemptions, & Deductions",
+      "url": "https://www.dor.ms.gov/individual/tax-rates"
+    },
+    "ms-80-100-2025": {
+      "name": "Mississippi Resident, Non-Resident and Part-Year Resident Income Tax Instructions (Form 80-100), 2025",
+      "url": "https://www.dor.ms.gov/sites/default/files/tax-forms/individual/80100251%202.pdf"
+    },
+    "pe-ms-income-sources": {
+      "name": "PolicyEngine US parameters, MS income sources counted toward Mississippi AGI (cites Form 80-105 and Miss. Code 27-7-15)",
+      "url": "https://raw.githubusercontent.com/PolicyEngine/policyengine-us/main/policyengine_us/parameters/gov/states/ms/tax/income/income_sources.yaml"
+    },
+    "tf-2026": {
+      "name": "Tax Foundation, State Individual Income Tax Rates and Brackets, 2026",
+      "url": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/"
+    },
+    "pe-us-model": {
+      "name": "PolicyEngine US 2.118.6, run locally with oracle/flags.py to compare how each kind of contribution changes state tax",
+      "url": "https://github.com/PolicyEngine/policyengine-us"
+    },
+    "dol-ui-financing-2023": {
+      "name": "US Department of Labor, Comparison of State Unemployment Insurance Laws 2023, Financing (which states take contributions from workers)",
+      "url": "https://oui.doleta.gov/unemploy/pdf/uilawcompar/2023/financing.pdf"
+    }
+  },
+  "incomeTax": {
+    "type": "bracketed",
+    "startingPoint": "federal_agi",
+    "brackets": {
+      "cites": [
+        "ms-dor-tax-rates",
+        "tf-2026"
+      ],
+      "section": "Tax Rates for Tax years 2025-2027, Tax Year 2026",
+      "confidence": "primary",
+      "note": "The DOR page gives 0% on the first $10,000 of taxable income and 4% on the excess for tax year 2026 (4.4% for 2025, 3.75% for 2027). Tax Foundation and PolicyEngine agree. The schedule is the same for every filing status, so head of household uses it too. On a joint or combined return each spouse's income is taxed in its own column, which the single joint schedule here does not capture (see rules.notes). The page prints no cumulative amounts.",
+      "single": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 10000,
+          "rate": 0.04
+        }
+      ],
+      "mfj": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 10000,
+          "rate": 0.04
+        }
+      ],
+      "hoh": [
+        {
+          "from": 0,
+          "rate": 0
+        },
+        {
+          "from": 10000,
+          "rate": 0.04
+        }
+      ]
+    },
+    "surtaxes": [],
+    "standardDeduction": {
+      "cites": [
+        "ms-dor-tax-rates",
+        "ms-80-100-2025",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "Read from the DOR page, which lists no year because these amounts are fixed in statute and not indexed. The 2025 instructions show the same amounts and Tax Foundation's 2026 table agrees for single and joint. Head of household is Mississippi's \"Head of Family\" status.",
+      "single": 2300,
+      "mfj": 4600,
+      "hoh": 3400
+    },
+    "personalExemption": {
+      "cites": [
+        "ms-dor-tax-rates",
+        "ms-80-100-2025",
+        "tf-2026"
+      ],
+      "confidence": "primary",
+      "note": "Read from the DOR page. Not indexed. Head of Family requires at least one dependent, and per the 2025 instructions the $1,500 dependent exemption is allowed for that dependent as well ($9,500 total with one dependent). There is a further $1,500 each for a filer or spouse who is 65 or older or blind, not modeled.",
+      "kind": "deduction",
+      "single": 6000,
+      "mfj": 12000,
+      "hoh": 8000,
+      "dependent": 1500
+    }
+  },
+  "rules": {
+    "cites": [
+      "tf-2026",
+      "ms-80-100-2025",
+      "pe-ms-income-sources",
+      "pe-us-model",
+      "dol-ui-financing-2023"
+    ],
+    "confidence": "secondary",
+    "note": "No local income tax: Mississippi is not in Tax Foundation footnote (a). 401k, IRA, HSA and cafeteria plan treatment read in the 2025 Form 80-100 instructions and Title 35 Part III of the Administrative Code. The HSA deduction follows Mississippi's own Health Savings Account Act. Contribution flags checked on 2026-11-12 against PolicyEngine US 2.118.6 (oracle/flags.py), which moves this state's tax by the same amount as this engine for 401k, HSA, IRA and health premium contributions. FSA and commuter benefits are not PolicyEngine inputs and rest on the state starting from federal income. No employee payroll contribution: the US Department of Labor's comparison lists worker unemployment contributions only in Alaska, New Jersey and Pennsylvania and disability insurance only in California, Hawaii, New Jersey, New York and Rhode Island, and no paid leave or similar program with an employee contribution was found for this state on 2026-11-12.",
+    "taxes401kContributions": false,
+    "taxesHsaContributions": false,
+    "taxesIraContributions": false,
+    "taxesHealthPremiums": false,
+    "taxesFsaContributions": false,
+    "taxesCommuterBenefits": false,
+    "hasLocalIncomeTaxes": false,
+    "hasStatePayrollTax": false,
+    "notes": [
+      "Mississippi builds income from its own list of items rather than starting from federal AGI. For wage earners the result is normally the same.",
+      "Not modeled: on a joint or combined return each spouse's income is taxed separately, so a couple where both spouses have income gets the 0% rate on up to $20,000 instead of $10,000. Tax is overstated by up to $400 for two-earner couples. Exemptions and the standard deduction can be split between the spouses."
+    ],
+    "maintainerNotes": [
+      "Mississippi builds its own gross income from listed income items rather than starting from federal AGI (PolicyEngine, citing Form 80-105). For wage earners the result is normally the same, so the starting point is entered as federal AGI."
+    ]
+  }
+}
