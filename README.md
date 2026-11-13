@@ -51,3 +51,7 @@ npm test
 State payroll contributions (disability and paid leave), local income taxes, itemized deductions beyond state income tax, self-employment income, and a spouse's income as a separate input. Each state's page in the app lists the rules it leaves out.
 
 Some 2026 figures weren't published when the data was built, so a few states use 2025 values. `npm run build:data` lists them.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
